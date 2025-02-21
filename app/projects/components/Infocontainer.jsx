@@ -54,17 +54,63 @@ const Infocontainer = (props) => {
             </div>
           </div>
         )}</div>
-        <div className=' mb-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3   md:gap-4 md:px-0  '>
-        <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkbluec dark:text-subcolor' iconcolor='text-bluecolor  dark:bg-darkbox ' linkcolor='bg-lightblue dark:bg-bluecolor' text="Man Power" href='' value={manPower } icon='fluent:people-team-20-filled'/>
-        <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkbluec dark:text-subcolor' iconcolor='text-bluecolor  dark:bg-darkbox' linkcolor='bg-lightblue dark:bg-bluecolor' href='' text='Day Hours' value={dayHours } icon='tabler:clock-hour-4-filled'/>
-        <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkbluec dark:text-subcolor' iconcolor='text-bluecolor  dark:bg-darkbox' linkcolor='bg-lightblue dark:bg-bluecolor' href='' text='Man Hours' value={manHours } icon='fa-solid:business-time'/>
-        <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkorange dark:text-subcolor' iconcolor=' text-orangecolor dark:bg-darkbox' linkcolor='bg-lightorange dark:bg-orangecolor' href='' text='Observations' value={observationsCount } icon='weui:eyes-on-filled'/>
-        <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkgreencolor dark:text-subcolor' iconcolor=' text-greencolor dark:bg-darkbox' linkcolor='bg-lightgreen dark:bg-greencolor' href='' text='TBTs' value={tbtsCount } icon='mdi:talk'/>
-
-                <InfoBox textcolor=' dark:text-subcolor ' valuecolor=' text-darkredcolor dark:text-subcolor' iconcolor=' text-redcolor dark:bg-darkbox' linkcolor='bg-lightred  dark:bg-redcolor' href='' text='Abnormals' value={abnormalEventsCount } icon='jam:triangle-danger-f'/>
-
+        <div className=' mb-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6  gap-3   md:gap-4 md:px-0  '>
+        <InfoBox 
+          textcolor='text-darkblueb truncate overflow-hidden dark:text-subcolor' 
+          valuecolor='text-darkbluec dark:text-subcolor' 
+          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/80' 
+          linkcolor='bg-lightblue/50 hover:bg-lightblue/50 dark:bg-bluecolor/70 ' 
+          text="ManPower" 
+          value={manPower} 
+          icon='fluent:people-team-20-filled'
+        />
+        <InfoBox 
+          textcolor='text-darkblueb truncate overflow-hidden dark:text-subcolor' 
+          valuecolor='text-darkbluec dark:text-subcolor' 
+          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/80' 
+          linkcolor='bg-lightblue/50 hover:bg-lightblue/50 dark:bg-bluecolor/70 ' 
+          text='DayHours' 
+          value={dayHours} 
+          icon='tabler:clock-hour-4-filled'
+        />
+        <InfoBox 
+          textcolor='text-darkblueb truncate overflow-hidden dark:text-subcolor' 
+          valuecolor='text-darkbluec dark:text-subcolor' 
+          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/80' 
+          linkcolor='bg-lightblue/50  dark:bg-bluecolor/70 ' 
+          text='ManHours' 
+          value={manHours} 
+          icon='fa-solid:business-time'
+        />
+        <InfoBox 
+          textcolor='text-darkorange truncate overflow-hidden dark:text-subcolor' 
+          valuecolor='text-darkorange dark:text-subcolor' 
+          iconcolor='bg-lightorange text-orangecolor dark:bg-darkorange/70' 
+          linkcolor='bg-lightorange/50  dark:bg-orangecolor/70 ' 
+          text='Observations' 
+          value={observationsCount} 
+          icon='weui:eyes-on-filled'
+        />
+        <InfoBox 
+          textcolor='text-darkgreen dark:text-subcolor' 
+          valuecolor='text-darkgreencolor dark:text-subcolor' 
+          iconcolor='bg-lightgreen text-greencolor dark:bg-darkgreen/70' 
+          linkcolor='bg-lightgreen/50  dark:bg-greencolor/70' 
+          text='TBTs' 
+          value={tbtsCount} 
+          icon='mdi:talk'
+        />
+        <InfoBox 
+          textcolor='text-darkred truncate overflow-hidden dark:text-subcolor' 
+          valuecolor='text-darkredcolor dark:text-subcolor' 
+          iconcolor='bg-lightred text-redcolor dark:bg-darkred/70' 
+          linkcolor='bg-lightred/50  dark:bg-redcolor/70 ' 
+          text='Abnormals' 
+          value={abnormalEventsCount} 
+          icon='jam:triangle-danger-f'
+        />
         <Link href={props.dayhref} className=' hover:text-maincolor dark:text-hovercolor dark:hover:text-bluecolor flex items-center justify-center gap-2 hover:gap-6 duration-300' >
-        <span className='  font-bold '>FULL DAY</span> <Icon icon="ep:arrow-up-bold" className=' bg-maincolor/20 p-2 rounded-full text-darkbluea rotate-90' width="40" height="40" />
+        <span className=' text-xs  sm:text-sm font-bold '>FULL DAY</span> <Icon icon="ep:arrow-up-bold" className=' bg-maincolor/20 p-2 rounded-full text-darkbluea rotate-90' width="40" height="40" />
         </Link>
             
         </div>

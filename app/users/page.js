@@ -102,9 +102,9 @@ const UsersPage = () => {
      <Link 
      href={`/users/${user._id}`} 
      key={user._id} 
-     className="block  transition-all duration-300 hover:translate-y-1 hover:shadow-xl"
+     className="block  transition-all duration-300 "
    >
-     <div className="overflow-hidden rounded-main bg-boxcolor dark:bg-darkbox border border-border dark:border-darkgrey shadow-md">
+     <div className="overflow-hidden rounded-main bg-boxcolor dark:bg-darkbox border border-border dark:border-darkgrey ">
        {/* Top Accent Bar */}
        <div className="h-12 bg-gradient-to-r from-maincolor to-cyancolor"></div>
        

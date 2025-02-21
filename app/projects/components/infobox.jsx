@@ -1,18 +1,20 @@
-import { Icon } from '@iconify/react'
-import Link from 'next/link'
 import React from 'react'
+import Link from 'next/link'
+import { Icon } from '@iconify/react'
 
-const InfoBox = (props) => {
+const InfoBox = ({ href, linkcolor, textcolor, valuecolor, iconcolor, text, value, icon }) => {
   return (
-    <Link href={props.href} className={`${props.linkcolor} flex-col  flex justify-between  bg-hovercolor rounded-main w-full font-semibold  md:h-24 p-3 `}>
-        <div className=' flex gap-2 items-center '>
-            <Icon className={`${props.iconcolor} h-8 w-8 min-w-8 bg-boxcolor rounded-full p-1`} icon={props.icon} width="24" height="24" />
-            <span className={props.textcolor}>{props.text}</span>
+    <Link 
+      href={href || '#'} 
+      className={`${linkcolor} group flex flex-col justify-between bg-hovercolor rounded-main shadow-sm hover:shadow-md transition-all duration-200 h-20 md:h-20 p-3`}
+    >
+      <div className='flex items-center gap-2'>
+        <div className={`${iconcolor} rounded-full p-1.5 group-hover:scale-110 transition-transform duration-200`}>
+          <Icon icon={icon} className="w-5 h-5" />
         </div>
-        
-        <span className={`' font-bold text-xl self-end ${props.valuecolor}`} >
-            {props.value}
-        </span>
+        <span className={`${textcolor} text-sm font-medium`}>{text}</span>
+      </div>
+      <span className={`${valuecolor} text-xl font-bold self-end`}>{value}</span>
     </Link>
   )
 }
