@@ -14,14 +14,60 @@ import { useRouter } from 'next/navigation'; // Import useRouter
 
 const Page = () => {
   const router = useRouter(); // Initialize router
-
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
   const [apiError, setApiError] = useState({});
   const { user, users, setUsers, setUser } = useContext(UsersContext);
   const [imageFile, setImageFile] = useState(null);
   const [isVerified, setIsVerified] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const EnhancedProgressBar = ({ progress, isUploading }) => {
+    if (!isUploading) return null;
+    
+    return (
+      <div className="fixed inset-0 bg-darkbox/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+        <div className="w-11/12 md:w-2/3 lg:w-1/2 max-w-md bg-boxcolor dark:bg-blackgrey rounded-main p-6 shadow-lg transform scale-100 animate-fadeIn">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-subcolor dark:text-subtextcolor font-bold">Uploading Files</h3>
+            <div className="flex items-center">
+              <span className="text-bluecolor dark:text-lightblue font-medium text-lg mr-1">{progress}%</span>
+              <div className="animate-spin h-4 w-4 border-2 border-bluecolor dark:border-lightblue border-t-transparent rounded-circle"></div>
+            </div>
+          </div>
+          
+          {/* Main progress track */}
+          <div className="h-3 w-full bg-gray-200 dark:bg-darkbox rounded-full overflow-hidden mb-2">
+            {/* Animated gradient progress fill */}
+            <div 
+              className="h-full bg-gradient-to-r from-bluecolor via-maincolor to-rosecolor rounded-full transition-all duration-300 ease-out"
+              style={{ 
+                width: `${progress}%`,
+                boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)'
+              }}
+            >
+              {/* Shimmer effect */}
+              <div className="w-full h-full relative overflow-hidden">
+                <div className="absolute inset-0 bg-white/20 skew-x-12 animate-shimmer"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Status indicator */}
+          <div className="flex justify-between items-center mt-3 text-xs">
+            <span className="text-darkgrey dark:text-gray-400">
+              {progress < 30 ? 'Starting upload...' : 
+               progress < 70 ? 'Processing files...' : 
+               progress < 100 ? 'Almost done...' : 'Complete!'}
+            </span>
+            <span className="text-greencolor dark:text-lightgreen font-medium">
+              {progress === 100 ? 'Upload complete!' : 'Please wait...'}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
   useEffect(() => {
     if (user) {
       formik.setValues({
@@ -75,7 +121,8 @@ const Page = () => {
     onSubmit: async (values) => {
       setIsSuccess(false);
       setIsLoading(true);
-
+      setIsUploading(true);
+      setUploadProgress(0);
       setApiError({}); // Clear previous errors
       const formData = new FormData();
 
@@ -103,7 +150,12 @@ const Page = () => {
           headers: { 
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${localStorage.getItem('token')}` 
-          },
+          }, onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percentCompleted);
+          }
         });
         
 
@@ -111,13 +163,15 @@ const Page = () => {
         setIsSuccess(true);
         setTimeout(() => setIsSuccess(false), 1000)
         // Optionally, show success message or redirect
-        
+        setIsUploading(false);
+
 
         router.back();
       } catch (error) {
         if (error.response && error.response.data.errors) {
           // Handle specific field errors from backend
           setApiError(error.response.data.errors);
+
         } else {
           // Handle general error
           setApiError({ 
@@ -125,6 +179,9 @@ const Page = () => {
           });
         }
         console.error('Error updating user:', error);
+        setIsUploading(false);
+        setIsLoading(false);
+
       }
     },
   });
@@ -146,7 +203,13 @@ const Page = () => {
       <div className='hidden justify-center items-center lg:flex w-full'>
         <span className='text-7xl font-black text-center lg:text-darkbluec text-maincolor'>EDIT USER</span>
       </div>
-      {isLoading? <div className='w-full h-screen flex justify-center items-center'><div className='loader'></div></div> :<form onSubmit={formik.handleSubmit} className='w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-blackgrey bg-boxcolor'>
+      {isLoading? <div className='w-full h-screen flex justify-center items-center'><div className='loader'></div></div> :
+      <form onSubmit={formik.handleSubmit} className='w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-blackgrey bg-boxcolor'>
+           {/* عرض شريط التقدم أثناء الرفع فقط */}
+           {isUploading && (
+                     <EnhancedProgressBar progress={uploadProgress} isUploading={isUploading} />
+
+          )}
         <div className='w-full lg:hidden'>
           <span className='self-start font-bold'>Edit User</span>
         </div>

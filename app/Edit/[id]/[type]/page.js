@@ -19,9 +19,55 @@ const EditPage = () => {
   const [initialData, setInitialData] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [existingFile, setExistingFile] = useState();
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);  const router = useRouter(); // Initialize router
   const [loading, setLoading] = useState(false);
-  const router = useRouter(); // Initialize router
-
+  const EnhancedProgressBar = ({ progress, isUploading }) => {
+    if (!isUploading) return null;
+    
+    return (
+      <div className="fixed inset-0 bg-darkbox/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+        <div className="w-11/12 md:w-2/3 lg:w-1/2 max-w-md bg-boxcolor dark:bg-blackgrey rounded-main p-6 shadow-lg transform scale-100 animate-fadeIn">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-subcolor dark:text-subtextcolor font-bold">Uploading Files</h3>
+            <div className="flex items-center">
+              <span className="text-bluecolor dark:text-lightblue font-medium text-lg mr-1">{progress}%</span>
+              <div className="animate-spin h-4 w-4 border-2 border-bluecolor dark:border-lightblue border-t-transparent rounded-circle"></div>
+            </div>
+          </div>
+          
+          {/* Main progress track */}
+          <div className="h-3 w-full bg-gray-200 dark:bg-darkbox rounded-full overflow-hidden mb-2">
+            {/* Animated gradient progress fill */}
+            <div 
+              className="h-full bg-gradient-to-r from-bluecolor via-maincolor to-rosecolor rounded-full transition-all duration-300 ease-out"
+              style={{ 
+                width: `${progress}%`,
+                boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)'
+              }}
+            >
+              {/* Shimmer effect */}
+              <div className="w-full h-full relative overflow-hidden">
+                <div className="absolute inset-0 bg-white/20 skew-x-12 animate-shimmer"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Status indicator */}
+          <div className="flex justify-between items-center mt-3 text-xs">
+            <span className="text-darkgrey dark:text-gray-400">
+              {progress < 30 ? 'Starting upload...' : 
+               progress < 70 ? 'Processing files...' : 
+               progress < 100 ? 'Almost done...' : 'Complete!'}
+            </span>
+            <span className="text-greencolor dark:text-lightgreen font-medium">
+              {progress === 100 ? 'Upload complete!' : 'Please wait...'}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
   const observationTypes = [
     "Access/Egress", "Barriers/Guards", "Behavioural aspects", "Briefings", 
     "Competence/Training/Licences", "Confined Space", "Driving", "Electrical safety", 
@@ -64,6 +110,8 @@ const EditPage = () => {
     }
   };
   useEffect(() => {
+    setLoading(true);
+
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       try {
@@ -87,8 +135,12 @@ const EditPage = () => {
         } else if (['audit', 'drill', 'hse', 'training'].includes(type)) {
           setExistingFile(response.data.file);
         }
+        setLoading(false);
+
       } catch (error) {
         setApiError("Failed to fetch report data");
+        setLoading(false);
+
       }
     };
     fetchData();
@@ -213,6 +265,9 @@ const EditPage = () => {
     initialValues: getInitialValues(),
     enableReinitialize: true,
     onSubmit: async (values) => {
+      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
       const formData = new FormData();
       
       Object.keys(values).forEach(key => {
@@ -252,9 +307,10 @@ const EditPage = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         setApiError("Authentication token is missing.");
-        return;
+        setLoading(false);
+        setIsUploading(false);
+                return;
       }
-      setLoading(true)
 
       try {
         const response = await axios.put(
@@ -264,21 +320,26 @@ const EditPage = () => {
             headers: { 
               'Content-Type': 'multipart/form-data', 
               'Authorization': `Bearer ${token}` 
-            } 
+            } ,
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setUploadProgress(percentCompleted);
+            }
           }
         );
-        setLoading(false)
-        const currentPath = window.location.pathname;
-        const pathParts = currentPath.split('/');
-        pathParts.pop(); // Remove last segment
-        const redirectPath = pathParts.join('/');
+     
   
-        router.push('/');
+        router.back();
         setApiError("");
+        setLoading(false);
+        setIsUploading(false);
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred";
         setApiError(errorMessage);
-      }
+        setLoading(false);
+        setIsUploading(false);      }
     }
   });
   const handleDelete = async () => {
@@ -299,10 +360,12 @@ const EditPage = () => {
       setLoading(false)
     
 
-      router.push('/');
+      router.back();
         } catch (error) {
       const errorMessage = error.response?.data?.message || "An error occurred while deleting the report.";
       setApiError(errorMessage);
+      setLoading(false)
+
     }
   };
   if (!initialData) {
@@ -313,8 +376,11 @@ const EditPage = () => {
 
   return (
     <div className="w-full p-4 h-full md:h-full overflow-y-auto dark:text-subtextcolor flex gap-3 justify-center rounded-main">
-            {loading? <div className='w-full h-screen flex justify-center items-center'><div className='loader'></div></div> :
-            <form onSubmit={formik.handleSubmit} className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey bg-boxcolor">
+ {loading && !isUploading ? (
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className="loader"></div>
+        </div>
+      ) :            <form onSubmit={formik.handleSubmit} className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey bg-boxcolor">
         <div className="w-full flex items-center gap-2">
           <Icon
             className={`text-xl ${
@@ -338,7 +404,11 @@ const EditPage = () => {
             Edit {type.charAt(0).toUpperCase() + type.slice(1)} Report
           </span>
         </div>
+   {/* عرض شريط التقدم أثناء الرفع فقط */}
+   {isUploading && (
+                     <EnhancedProgressBar progress={uploadProgress} isUploading={isUploading} />
 
+          )}
         {/* Date field for relevant report types */}
         {['audit', 'drill', 'hse', 'training'].includes(type) && (
           <div className="w-full">

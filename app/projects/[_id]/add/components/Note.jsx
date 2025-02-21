@@ -15,6 +15,8 @@ const NoteForm = () => {
   const [files, setFiles] = useState({ images: [], files: [] });
   const [fileErrors, setFileErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState({ success: false, error: null });
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   const noteTypes = ['Warning', 'Notice', 'Alert', 'Reminder', 'News', 'Thank', 'Promote'];
 
@@ -36,6 +38,53 @@ const NoteForm = () => {
 if(!projectId){
   return <span>loading</span>
 }
+const EnhancedProgressBar = ({ progress, isUploading }) => {
+  if (!isUploading) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-darkbox/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+      <div className="w-11/12 md:w-2/3 lg:w-1/2 max-w-md bg-boxcolor dark:bg-blackgrey rounded-main p-6 shadow-lg transform scale-100 animate-fadeIn">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-subcolor dark:text-subtextcolor font-bold">Uploading Files</h3>
+          <div className="flex items-center">
+            <span className="text-bluecolor dark:text-lightblue font-medium text-lg mr-1">{progress}%</span>
+            <div className="animate-spin h-4 w-4 border-2 border-bluecolor dark:border-lightblue border-t-transparent rounded-circle"></div>
+          </div>
+        </div>
+        
+        {/* Main progress track */}
+        <div className="h-3 w-full bg-gray-200 dark:bg-darkbox rounded-full overflow-hidden mb-2">
+          {/* Animated gradient progress fill */}
+          <div 
+            className="h-full bg-gradient-to-r from-bluecolor via-maincolor to-rosecolor rounded-full transition-all duration-300 ease-out"
+            style={{ 
+              width: `${progress}%`,
+              boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)'
+            }}
+          >
+            {/* Shimmer effect */}
+            <div className="w-full h-full relative overflow-hidden">
+              <div className="absolute inset-0 bg-white/20 skew-x-12 animate-shimmer"></div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Status indicator */}
+        <div className="flex justify-between items-center mt-3 text-xs">
+          <span className="text-darkgrey dark:text-gray-400">
+            {progress < 30 ? 'Starting upload...' : 
+             progress < 70 ? 'Processing files...' : 
+             progress < 100 ? 'Almost done...' : 'Complete!'}
+          </span>
+          <span className="text-greencolor dark:text-lightgreen font-medium">
+            {progress === 100 ? 'Upload complete!' : 'Please wait...'}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
   const formik = useFormik({
     initialValues: {
       content: '',
@@ -45,7 +94,9 @@ if(!projectId){
     },
     onSubmit: async (values) => {
       setLoading(true);
-      const formData = new FormData();
+      setIsUploading(true);
+      setUploadProgress(0);
+            const formData = new FormData();
 
       Object.keys(values).forEach(key => formData.append(key, values[key]));
       selectedUsers.forEach(user => formData.append('usersId[]', user._id));
@@ -73,7 +124,8 @@ if(!projectId){
         setSubmitStatus({ success: false, error: errorMessage });
       } finally {
         setLoading(false);
-      }
+        setIsUploading(false);
+            }
     }
   });
 
@@ -103,7 +155,18 @@ if(!projectId){
     }));
     setFileErrors(prev => ({ ...prev, [type]: null }));
   };
+  const totalFileSize = Object.values(files)
+  .filter(file => file)
+  .reduce((total, file) => total + file.size, 0);
 
+// تحويل حجم الملف إلى صيغة مقروءة
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
   const removeFile = (index, type) => {
     setFiles(prev => ({
       ...prev,
@@ -113,17 +176,20 @@ if(!projectId){
 
   return (
     <div className="w-full rounded-main">
-      {loading ? (
-        <div className="w-full h-64 flex justify-center items-center">
+      {loading && !isUploading ? (
+        <div className='w-full h-full flex justify-center items-center'>
           <div className="loader"></div>
         </div>
-      ) : (
+      )  : (
         <form onSubmit={formik.handleSubmit} className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center bg-boxcolor dark:bg-blackgrey">
           <div className="w-full flex items-center gap-2">
             <Icon className="text-xl text-maincolor duration-300" icon="material-symbols:note-add" />
             <span className="self-start font-bold">New Note</span>
           </div>
+          {isUploading && (
+                     <EnhancedProgressBar progress={uploadProgress} isUploading={isUploading} />
 
+          )}
           {submitStatus.success && (
             <div className="w-full p-4 mb-4 text-green-700 bg-green-100 rounded-main">
               Note created successfully!
@@ -283,7 +349,15 @@ if(!projectId){
               </div>
             </div>
           </div>
-
+    {/* عرض معلومات إجمالي الملفات إذا كان هناك ملفات */}
+    {Object.values(files).filter(file => file).length > 0 && (
+            <div className="w-full p-2 mb-2 bg-gray-100 dark:bg-gray-800 rounded-md">
+              <div className="flex justify-between items-center">
+                <span className="text-xs font-medium">Files Selected: {Object.values(files).filter(file => file).length}</span>
+                <span className="text-xs font-medium">Total Size: {formatFileSize(totalFileSize)}</span>
+              </div>
+            </div>
+          )}
           {apiError && (
             <div className="text-redcolor text-sm font-bold">
               Error: {apiError}

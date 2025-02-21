@@ -6,18 +6,63 @@ import { useState, useEffect, useContext } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import Addinput from '../../addproject/components/Addinput';
 
-const LoadingSpinner = () => (
-  <div className='w-full h-screen flex justify-center items-center'>
-    <div className='loader'></div>
-  </div>
-);
+
 
 const EditProject = () => {
   const { project, loading } = useContext(ProjectsContext);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isUploading, setIsUploading] = useState(false);
+  
   const [submitStatus, setSubmitStatus] = useState({ 
     success: false, 
     error: null 
   });
+  const EnhancedProgressBar = ({ progress, isUploading }) => {
+    if (!isUploading) return null;
+    
+    return (
+      <div className="fixed inset-0 bg-darkbox/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+        <div className="w-11/12 md:w-2/3 lg:w-1/2 max-w-md bg-boxcolor dark:bg-blackgrey rounded-main p-6 shadow-lg transform scale-100 animate-fadeIn">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-subcolor dark:text-subtextcolor font-bold">Uploading Files</h3>
+            <div className="flex items-center">
+              <span className="text-bluecolor dark:text-lightblue font-medium text-lg mr-1">{progress}%</span>
+              <div className="animate-spin h-4 w-4 border-2 border-bluecolor dark:border-lightblue border-t-transparent rounded-circle"></div>
+            </div>
+          </div>
+          
+          {/* Main progress track */}
+          <div className="h-3 w-full bg-gray-200 dark:bg-darkbox rounded-full overflow-hidden mb-2">
+            {/* Animated gradient progress fill */}
+            <div 
+              className="h-full bg-gradient-to-r from-bluecolor via-maincolor to-rosecolor rounded-full transition-all duration-300 ease-out"
+              style={{ 
+                width: `${progress}%`,
+                boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)'
+              }}
+            >
+              {/* Shimmer effect */}
+              <div className="w-full h-full relative overflow-hidden">
+                <div className="absolute inset-0 bg-white/20 skew-x-12 animate-shimmer"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Status indicator */}
+          <div className="flex justify-between items-center mt-3 text-xs">
+            <span className="text-darkgrey dark:text-gray-400">
+              {progress < 30 ? 'Starting upload...' : 
+               progress < 70 ? 'Processing files...' : 
+               progress < 100 ? 'Almost done...' : 'Complete!'}
+            </span>
+            <span className="text-greencolor dark:text-lightgreen font-medium">
+              {progress === 100 ? 'Upload complete!' : 'Please wait...'}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -45,6 +90,8 @@ const EditProject = () => {
     }),
 
     onSubmit: async (values, { setSubmitting }) => {
+      setIsUploading(true);
+      setUploadProgress(0);
       const formattedValues = {
         ...values,
         startDate: new Date(values.startDate).toISOString(),
@@ -61,7 +108,13 @@ const EditProject = () => {
           {
             headers: { 
               'Authorization': `Bearer ${token}`
-            },
+            }, onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setUploadProgress(percentCompleted);
+            }
+          
           }
         );
         
@@ -78,16 +131,17 @@ const EditProject = () => {
           success: false,
           error: errorMessage
         });
+        setIsUploading(false);
         console.error('Error updating project:', errorMessage);
       } finally {
         setSubmitting(false);
+        setIsUploading(false);
+
       }
     },
   });
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+
 
   return (
     <div className=' flex gap-3 justify-center lg:bg-maincolor bg-darkbluec dark:text-subtextcolor m-2 rounded-main'>
@@ -95,11 +149,18 @@ const EditProject = () => {
         <span className='text-7xl font-black text-center lg:text-darkbluec text-maincolor'>EDIT PROJECT</span>
       </div>
       
-      <form onSubmit={formik.handleSubmit} className='w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-darkbox bg-boxcolor'>
+      {loading && !isUploading ? (
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className="loader"></div>
+        </div>
+      )  : <form onSubmit={formik.handleSubmit} className='w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-darkbox bg-boxcolor'>
         <div className='w-full lg:hidden'>
           <span className='self-start font-bold'>Edit Project</span>
         </div>
-        
+        {isUploading && (
+                     <EnhancedProgressBar progress={uploadProgress} isUploading={isUploading} />
+
+          )}
         {submitStatus.success && (
           <div className="w-full p-4 mb-4 text-darkgreen bg-lightgreen rounded-main">
             Project updated successfully!
@@ -217,7 +278,7 @@ const EditProject = () => {
         >
           {formik.isSubmitting ? 'Updating Project...' : 'Update Project'}
         </button>
-      </form>
+      </form>}
     </div>
   );
 };
