@@ -61,7 +61,7 @@ const Infocontainer = (props) => {
         <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkorange dark:text-subcolor' iconcolor=' text-orangecolor dark:bg-darkbox' linkcolor='bg-lightorange dark:bg-orangecolor' href='' text='Observations' value={observationsCount } icon='weui:eyes-on-filled'/>
         <InfoBox textcolor=' darkblueb dark:text-subcolor' valuecolor=' text-darkgreencolor dark:text-subcolor' iconcolor=' text-greencolor dark:bg-darkbox' linkcolor='bg-lightgreen dark:bg-greencolor' href='' text='TBTs' value={tbtsCount } icon='mdi:talk'/>
 
-                <InfoBox textcolor=' dark:text-subcolor ' valuecolor=' text-darkredcolor dark:text-subcolor' iconcolor=' text-redcolor dark:bg-darkbox' linkcolor='bg-lightred  dark:bg-redcolor' href='' text='Abnormal Events' value={abnormalEventsCount } icon='jam:triangle-danger-f'/>
+                <InfoBox textcolor=' dark:text-subcolor ' valuecolor=' text-darkredcolor dark:text-subcolor' iconcolor=' text-redcolor dark:bg-darkbox' linkcolor='bg-lightred  dark:bg-redcolor' href='' text='Abnormals' value={abnormalEventsCount } icon='jam:triangle-danger-f'/>
 
         <Link href={props.dayhref} className=' hover:text-maincolor dark:text-hovercolor dark:hover:text-bluecolor flex items-center justify-center gap-2 hover:gap-6 duration-300' >
         <span className='  font-bold '>FULL DAY</span> <Icon icon="ep:arrow-up-bold" className=' bg-maincolor/20 p-2 rounded-full text-darkbluea rotate-90' width="40" height="40" />

@@ -143,14 +143,14 @@ const DayContent = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div className="bg-hovercolor dark:bg-darkbox p-4 rounded-main shadow-sm">
             <div className="flex items-center gap-3">
               <div className="bg-bluecolor/10 p-2 rounded-circle">
                 <Icon icon="fluent:people-team-20-filled" className="w-6 h-6 text-bluecolor" />
               </div>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Man Power</p>
+                <p className="text-sm text-gray-600 text-nowrap dark:text-gray-400">Man Power</p>
                 <p className="text-xl font-semibold">{manPower}</p>
               </div>
             </div>
@@ -162,7 +162,7 @@ const DayContent = () => {
                 <Icon icon="tabler:clock-hour-4-filled" className="w-6 h-6 text-bluecolor" />
               </div>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Working Hours</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">W Hours</p>
                 <p className="text-xl font-semibold">{dayHours}h</p>
               </div>
             </div>

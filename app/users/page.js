@@ -44,8 +44,9 @@ const UsersPage = () => {
 
   return (
     <div className="p-4 dark:text-subtextcolor">
-        <span className=' text-blackgrey dark:text-hovercolor font-bold '>All Users</span>
-      <div className="flex mb-4 flex-col  md:flex-row gap-2">
+        <span className=' flex w-fit items-center gap-2  text-darkbluea pr-4 dark:text-hovercolor text-xl font-bold bg-bluecolor/40 p-2 rounded-main '>        <Icon icon="mdi-worker" className=' text-darkbluea bg-backgroundcolor dark:bg-darkbox p-1 rounded-circle  pointer-events-none ' width="28" height="28" />
+        ALL USERS</span>
+      <div className="flex mb-4 flex-col mt-4  md:flex-row gap-4">
         {/* Search Input */}
        <div className='relative w-full'> <input
           type="text"
@@ -57,7 +58,7 @@ const UsersPage = () => {
         <Icon icon="iconamoon:search-fill" className=' text-bluecolor bg-backgroundcolor dark:bg-darkbox p-1 rounded-circle absolute pointer-events-none top-1/2 -translate-y-1/2 left-1.5' width="28" height="28" />
         </div>
         
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-4">
           {/* Project Filter p5*/}
         
         <div className='w-full relative'> 
@@ -96,24 +97,58 @@ const UsersPage = () => {
       </div>
 
       {/* Users Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {users.map(user => (
-          <Link href={`/users/${user._id}`} key={user._id} className="p-4  rounded-main dark:bg-darkbox  bg-hovercolor">
-            <div className="flex items-center space-x-4">
-              <img
-                src={`${process.env.NEXT_PUBLIC_API}${user.image}` || '/placeholder-avatar.png'}
-                alt={user.name}
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="font-bold">{user.name}</h3>
-                <p className="text-gray-600">{user.role}</p>
-                <p className="text-sm text-gray-500">
-                  {user.currentProject?.name || 'لا يوجد مشروع'}
-                </p>
-              </div>
-            </div>
-          </Link>
+     <Link 
+     href={`/users/${user._id}`} 
+     key={user._id} 
+     className="block  transition-all duration-300 hover:translate-y-1 hover:shadow-xl"
+   >
+     <div className="overflow-hidden rounded-main bg-boxcolor dark:bg-darkbox border border-border dark:border-darkgrey shadow-md">
+       {/* Top Accent Bar */}
+       <div className="h-12 bg-gradient-to-r from-maincolor to-cyancolor"></div>
+       
+       {/* Profile Image Section */}
+       <div className="flex justify-center -mt-1">
+         <div className="relative -top-8">
+           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-maincolor via-bluecolor to-cyancolor blur-sm opacity-70"></div>
+           <img
+             src={`${process.env.NEXT_PUBLIC_API}${user.image}` || '/placeholder-avatar.png'}
+             alt={user.name}
+             className="relative w-40 h-40 rounded-full object-cover border-4 border-boxcolor dark:border-darkbox shadow-lg"
+           />
+         </div>
+       </div>
+       
+       {/* User Info Section */}
+       <div className="px-4 pb-6 -mt-4 text-center">
+         <h3 className="font-bold text-lg mb-1 text-subcolor text-nowrap dark:text-subtextcolor">{user.name}</h3>
+         
+         {/* Role Badge */}
+        
+         
+         {/* Project Status */}
+         <div className=" py-2 px-2 bg-hovercolor dark:bg-blackgrey rounded-main">
+         <span className="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-verylightblue dark:bg-darkbluec text-bluecolor dark:text-lightblue ">
+           {user.role}
+         </span>           <div className="flex items-center justify-center gap-2 mt-1">
+             <div className={`w-2 h-2 rounded-circle ${user.currentProject?.name ? 'bg-greencolor dark:bg-lightgreen' : 'bg-redcolor dark:bg-lightred'}`}></div>
+             <p className="font-medium text-subcolor dark:text-subtextcolor">
+               {user.currentProject?.name || 'لا يوجد مشروع'}
+             </p>
+           </div>
+         </div>
+         
+         {/* View Profile Button */}
+         <button className="w-full mt-5 py-2 px-4 bg-transparent hover:bg-verylightblue dark:hover:bg-darkbluec text-maincolor dark:text-lightblue border border-maincolor dark:border-bluecolor rounded-main transition-colors duration-300 text-sm font-medium flex items-center justify-center gap-2">
+           View Full Profile
+           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+           </svg>
+         </button>
+       </div>
+     </div>
+   </Link>
         ))}
       </div>
 

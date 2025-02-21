@@ -76,7 +76,41 @@ export const NotesProvider = ({ children }) => {
         );
         return data;
     };
-
+    const togglePinNote = async (id) => {
+        const token = localStorage.getItem('token');
+        
+        try {
+          const { data } = await axios.patch(
+            `${process.env.NEXT_PUBLIC_API}/api/notes/${id}/toggle-pin`,
+            {},
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            }
+          );
+          
+          // Optimistic update for better UX
+          queryClient.setQueryData(['notes'], old => 
+            old?.map(note => note._id === id ? {...note, pinned: !note.pinned} : note)
+          );
+          
+          if (project?._id) {
+            queryClient.setQueryData(['notes', project._id], old => 
+              old?.map(note => note._id === id ? {...note, pinned: !note.pinned} : note)
+            );
+          }
+          
+          return data;
+        } catch (error) {
+          console.error('Error toggling pin status:', error);
+          // Revert optimistic update on error
+          refreshAllNotes();
+          if (project?._id) refreshProjectNotes();
+          throw error;
+        }
+      };
+      
     const updateNote = async (id, noteData) => {
         const formData = new FormData();
         Object.keys(noteData).forEach(key => {
@@ -181,7 +215,8 @@ export const NotesProvider = ({ children }) => {
             refreshAllNotes,
             refreshProjectNotes,
             filterNotesByType,
-            filterNotesByDate
+            filterNotesByDate,
+            togglePinNote 
         }}>
             {children}
         </NotesContext.Provider>

@@ -42,7 +42,7 @@ const ProtectedRoute = ({ children }) => {
   }, [router]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // يمكنك استبدال هذا بأي شكل تحميل تفضله
+    return <div className=' h-screen dark:bg-subcolor bg-darkbluec flex-1 justify-center items-center flex'><div className='loader '></div></div>  // يمكنك استبدال هذا بأي شكل تحميل تفضله
   }
 
   return children;

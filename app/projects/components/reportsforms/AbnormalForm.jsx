@@ -10,7 +10,7 @@ const AbnormalForm = () => {
   const { _id: projectId } = useParams();
   console.log('Project ID:', projectId);
   const [loading, setLoading] = useState(false)
-
+  const [progress, setProgress] = useState(0);
   const [apiError, setApiError] = useState("");
   const [fileErrors, setFileErrors] = useState({});
   const [files, setFiles] = useState({});
@@ -38,6 +38,8 @@ const AbnormalForm = () => {
     }),
     onSubmit: async (values) => {
       setLoading(true)
+      setProgress(0);
+
       const formData = new FormData();
       Object.keys(values).forEach(key => formData.append(key, values[key]));
       Object.keys(files).forEach(key => {
@@ -56,9 +58,17 @@ const AbnormalForm = () => {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/api/abnormal-events/admin`,
           formData,
-          { headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` } }
+          { headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` },
+          onUploadProgress: (event) => {
+            if (event.lengthComputable) {
+              const percent = Math.round((event.loaded / event.total) * 100);
+              setProgress(percent);
+            }
+          }
+        }
         );
         setLoading(false)
+        setProgress(100);
 
         formik.resetForm();
         setFiles({});
@@ -67,6 +77,7 @@ const AbnormalForm = () => {
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred";
         setApiError(errorMessage);
+        setLoading(false);
       }
     },
   });
@@ -90,7 +101,14 @@ const AbnormalForm = () => {
   };
   return (
     <div className="w-full   h-full md:h-full overflow-y-auto flex gap-3 justify-center scrollbar-hide rounded-main">
-     {loading?<div className='w-full h-full flex justify-center items-center'><div className="loader"></div></div>:
+     {loading?
+  <div className='w-full h-full flex flex-col justify-center items-center'>
+  <div className="loader"></div>
+  <p className="text-sm font-bold mt-2">Uploading... {progress}%</p>
+  <div className="w-64 bg-hovercolor rounded-full h-2.5 mt-2">
+    <div className="bg-bluecolor h-2.5 rounded-full transition-all" style={{ width: `${progress}%` }}></div>
+  </div>
+</div>     :
 
       <form onSubmit={formik.handleSubmit} className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey dark:text-subtextcolor bg-boxcolor">
         <div className="w-full flex items-center gap-2">

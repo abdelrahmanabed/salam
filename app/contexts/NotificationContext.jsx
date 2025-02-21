@@ -30,12 +30,12 @@ export const NotificationsProvider = ({ children }) => {
         const socket = io(`${process.env.NEXT_PUBLIC_API}`);
         socket.on('newNotification', (notification) => {
             setUnreadCount(prev => prev + 1);
-            
-            
+
             const toastId = Date.now();
             setToasts(prev => [...prev, {
                 id: toastId,
-                message: notification.message
+                message: notification.message,
+                type:notification.type
             }]);
         });
 
@@ -65,6 +65,8 @@ export const NotificationsProvider = ({ children }) => {
                             key={toast.id}
                             message={toast.message}
                             onClose={() => removeToast(toast.id)}
+                            type={toast.type} // Make sure this is being passed
+
                         />
                     ))}
                 </div>
