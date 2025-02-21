@@ -9,8 +9,11 @@ import { useParams } from 'next/navigation';
 const AbnormalForm = () => {
   const { _id: projectId } = useParams();
   console.log('Project ID:', projectId);
-  const [loading, setLoading] = useState(false)
-  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+  // إضافة حالات جديدة لتتبع التقدم
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+
   const [apiError, setApiError] = useState("");
   const [fileErrors, setFileErrors] = useState({});
   const [files, setFiles] = useState({});
@@ -19,6 +22,21 @@ const AbnormalForm = () => {
     success: false, 
     error: null 
   });
+
+  // مكون شريط التقدم
+  const ProgressBar = ({ progress }) => {
+    return (
+      <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-4">
+        <div 
+          className="bg-redcolor h-2.5 rounded-full transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        ></div>
+        <p className="text-xs text-center mt-1 text-redcolor font-medium">
+          {progress}% Uploaded
+        </p>
+      </div>
+    );
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -37,9 +55,11 @@ const AbnormalForm = () => {
       description: Yup.string().required('Description is required'),
     }),
     onSubmit: async (values) => {
-      setLoading(true)
-      setProgress(0);
-
+      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
+      setSubmitStatus({ success: false, error: null });
+      
       const formData = new FormData();
       Object.keys(values).forEach(key => formData.append(key, values[key]));
       Object.keys(files).forEach(key => {
@@ -49,8 +69,8 @@ const AbnormalForm = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         setApiError("Authentication token is missing.");
-        setLoading(false)
-
+        setLoading(false);
+        setIsUploading(false);
         return;
       }
 
@@ -58,26 +78,42 @@ const AbnormalForm = () => {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/api/abnormal-events/admin`,
           formData,
-          { headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` },
-          onUploadProgress: (event) => {
-            if (event.lengthComputable) {
-              const percent = Math.round((event.loaded / event.total) * 100);
-              setProgress(percent);
+          { 
+            headers: { 
+              'Content-Type': 'multipart/form-data', 
+              'Authorization': `Bearer ${token}` 
+            },
+            // إضافة مراقبة التقدم للطلب
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setUploadProgress(percentCompleted);
             }
           }
-        }
         );
-        setLoading(false)
-        setProgress(100);
-
+        
+        setSubmitStatus({
+          success: true,
+          error: null
+        });
+        
+        // إعادة تعيين النموذج بعد النجاح
         formik.resetForm();
         setFiles({});
         setFormKey(prev => prev + 1);
         setApiError("");
+        setLoading(false);
+        setIsUploading(false);
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred";
+        setSubmitStatus({
+          success: false,
+          error: errorMessage
+        });
         setApiError(errorMessage);
         setLoading(false);
+        setIsUploading(false);
       }
     },
   });
@@ -99,145 +135,185 @@ const AbnormalForm = () => {
     setFiles(prev => ({ ...prev, [fieldName]: file }));
     setFileErrors(prev => ({ ...prev, [fieldName]: null }));
   };
+
+  // حساب حجم الملفات الإجمالي
+  const totalFileSize = Object.values(files)
+    .filter(file => file)
+    .reduce((total, file) => total + file.size, 0);
+  
+  // تحويل حجم الملف إلى صيغة مقروءة
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
   return (
-    <div className="w-full   h-full md:h-full overflow-y-auto flex gap-3 justify-center scrollbar-hide rounded-main">
-     {loading?
-  <div className='w-full h-full flex flex-col justify-center items-center'>
-  <div className="loader"></div>
-  <p className="text-sm font-bold mt-2">Uploading... {progress}%</p>
-  <div className="w-64 bg-hovercolor rounded-full h-2.5 mt-2">
-    <div className="bg-bluecolor h-2.5 rounded-full transition-all" style={{ width: `${progress}%` }}></div>
-  </div>
-</div>     :
-
-      <form onSubmit={formik.handleSubmit} className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey dark:text-subtextcolor bg-boxcolor">
-        <div className="w-full flex items-center gap-2">
-          <Icon
-            className="text-xl text-redcolor duration-300"
-            icon="icon-park-solid:abnormal"
-          />
-          <span className="self-start dark:text-subtextcolor font-bold">New Abnormal Event</span>
+    <div className="w-full h-full md:h-full overflow-y-auto flex gap-3 justify-center scrollbar-hide rounded-main">
+      {loading && !isUploading ? (
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className="loader"></div>
         </div>
-        {submitStatus.success && (
-          <div className="w-full p-4 mb-4 text-green-700 bg-green-100 rounded-main">
-            Abnormal Event created successfully!
-          </div>
-        )}
-        
-        {submitStatus.error && (
-          <div className="w-full p-4 mb-4 text-red-700 bg-red-100 rounded-main">
-            {submitStatus.error}
-          </div>
-        )}
-
-        <div className="w-full">
-          <div>
-            <Addinput 
-              label="Location" 
-              name="location" 
-              type="text" 
-              value={formik.values.location} 
-              onChange={formik.handleChange} 
+      ) : (
+        <form onSubmit={formik.handleSubmit} className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey dark:text-subtextcolor bg-boxcolor">
+          <div className="w-full flex items-center gap-2">
+            <Icon
+              className="text-xl text-redcolor duration-300"
+              icon="icon-park-solid:abnormal"
             />
-            {formik.touched.location && formik.errors.location && 
-              <span className="error-message ml-2 text-xs font-bold text-redcolor">
-                *{formik.errors.location}
-              </span>
-            }
+            <span className="self-start dark:text-subtextcolor font-bold">New Abnormal Event</span>
           </div>
 
-          <div className="flex flex-col gap-1 p-2">
-            <label htmlFor="eventType" className="text-sm font-semibold">
-              Event Type
-            </label>
-            <select
-              id="eventType"
-              name="eventType"
-              value={formik.values.eventType}
-              onChange={formik.handleChange}
-              className="shadow-sm border-border dark:border-darkbox dark:bg-darkbox border-2 rounded-main p-2"
-            >
-              <option value="">Select Event Type</option>
-              {['Near miss', 'Property Damage', 'Environmental Harm', 
-                'First Aid', 'Medical Treatment', 'LTI', 'Fatality'].map(type => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-            {formik.touched.eventType && formik.errors.eventType && 
-              <span className="error-message ml-2 text-xs font-bold text-redcolor">
-                *{formik.errors.eventType}
-              </span>
-            }
-          </div>
+          {/* عرض شريط التقدم أثناء الرفع فقط */}
+          {isUploading && (
+            <div className="w-full mt-2 mb-4">
+              <ProgressBar progress={uploadProgress} />
+            </div>
+          )}
+          
+          {submitStatus.success && (
+            <div className="w-full p-4 mb-4 text-green-700 bg-green-100 rounded-main">
+              Abnormal Event created successfully!
+            </div>
+          )}
+          
+          {submitStatus.error && (
+            <div className="w-full p-4 mb-4 text-red-700 bg-red-100 rounded-main">
+              {submitStatus.error}
+            </div>
+          )}
 
-          <div>
-            <Addinput 
-              label="Description" 
-              name="description" 
-              type="text" 
-              value={formik.values.description} 
-              onChange={formik.handleChange} 
-            />
-            {formik.touched.description && formik.errors.description && 
-              <span className="error-message ml-2 text-xs font-bold text-redcolor">
-                *{formik.errors.description}
-              </span>
-            }
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 w-full">
-          {[
-            { label: 'Initial Report', name: 'initialReport' },
-            { label: 'Investigation Report', name: 'investigationReport' },
-            { label: 'Action Plan', name: 'actionPlan' },
-            { label: 'Lesson Learned', name: 'lessonLearned' },
-            { label: 'Closeout Report', name: 'closeoutReport' }
-          ].map((field) => (
-            <div key={field.name} className=" relative  p-1 rounded-main flex ">
-              <label className="text-xs flex flex-col">{field.label}
-              <input
-                className=" rounded-full text-xs w-24 cursor-pointer file:cursor-pointer file:border-0 file:py-2 file:px-4 file:mr file:bg-lightred file:text-white hover:file:bg-redcolor"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={(e) => handleFileChange(e, field.name)}
-              /></label>
-
-
-              {files[field.name] && <>
-                <span className="text-xs overflow-clip text-greencolor mt-1">
-                {files[field.name].name}
-                </span>      <button
-      type="button"
-      onClick={() => setFiles((prev) => ({ ...prev, [field.name]: null }))}
-      className="bg-redcolor flex items-center justify-center h-4 w-4 absolute right-0 top-0 rounded-circle text-xs font-bold hover:text-darkred"
-    >
-      X
-            </button>   </>}
-        
-   
-              {fileErrors[field.name] && 
-                <span className="text-xs text-redcolor mt-1">
-                  {fileErrors[field.name]}
+          <div className="w-full">
+            <div>
+              <Addinput 
+                label="Location" 
+                name="location" 
+                type="text" 
+                value={formik.values.location} 
+                onChange={formik.handleChange} 
+              />
+              {formik.touched.location && formik.errors.location && 
+                <span className="error-message ml-2 text-xs font-bold text-redcolor">
+                  *{formik.errors.location}
                 </span>
               }
             </div>
-          ))}
-        </div>
 
-        {apiError && 
-          <div className="text-redcolor text-sm font-bold">
-            Error: {apiError}
+            <div className="flex flex-col gap-1 p-2">
+              <label htmlFor="eventType" className="text-sm font-semibold">
+                Event Type
+              </label>
+              <select
+                id="eventType"
+                name="eventType"
+                value={formik.values.eventType}
+                onChange={formik.handleChange}
+                className="shadow-sm border-border dark:border-darkbox dark:bg-darkbox border-2 rounded-main p-2"
+              >
+                <option value="">Select Event Type</option>
+                {['Near miss', 'Property Damage', 'Environmental Harm', 
+                  'First Aid', 'Medical Treatment', 'LTI', 'Fatality'].map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+              {formik.touched.eventType && formik.errors.eventType && 
+                <span className="error-message ml-2 text-xs font-bold text-redcolor">
+                  *{formik.errors.eventType}
+                </span>
+              }
+            </div>
+
+            <div>
+              <Addinput 
+                label="Description" 
+                name="description" 
+                type="text" 
+                value={formik.values.description} 
+                onChange={formik.handleChange} 
+              />
+              {formik.touched.description && formik.errors.description && 
+                <span className="error-message ml-2 text-xs font-bold text-redcolor">
+                  *{formik.errors.description}
+                </span>
+              }
+            </div>
           </div>
-        }
 
-        <button
-          type="submit"
-          className="rounded-full w-full md:w-96 hover:bg-redcolor duration-200 bg-darkred text-subtextcolor text-xl font-black py-3 px-8"
-        >
-          Submit Abnormal Event
-        </button>
-      </form>}
+          {/* عرض معلومات إجمالي الملفات إذا كان هناك ملفات */}
+          {Object.values(files).filter(file => file).length > 0 && (
+            <div className="w-full p-2 mb-2 bg-gray-100 dark:bg-gray-800 rounded-md">
+              <div className="flex justify-between items-center">
+                <span className="text-xs font-medium">Files Selected: {Object.values(files).filter(file => file).length}</span>
+                <span className="text-xs font-medium">Total Size: {formatFileSize(totalFileSize)}</span>
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-3 w-full">
+            {[
+              { label: 'Initial Report', name: 'initialReport' },
+              { label: 'Investigation Report', name: 'investigationReport' },
+              { label: 'Action Plan', name: 'actionPlan' },
+              { label: 'Lesson Learned', name: 'lessonLearned' },
+              { label: 'Closeout Report', name: 'closeoutReport' }
+            ].map((field) => (
+              <div key={field.name} className="relative p-1 rounded-main flex">
+                <label className="text-xs flex flex-col">{field.label}
+                <input
+                  className="rounded-full text-xs w-24 cursor-pointer file:cursor-pointer file:border-0 file:py-2 file:px-4 file:mr file:bg-lightred file:text-white hover:file:bg-redcolor"
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={(e) => handleFileChange(e, field.name)}
+                  disabled={isUploading}
+                />
+                </label>
+
+                {files[field.name] && (
+                  <>
+                    <span className="text-xs overflow-clip text-greencolor mt-1">
+                      {files[field.name].name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setFiles((prev) => ({ ...prev, [field.name]: null }))}
+                      className="bg-redcolor flex items-center justify-center h-4 w-4 absolute right-0 top-0 rounded-circle text-xs font-bold hover:text-darkred"
+                      disabled={isUploading}
+                    >
+                      X
+                    </button>
+                  </>
+                )}
+          
+                {fileErrors[field.name] && 
+                  <span className="text-xs text-redcolor mt-1">
+                    {fileErrors[field.name]}
+                  </span>
+                }
+              </div>
+            ))}
+          </div>
+
+          {apiError && 
+            <div className="text-redcolor text-sm font-bold">
+              Error: {apiError}
+            </div>
+          }
+
+          <button
+            type="submit"
+            disabled={isUploading}
+            className={`rounded-full w-full md:w-96 duration-200 text-subtextcolor text-xl font-black py-3 px-8 ${
+              isUploading 
+                ? "bg-gray-400 cursor-not-allowed" 
+                : "hover:bg-redcolor bg-darkred"
+            }`}
+          >
+            {isUploading ? 'Uploading...' : 'Submit Abnormal Event'}
+          </button>
+        </form>
+      )}
     </div>
   );
 };
