@@ -44,7 +44,7 @@ const UsersPage = () => {
 
   return (
     <div className="p-4 dark:text-subtextcolor">
-        <span className=' flex w-fit items-center gap-2  text-darkbluea pr-4 dark:text-hovercolor text-xl font-bold bg-bluecolor/40 p-2 rounded-main '>        <Icon icon="mdi-worker" className=' text-darkbluea bg-backgroundcolor dark:bg-darkbox p-1 rounded-circle  pointer-events-none ' width="28" height="28" />
+        <span className=' flex w-fit items-center gap-2  text-darkbluea pr-4 dark:text-hovercolor text-xl font-bold bg-bluecolor/40 p-2 rounded-main '>        <Icon icon="mdi-worker" className=' text-darkbluea bg-backgroundcolor dark:text-subtextcolor dark:bg-darkbox/50 p-1 rounded-circle  pointer-events-none ' width="28" height="28" />
         ALL USERS</span>
       <div className="flex mb-4 flex-col mt-4  md:flex-row gap-4">
         {/* Search Input */}
@@ -142,9 +142,7 @@ const UsersPage = () => {
          {/* View Profile Button */}
          <button className="w-full mt-5 py-2 px-4 bg-transparent hover:bg-verylightblue dark:hover:bg-darkbluec text-maincolor dark:text-lightblue border border-maincolor dark:border-bluecolor rounded-main transition-colors duration-300 text-sm font-medium flex items-center justify-center gap-2">
            View Full Profile
-           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-           </svg>
+           <Icon icon="ep:arrow-right-bold" width="24" height="24" />
          </button>
        </div>
      </div>

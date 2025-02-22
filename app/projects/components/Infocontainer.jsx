@@ -58,8 +58,8 @@ const Infocontainer = (props) => {
         <InfoBox 
           textcolor='text-darkblueb truncate overflow-hidden dark:text-subcolor' 
           valuecolor='text-darkbluec dark:text-subcolor' 
-          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/80' 
-          linkcolor='bg-lightblue/50 hover:bg-lightblue/50 dark:bg-bluecolor/70 ' 
+          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/90' 
+          linkcolor='bg-lightblue/50 hover:bg-lightblue/50 dark:bg-bluecolor/90 ' 
           text="ManPower" 
           value={manPower} 
           icon='fluent:people-team-20-filled'
@@ -67,8 +67,8 @@ const Infocontainer = (props) => {
         <InfoBox 
           textcolor='text-darkblueb truncate overflow-hidden dark:text-subcolor' 
           valuecolor='text-darkbluec dark:text-subcolor' 
-          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/80' 
-          linkcolor='bg-lightblue/50 hover:bg-lightblue/50 dark:bg-bluecolor/70 ' 
+          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/90' 
+          linkcolor='bg-lightblue/50 hover:bg-lightblue/50 dark:bg-bluecolor/90 ' 
           text='DayHours' 
           value={dayHours} 
           icon='tabler:clock-hour-4-filled'
@@ -76,8 +76,8 @@ const Infocontainer = (props) => {
         <InfoBox 
           textcolor='text-darkblueb truncate overflow-hidden dark:text-subcolor' 
           valuecolor='text-darkbluec dark:text-subcolor' 
-          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/80' 
-          linkcolor='bg-lightblue/50  dark:bg-bluecolor/70 ' 
+          iconcolor='bg-lightblue text-bluecolor dark:bg-darkbluec/90' 
+          linkcolor='bg-lightblue/50  dark:bg-bluecolor/90 ' 
           text='ManHours' 
           value={manHours} 
           icon='fa-solid:business-time'
@@ -85,8 +85,8 @@ const Infocontainer = (props) => {
         <InfoBox 
           textcolor='text-darkorange truncate overflow-hidden dark:text-subcolor' 
           valuecolor='text-darkorange dark:text-subcolor' 
-          iconcolor='bg-lightorange text-orangecolor dark:bg-darkorange/70' 
-          linkcolor='bg-lightorange/50  dark:bg-orangecolor/70 ' 
+          iconcolor='bg-lightorange text-orangecolor dark:bg-darkorange/90' 
+          linkcolor='bg-lightorange/50  dark:bg-orangecolor/90 ' 
           text='Observations' 
           value={observationsCount} 
           icon='weui:eyes-on-filled'
@@ -94,8 +94,8 @@ const Infocontainer = (props) => {
         <InfoBox 
           textcolor='text-darkgreen dark:text-subcolor' 
           valuecolor='text-darkgreencolor dark:text-subcolor' 
-          iconcolor='bg-lightgreen text-greencolor dark:bg-darkgreen/70' 
-          linkcolor='bg-lightgreen/50  dark:bg-greencolor/70' 
+          iconcolor='bg-lightgreen text-greencolor dark:bg-darkgreen/90' 
+          linkcolor='bg-lightgreen/50  dark:bg-greencolor/90' 
           text='TBTs' 
           value={tbtsCount} 
           icon='mdi:talk'
@@ -103,8 +103,8 @@ const Infocontainer = (props) => {
         <InfoBox 
           textcolor='text-darkred truncate overflow-hidden dark:text-subcolor' 
           valuecolor='text-darkredcolor dark:text-subcolor' 
-          iconcolor='bg-lightred text-redcolor dark:bg-darkred/70' 
-          linkcolor='bg-lightred/50  dark:bg-redcolor/70 ' 
+          iconcolor='bg-lightred text-redcolor dark:bg-darkred/90' 
+          linkcolor='bg-lightred/50  dark:bg-redcolor/90 ' 
           text='Abnormals' 
           value={abnormalEventsCount} 
           icon='jam:triangle-danger-f'
