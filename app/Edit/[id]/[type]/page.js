@@ -29,7 +29,7 @@ const EditPage = () => {
       <div className="fixed inset-0 bg-darkbox/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
         <div className="w-11/12 md:w-2/3 lg:w-1/2 max-w-md bg-boxcolor dark:bg-blackgrey rounded-main p-6 shadow-lg transform scale-100 animate-fadeIn">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-subcolor dark:text-subtextcolor font-bold">Uploading Files</h3>
+            <h3 className="text-subcolor dark:text-subtextcolor font-bold">Updating Report</h3>
             <div className="flex items-center">
               <span className="text-bluecolor dark:text-lightblue font-medium text-lg mr-1">{progress}%</span>
               <div className="animate-spin h-4 w-4 border-2 border-bluecolor dark:border-lightblue border-t-transparent rounded-circle"></div>

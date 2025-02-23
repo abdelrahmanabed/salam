@@ -4,8 +4,9 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Icon } from '@iconify/react';
 
-import Addinput from '../../../addproject/components/Addinput';
+
 import { useParams } from 'next/navigation';
+import Addinput from '../../../components/cards/Addinput';
 
 const TrainingForm = (props) => {
   const { _id: projectId } = useParams();

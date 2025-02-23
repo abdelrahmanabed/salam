@@ -350,14 +350,7 @@ const formatFileSize = (bytes) => {
             </div>
           </div>
     {/* عرض معلومات إجمالي الملفات إذا كان هناك ملفات */}
-    {Object.values(files).filter(file => file).length > 0 && (
-            <div className="w-full p-2 mb-2 bg-gray-100 dark:bg-gray-800 rounded-md">
-              <div className="flex justify-between items-center">
-                <span className="text-xs font-medium">Files Selected: {Object.values(files).filter(file => file).length}</span>
-                <span className="text-xs font-medium">Total Size: {formatFileSize(totalFileSize)}</span>
-              </div>
-            </div>
-          )}
+
           {apiError && (
             <div className="text-redcolor text-sm font-bold">
               Error: {apiError}

@@ -24,7 +24,7 @@ const router = useRouter()
       <div className="fixed inset-0 bg-darkbox/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
         <div className="w-11/12 md:w-2/3 lg:w-1/2 max-w-md bg-boxcolor dark:bg-blackgrey rounded-main p-6 shadow-lg transform scale-100 animate-fadeIn">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-subcolor dark:text-subtextcolor font-bold">Uploading Files</h3>
+            <h3 className="text-subcolor dark:text-subtextcolor font-bold">wait..</h3>
             <div className="flex items-center">
               <span className="text-bluecolor dark:text-lightblue font-medium text-lg mr-1">{progress}%</span>
               <div className="animate-spin h-4 w-4 border-2 border-bluecolor dark:border-lightblue border-t-transparent rounded-circle"></div>
@@ -51,8 +51,8 @@ const router = useRouter()
           {/* Status indicator */}
           <div className="flex justify-between items-center mt-3 text-xs">
             <span className="text-darkgrey dark:text-gray-400">
-              {progress < 30 ? 'Starting upload...' : 
-               progress < 70 ? 'Processing files...' : 
+              {progress < 30 ? 'Adding New Project...' : 
+               progress < 70 ? 'Processing ...' : 
                progress < 100 ? 'Almost done...' : 'Complete!'}
             </span>
             <span className="text-greencolor dark:text-lightgreen font-medium">
@@ -266,7 +266,10 @@ const router = useRouter()
             <span className="error-message ml-2 text-xs font-bold text-redcolor">*{formik.errors.subcontractors}</span> 
           : null}
         </div>
-        <div className="mb-4 w-full">
+        {isUploading ? (
+                     <EnhancedProgressBar progress={uploadProgress} isUploading={isUploading} />
+         ) :
+  <div className="mb-4 w-full">
           <label className="block pl-2 font-bold mb-2">Location</label>
           <MapLocation onLocationSelect={handleLocationSelect} />
           
@@ -277,6 +280,8 @@ const router = useRouter()
           )}
         </div>
 
+          }
+      
         {/* Display selected address */}
         {formik.values.location.address && (
           <div className="w-full">
