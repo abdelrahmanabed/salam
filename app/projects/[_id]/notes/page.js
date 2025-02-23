@@ -198,7 +198,7 @@ const ProjectNotesPage = () => {
           Array(6).fill().map((_, i) => <NoteSkeleton key={i} />)
         ) : displayedNotes.length > 0 ? (
           displayedNotes.map(note => (
-            <NoteCard key={note._id} note={note} projectId={note.projectId} />
+            <NoteCard key={note._id} note={note} projectId={note.projectId._id} />
           ))
         ) : (
           <div className="col-span-full text-center py-12 text-darkgrey">
