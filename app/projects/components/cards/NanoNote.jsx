@@ -37,7 +37,7 @@ const getNoteTypeConfig = (type) => {
   return config[type];
 };
 
-const NanoNote = ({ note }) => {
+const NanoNote = ({ note,projectId }) => {
 
   const {
     type,
@@ -46,7 +46,6 @@ const NanoNote = ({ note }) => {
     images,
     files,
     usersId,
-    projectId,
     _id
   } = note;
 
@@ -56,7 +55,7 @@ const NanoNote = ({ note }) => {
   const totalAttachments = (images?.length || 0) + (files?.length || 0);
 
   return (
-    <Link href={`/projects/${projectId._id}/notes/${_id}`} className="block text-xs my-2  overflow-hidden w-full">
+    <Link href={`/projects/${projectId}/notes/${_id}`} className="block text-xs my-2  overflow-hidden w-full">
       <div className={`bg-${typeConfig.bgColor}    bg-opacity-50    dark:bg-darkbox dark:hover:bg-darkbluec  w-full overflow-hidden rounded-full p-2 shadow-sm hover:bg-maincolor/10  transition-colors duration-200`}>
         <div className="flex items-center gap-4">
           {/* Icon and Type */}

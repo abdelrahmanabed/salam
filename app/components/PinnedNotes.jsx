@@ -23,7 +23,7 @@ const PinnedNotes = () => {
     <div className="w-full my-4 ">
       <div className="">
         {getPinnedNotes().map((note, index) => (
-          <NanoNote key={note._id || index} note={note} />
+          <NanoNote key={note._id || index} note={note} projectId={note.projectId._id} />
         ))}
       </div>
     </div>

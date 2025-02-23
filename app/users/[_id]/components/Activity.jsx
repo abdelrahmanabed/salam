@@ -149,7 +149,7 @@ const Activities = () => {
       <Suspense fallback={<PinnedNotesSkeleton/>}>{pinnedNotes.length > 0 && (
         <div className="space-y-2">
           {pinnedNotes.map((note, index) => (
-            <NanoNote key={index} note={note} />
+            <NanoNote key={index} note={note} projectId={note.projectId}/>
           ))}
         </div>
       )}</Suspense>
@@ -248,7 +248,7 @@ const Activities = () => {
               {regularNotes.length > 0 ? (
                 <div className="space-y-4">
                   {regularNotes.map((note, index) => (
-                    <NoteCard key={index} note={note} />
+                    <NoteCard key={index} note={note} projectId={note.projectId}/>
                   ))}
                 </div>
               ) : (

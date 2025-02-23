@@ -48,7 +48,7 @@ const LatestNotes = () => {
       ) : (
         <div className="space-y-4">
           {getLatestNotes().map((note, index) => (
-            <NoteCard key={note._id || index} note={note} />
+            <NoteCard key={note._id || index} note={note} projectId={note.projectId._id} />
           ))}
           {getLatestNotes().length === 0 && (
             <div className="text-center py-8 text-darkgrey">

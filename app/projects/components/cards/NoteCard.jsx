@@ -8,7 +8,7 @@ import { NotesContext } from '../../../contexts/NoteContext';
 
 
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note,projectId }) => {
   const { togglePinNote } = useContext(NotesContext);
   const [isPinning, setIsPinning] = useState(false);
   const [localPinned, setLocalPinned] = useState(note.pinned);
@@ -60,7 +60,6 @@ const NoteCard = ({ note }) => {
     images,
     files,
     usersId,
-    projectId,
     _id
   } = note;
 
@@ -113,7 +112,7 @@ const NoteCard = ({ note }) => {
       />
     </button>
     
-    <Link href={`/projects/${projectId._id}/notes/${_id}`} className="block overflow-hidden w-full">
+    <Link href={`/projects/${projectId}/notes/${_id}`} className="block overflow-hidden w-full">
       <div className={`bg-boxcolor dark:bg-darkbox dark:hover:bg-darkbluec w-full overflow-hidden rounded-[12px] p-4 shadow-sm hover:bg-maincolor/10 transition-colors duration-200 ${
         localPinned ? `border-l-4 border-hovercolor dark:border-amber-600` : ''
       }`}>

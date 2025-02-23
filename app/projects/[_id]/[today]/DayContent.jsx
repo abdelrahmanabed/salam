@@ -43,7 +43,6 @@ const DayContent = () => {
 
   const pinnedNotes = todayData?.notes?.filter(note => note.pinned) || [];
   const regularNotes = todayData?.notes || [];
-
   const allEvents = [
     ...(todayData?.abnormalEvents || []).map(event => ({ ...event, type: 'abnormal' })),
     ...(todayData?.observations || []).map(event => ({ ...event, type: 'observation' })),
@@ -107,7 +106,7 @@ const DayContent = () => {
             {pinnedNotes.length > 0 && (
               <div className="mt-2 space-y-2">
                 {pinnedNotes.map((note, index) => (
-                  <NanoNote key={index} note={note} />
+                  <NanoNote key={index} note={note} projectId={note.projectId}/>
                 ))}
               </div>
             )}
@@ -199,7 +198,7 @@ const DayContent = () => {
                   {regularNotes.map((note, index) => (
                     <NoteCard key={index} note={note} 
                     onPinToggled={toggleNotePin}
-
+                    projectId={note.projectId}
                     />
                   ))}
                 </div>

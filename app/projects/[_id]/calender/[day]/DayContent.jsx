@@ -66,6 +66,7 @@ const DayContent = () => {
   const lti = dayData?.manhours?.LTI ?? 0;
   const pinnedNotes = dayData?.notes?.filter(note => note.pinned) || [];
   const regularNotes = dayData?.notes || [];
+  console.log('rn',regularNotes)
 
   // Combine all events and sort by date
   const allEvents = [
@@ -135,7 +136,7 @@ const DayContent = () => {
             {pinnedNotes.length > 0 && (
               <div className="mt-2 space-y-2">
                 {pinnedNotes.map((note, index) => (
-                  <NanoNote key={index} note={note} />
+                  <NanoNote key={index} note={note}  projectId={note.projectId}/>
                 ))}
               </div>
             )}
@@ -225,7 +226,7 @@ const DayContent = () => {
               {regularNotes.length > 0 ? (
                 <div className="space-y-4 rounded-main  dark:bg-blackgrey  p-6 bg-backgroundcolor">
                   {regularNotes.map((note, index) => (
-                    <NoteCard key={index} note={note} />
+                    <NoteCard key={index} note={note} projectId={note.projectId}/>
                   ))}
                 </div>
               ) : (
