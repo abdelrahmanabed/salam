@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { Suspense, useContext } from 'react'
 import InfoBox from './infobox'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
@@ -35,6 +35,7 @@ const Infocontainer = (props) => {
       const uniqueNoteTypes = [...new Set(notes.map(note => note.type))];
 
   return (
+    <Suspense fallback={<div/>}>
     <div className='flex-col  mt-4 flex gap-2' >
         <div className=' flex justify-between'> <span className=' mb-2 dark:text-hovercolor text-xs flex items-end gap-2'><span className='font-black text-sm  md:text-lg text-blackgrey bg-maincolor/20 p-2 rounded-full dark:text-hovercolor'>Today</span> {today}</span>
        
@@ -115,7 +116,7 @@ const Infocontainer = (props) => {
             
         </div>
         
-    </div>
+    </div></Suspense>
   )
 }
 

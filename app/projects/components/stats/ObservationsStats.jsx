@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { Suspense, useContext } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import { Icon } from '@iconify/react';
 
@@ -67,7 +67,7 @@ const ObservationStats = ( props) => {
   };
 
   return (
-    <Link href={'/'} className={`${ props.className} group gap-2 p-2   dark:bg-blackgrey  bg-boxcolor  rounded-main duration-300  w-full  justify-between flex`}>
+   <Suspense fallback={<div/>}> <Link href={'/'} className={`${ props.className} group gap-2 p-2   dark:bg-blackgrey  bg-boxcolor  rounded-main duration-300  w-full  justify-between flex`}>
       {/* الأيقونة والفترات */}
       <div className='flex items-center flex-col'>
         <Icon             icon="weui:eyes-on-filled" className='text-xl sm:text-2xl text-orangecolor' />
@@ -111,7 +111,7 @@ const ObservationStats = ( props) => {
           <span className='p-1 bg-lightorange w-full  dark:bg-orangecolor  text-center rounded-main'>{stats.PTD.closed}</span>
         </div>
       </div>
-    </Link>
+    </Link></Suspense>
   );
 };
 

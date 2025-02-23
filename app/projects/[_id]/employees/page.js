@@ -1,9 +1,21 @@
 'use client'
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import axios from 'axios';
 import { ProjectsContext } from '../../context/ProjectsContext';
-import { Icon } from '@iconify/react';
-import Link from 'next/link';
+import { UserCardSkeleton } from '@/app/components/Loading';
+
+// Lazy load components
+const SearchBar = lazy(() => import('./components/SearchBar'));
+const RoleFilter = lazy(() => import('./components/RoleFilters'));
+const UserGrid = lazy(() => import('./components/UsersGrid'));
+const Pagination = lazy(() => import('./components/Pagination'));
+
+// Loading components for Suspense
+const LoadingSpinner = () => (
+  <div className="flex justify-center items-center p-4">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 const ProjectUsersPage = () => {
   const { project } = useContext(ProjectsContext);
@@ -15,8 +27,6 @@ const ProjectUsersPage = () => {
   const [filters, setFilters] = useState({
     role: ''
   });
-
-  const roles = ['HSE Officer', 'Admin', 'Project Manager'];
 
   const fetchUsers = async () => {
     if (!project?._id) return;
@@ -45,90 +55,36 @@ const ProjectUsersPage = () => {
   }, [currentPage, searchTerm, filters, project]);
 
   if (!project) {
-    return <div className="p-4">Loading project...</div>;
+    return;
   }
 
   return (
     <div className="p-4 dark:text-subtextcolor">
-      <span className='text-blackgrey dark:text-hovercolor font-bold'>
-       {project.name} Users
-      </span>
+    <Suspense fallback={<div className='h-2 rounded-full bg-backgroundcolor dark:bg-blackgrey animate-pulse'></div>}>  <span className='text-blackgrey dark:text-hovercolor font-bold'>
+        {project.name} Users
+      </span>  </Suspense>  
       
       <div className="flex my-4 flex-col md:flex-row gap-2">
-        {/* Search Input */}
-        <div className='relative w-full'>
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-[10px] pl-10 border-2 dark:bg-blackgrey dark:border-blackgrey rounded-main border-border"
-          />
-          <Icon 
-            icon="iconamoon:search-fill" 
-            className='text-bluecolor bg-backgroundcolor dark:bg-darkbox p-1 rounded-circle absolute pointer-events-none top-1/2 -translate-y-1/2 left-1.5' 
-            width="28" 
-            height="28" 
-          />
-        </div>
+        <Suspense fallback={<div className=' bg-backgroundcolor animate-pulse dark:bg-blackgrey rounded-main h-8 w-100'></div>}>
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </Suspense>
         
-        <div className='w-full relative'> 
-          <Icon 
-            icon="tabler:military-rank-filled" 
-            className='text-bluecolor bg-backgroundcolor dark:bg-darkbox p-1 rounded-circle absolute pointer-events-none top-1/2 -translate-y-1/2 left-1.5' 
-            width="28" 
-            height="28" 
-          />
-          <select
-            value={filters.role}
-            onChange={(e) => setFilters(prev => ({ ...prev, role: e.target.value }))}
-            className="w-full py-3 pl-9 p-2 border-2 dark:bg-blackgrey dark:border-blackgrey rounded-main border-border"
-          >
-            <option value="">All Roles</option>
-            {roles.map(role => (
-              <option key={role} value={role}>
-                {role}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Suspense fallback={<div className=' bg-backgroundcolor animate-pulse dark:bg-blackgrey rounded-main h-8 w-100'></div>}>
+          <RoleFilter filters={filters} setFilters={setFilters} />
+        </Suspense>
       </div>
 
-      {/* Users Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {users.map(user => (
-          <Link href={`/users/${user._id}`} key={user._id} className="p-4 rounded-main dark:bg-darkbox bg-hovercolor">
-            <div className="flex items-center space-x-4">
-              <img
-                src={`${process.env.NEXT_PUBLIC_API}${user.image}` || '/placeholder-avatar.png'}
-                alt={user.name}
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="font-bold">{user.name}</h3>
-                <p className="text-gray-600">{user.role}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <Suspense fallback={<UserCardSkeleton />}>
+        <UserGrid users={users} />
+      </Suspense>
 
-      {/* Pagination */}
-      <div className="mt-6 flex justify-center gap-2">
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 rounded ${
-              currentPage === i + 1
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200'
-            }`}
-          >
-            {i + 1}
-          </button>
-        ))}
-      </div>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Pagination 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          setCurrentPage={setCurrentPage} 
+        />
+      </Suspense>
     </div>
   );
 };

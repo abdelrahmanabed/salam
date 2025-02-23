@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
-import { ProjectsContext } from '../../context/ProjectsContext';
 
 const getNoteTypeConfig = (type) => {
     
@@ -39,7 +38,6 @@ const getNoteTypeConfig = (type) => {
 };
 
 const NanoNote = ({ note }) => {
-    const { project } = useContext(ProjectsContext);
 
   const {
     type,

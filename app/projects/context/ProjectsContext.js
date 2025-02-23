@@ -33,6 +33,7 @@ export const ProjectsProvider = ({ children }) => {
         },
         enabled: !!id, // لا يتم تشغيل الاستعلام إذا لم يكن هناك ID
         staleTime: 300000,
+        
     });
 
     // تحديث المشاريع

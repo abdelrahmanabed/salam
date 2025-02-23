@@ -1,14 +1,14 @@
 'use client'
 import { Icon } from '@iconify/react'
-import React, { useContext, useState } from 'react';
+import React, { Suspense, useContext, useState } from 'react';
 import { ProjectsContext } from './context/ProjectsContext';
-import ProjectButton from '../components/PrContainer/ProjectButton';
 import Link from 'next/link';
+import { ProjectsContainerSkeleton } from '../components/Loading';
+const ProjectButton = React.lazy(() => import('../components/PrContainer/ProjectButton'));
 
 
 const ProjectsContainer = () => {
-    const { projects, loading } = useContext(ProjectsContext);
-    if (loading) return <p>Loading projects...</p>;
+    const { projects } = useContext(ProjectsContext);
     const calculateDuration = (startDate, endDate) => {
       const totalDays = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24));
       
@@ -38,6 +38,7 @@ const ProjectsContainer = () => {
            
            
         </div>
+<Suspense fallback={<ProjectsContainerSkeleton />}>
 
         <div className={` duration-200 ease-in-out  gap-2 grid sm:grid-cols-2 overflow-hidden  lg:grid-cols-3`}>
         {projects.map((project) => (
@@ -55,7 +56,7 @@ const ProjectsContainer = () => {
         ))}
 
         </div>
-        
+        </Suspense>
     </div>
   )
 }

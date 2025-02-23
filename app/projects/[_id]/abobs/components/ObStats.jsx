@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Suspense, useContext, useState } from 'react';
 import { ProjectsContext } from '../../../context/ProjectsContext';
 
 // Helper function to filter observations by type and date range

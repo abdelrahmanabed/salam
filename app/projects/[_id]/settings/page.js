@@ -2,9 +2,10 @@
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Suspense } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import Addinput from '../../addproject/components/Addinput';
+import EditProjectSkeleton from './Editskeleton';
 
 
 
@@ -144,15 +145,14 @@ const EditProject = () => {
 
 
   return (
+    <Suspense className={<div/>}>
     <div className=' flex gap-3 justify-center lg:bg-maincolor bg-darkbluec dark:text-subtextcolor m-2 rounded-main'>
       <div className='hidden justify-center items-center lg:flex w-full'> 
         <span className='text-7xl font-black text-center lg:text-darkbluec text-maincolor'>EDIT PROJECT</span>
       </div>
       
       {loading && !isUploading ? (
-        <div className='w-full h-full flex justify-center items-center'>
-          <div className="loader"></div>
-        </div>
+      <EditProjectSkeleton/>
       )  : <form onSubmit={formik.handleSubmit} className='w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-darkbox bg-boxcolor'>
         <div className='w-full lg:hidden'>
           <span className='self-start font-bold'>Edit Project</span>
@@ -279,7 +279,7 @@ const EditProject = () => {
           {formik.isSubmitting ? 'Updating Project...' : 'Update Project'}
         </button>
       </form>}
-    </div>
+    </div></Suspense>
   );
 };
 

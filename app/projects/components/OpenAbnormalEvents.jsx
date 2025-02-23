@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { Suspense, useContext, useState } from 'react'
 import { ProjectsContext } from '../context/ProjectsContext'
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
@@ -64,6 +64,7 @@ const OpenAbnormalEvents = () => {
     }
   };
   return (
+    <Suspense fallback={<div/>}>
     <div className=" w-full">
       <h2 className="text-xl font-bold flex justify-between dark:text-subtextcolor items-center mb-4">Open Abnormal Events <span className=' text-sm bg-redcolor dark:text-darkred px-4 p-1 rounded-full '>{openAbnormalEvents.length}</span></h2>
 
@@ -86,7 +87,7 @@ const OpenAbnormalEvents = () => {
           
         </button>
       )}
-    </div>
+    </div></Suspense>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Suspense, useContext, useState } from 'react';
 import { ProjectsContext } from '../context/ProjectsContext';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
@@ -8,9 +8,7 @@ const OpenObservations = () => {
   const { project } = useContext(ProjectsContext);
   const [showAll, setShowAll] = useState(false);  // ⬅️ حالة لإظهار أو إخفاء الملاحظات
 
-  if (!project) {
-    return <span>Loading project data...</span>;
-  }
+
 
   // استخراج كل الملاحظات ذات الحالة "Open"
   const openObservations = project?.calendar
@@ -29,6 +27,7 @@ const OpenObservations = () => {
 
  
   return (
+    <Suspense fallback={<div/>}>
     <div className=" w-full">
       <h2 className="text-xl font-bold flex justify-between dark:text-subtextcolor items-center mb-4">Open Observations <span className=' text-sm  dark:text-darkorange bg-orangecolor px-4 p-1 rounded-full '>{openObservations.length}</span></h2>
 
@@ -53,7 +52,7 @@ const OpenObservations = () => {
           
         </button>
       )}
-    </div>
+    </div></Suspense>
   );
 };
 

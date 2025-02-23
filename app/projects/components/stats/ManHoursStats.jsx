@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useContext, useMemo } from 'react'
+import React, { Suspense, useContext, useMemo } from 'react'
 import { ProjectsContext } from '../../context/ProjectsContext'
 import { Icon } from '@iconify/react'
 
@@ -78,6 +78,7 @@ const ManHoursStats = (props) => {
     }, [project])
 
     return (
+        <Suspense fallback={<div/>}>
         <Link href={'/'} className={`${ props.className} group gap-2 p-2   dark:bg-blackgrey  bg-boxcolor  rounded-main duration-300  w-full  justify-between flex`}>
             {/* أيقونة والفترات */}
             <div className='flex   items-center flex-col'>
@@ -122,7 +123,7 @@ const ManHoursStats = (props) => {
                     <span className='text-center   dark:bg-maincolor dark:text-subtextcolor w-full bg-lightblue p-1 rounded-main'>{stats.PTD.safeManhours}</span>
                 </div>
             </div>
-        </Link>
+        </Link></Suspense>
     )
 }
 

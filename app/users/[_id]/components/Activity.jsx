@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef,Suspense  } from 'react';
 import { Icon } from '@iconify/react';
 import { UsersContext } from '../../../contexts/UsersContext';
-import ObservationCard from '../../../projects/components/cards/ObservationCard';
-import TBTCard from '../../../projects/components/cards/TBTCard';
-import AuditCard from '../../../projects/components/cards/AuditCard';
-import DrillCard from '../../../projects/components/cards/DrillCard';
-import HSECard from '../../../projects/components/cards/HSECard';
-import AbnormalCard from '../../../projects/components/cards/AbnormalCard';
-import TrainingCard from '../../../projects/components/cards/TrainingCard';
-import NoteCard from '../../../projects/components/cards/NoteCard';
-import NanoNote from '../../../projects/components/cards/NanoNote';
+import { EventCardSkeleton, PinnedNotesSkeleton } from '@/app/components/Loading';
+const ObservationCard = React.lazy(() => import('../../../projects/components/cards/ObservationCard'));
+const TBTCard = React.lazy(() => import('../../../projects/components/cards/TBTCard'));
+const AuditCard = React.lazy(() => import('../../../projects/components/cards/AuditCard'));
+const DrillCard = React.lazy(() => import('../../../projects/components/cards/DrillCard'));
+const HSECard = React.lazy(() => import('../../../projects/components/cards/HSECard'));
+const AbnormalCard = React.lazy(() => import('../../../projects/components/cards/AbnormalCard'));
+const TrainingCard = React.lazy(() => import('../../../projects/components/cards/TrainingCard'));
+const NoteCard = React.lazy(() => import('../../../projects/components/cards/NoteCard'));
+const NanoNote = React.lazy(() => import('../../../projects/components/cards/NanoNote'));
 
 const Activities = () => {
   const { user, userLoading } = useContext(UsersContext);
@@ -105,34 +106,25 @@ const Activities = () => {
   const renderActivityCard = (activity, index) => {
     switch (activity.activityType) {
       case 'Safety Observation':
-        return <ObservationCard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <Suspense fallback={<EventCardSkeleton/>}> <ObservationCard key={activity._id || index} event={activity} index={index} /></Suspense> </Suspense>;
       case 'TBT':
-        return <TBTCard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <TBTCard key={activity._id || index} event={activity} index={index} /></Suspense>;
       case 'Audit Report':
-        return <AuditCard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <AuditCard key={activity._id || index} event={activity} index={index} /></Suspense>;
       case 'Drill Report':
-        return <DrillCard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <DrillCard key={activity._id || index} event={activity} index={index} /></Suspense>;
       case 'HSE Report':
-        return <HSECard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <HSECard key={activity._id || index} event={activity} index={index} /></Suspense>;
       case 'Abnormal Event':
-        return <AbnormalCard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <AbnormalCard key={activity._id || index} event={activity} index={index} /></Suspense>;
       case 'Training Record':
-        return <TrainingCard key={activity._id || index} event={activity} index={index} />;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <TrainingCard key={activity._id || index} event={activity} index={index} /></Suspense>;
       default:
         return null;
     }
   };
 
-  if (userLoading) {
-    return (
-      <div className="flex items-center justify-center w-full h-64">
-        <div className="flex flex-col items-center gap-4">
-          <Icon icon="eos-icons:loading" className="w-12 h-12 animate-spin text-bluecolor" />
-          <span className="text-lg text-gray-600">جاري تحميل البيانات...</span>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="mx-auto">
@@ -154,13 +146,13 @@ const Activities = () => {
         </button>
       </div>
 
-      {pinnedNotes.length > 0 && (
+      <Suspense fallback={<PinnedNotesSkeleton/>}>{pinnedNotes.length > 0 && (
         <div className="space-y-2">
           {pinnedNotes.map((note, index) => (
             <NanoNote key={index} note={note} />
           ))}
         </div>
-      )}
+      )}</Suspense>
     </div>
           
       <div className="mb-4 space-y-2">
@@ -252,7 +244,7 @@ const Activities = () => {
                 <Icon icon="material-symbols:sticky-note-2" className="w-5 h-5 text-bluecolor" />
                 Notes
               </h2>
-              
+              <Suspense fallback={<div></div>}>
               {regularNotes.length > 0 ? (
                 <div className="space-y-4">
                   {regularNotes.map((note, index) => (
@@ -264,7 +256,7 @@ const Activities = () => {
                   <Icon icon="material-symbols:note-stack" className="w-12 h-12 mx-auto mb-2" />
                   <p>No notes found</p>
                 </div>
-              )}
+              )}</Suspense>
             </div>
           </div>
         </div>

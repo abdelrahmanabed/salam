@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Suspense, useContext } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import { Icon } from '@iconify/react';
 
@@ -66,6 +66,7 @@ const AbnormalStats = (props) => {
   };
  
   return (
+    <Suspense fallback={<div/>}>
     <div  className={`${ props.className} group gap-2 p-2   dark:bg-blackgrey  bg-boxcolor  rounded-main duration-300  w-full  justify-between flex`}>
       {/* الأيقونة والفترات */}
       <div className='flex items-center  flex-col'>
@@ -110,7 +111,7 @@ const AbnormalStats = (props) => {
           <span className=' bg-lightred dark:bg-redcolor p-1 rounded-main text-center'>{stats.PTD.closed}</span>
         </div>
       </div>
-    </div>
+    </div></Suspense>
   );
 };
 

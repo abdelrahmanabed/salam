@@ -5,20 +5,39 @@ import { Icon } from '@iconify/react';
 /**
  * Header Skeleton Component
  */
+
+export const PinnedNotesSkeleton = () => {
+  return (
+    <div className="w-full my-4 animate-pulse">
+      <div className="space-y-4">
+        {/* Render 3 skeleton cards for pinned notes */}
+        {[1, 2, 3].map((index) => (
+          <div key={index} className="p-2 bg-hovercolor dark:bg-blackgrey rounded-main">
+            {/* Skeleton for the note title */}
+            {/* Skeleton for the note content */}
+            <div className="h-3 w-full bg-darkgrey dark:bg-darkgrey rounded-full mb-1"></div>
+            {/* Skeleton for the note metadata (e.g., date) */}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const HeaderSkeleton = () => {
   return (
     <div className="flex h-14 p-3 justify-between animate-pulse">
       {/* Logo Skeleton */}
       <div className="flex items-end h-full">
-        <div className="h-full w-12 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
-        <div className="h-4 w-16 -ml-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-full w-12 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+        <div className="h-4 w-16 -ml-2 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
       </div>
 
       {/* Navbar Skeleton */}
       <div className="flex gap-2">
-        <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-8 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         {[1, 2, 3, 4].map((item) => (
-          <div key={item} className="h-8 md:w-24 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div key={item} className="h-8 md:w-24 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         ))}
       </div>
     </div>
@@ -31,8 +50,8 @@ export const HeaderSkeleton = () => {
 export const LogoSkeleton = () => {
   return (
     <div className="flex items-end h-full animate-pulse">
-      <div className="h-full w-12 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
-      <div className="h-4 w-16 -ml-2 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+      <div className="h-full w-12 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+      <div className="h-4 w-16 -ml-2 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
     </div>
   );
 };
@@ -44,16 +63,16 @@ export const NavbarSkeleton = () => {
   return (
     <div className="flex gap-2 animate-pulse">
       {/* Theme Button Skeleton */}
-      <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+      <div className="h-8 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
       
       {/* Nav Buttons Skeleton */}
       {[1, 2, 3, 4].map((item) => (
         <div 
           key={item} 
-          className="flex items-center gap-1 h-8 md:w-24 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"
+          className="flex items-center gap-1 h-8 md:w-24 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"
         >
-          <div className="h-6 w-6 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-          <div className="hidden md:block h-4 w-16 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+          <div className="h-6 w-6 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
+          <div className="hidden md:block h-4 w-16 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         </div>
       ))}
     </div>
@@ -65,9 +84,9 @@ export const NavbarSkeleton = () => {
  */
 export const NavButtonSkeleton = () => {
   return (
-    <div className="flex items-center gap-1 h-8 md:w-24 w-8 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full px-1">
-      <div className="h-6 w-6 bg-gray-300 dark:bg-gray-600 rounded-full p-1"></div>
-      <div className="hidden md:block h-4 w-16 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+    <div className="flex items-center gap-1 h-8 md:w-24 w-8 bg-hovercolor dark:bg-blackgrey animate-pulse rounded-full px-1">
+      <div className="h-6 w-6 bg-darkgrey dark:bg-darkgrey rounded-full p-1"></div>
+      <div className="hidden md:block h-4 w-16 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
     </div>
   );
 };
@@ -86,7 +105,7 @@ export const ProjectsContainerSkeleton = () => {
         
         <div>
           <div className="bg-hovercolor rounded-full">
-            <div className="h-6 w-6 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full"></div>
+            <div className="h-6 w-6 bg-hovercolor dark:bg-blackgrey animate-pulse rounded-full"></div>
           </div>
         </div>
       </div>
@@ -105,36 +124,36 @@ export const ProjectsContainerSkeleton = () => {
  */
 export const ProjectButtonSkeleton = () => {
   return (
-    <div className="flex flex-col bg-boxcolor dark:bg-darkbox gap-2 p-2 relative border w-full rounded-main shadow-sm border-darkgrey dark:border-subcolor h-64 animate-pulse">
+    <div className="flex flex-col bg-hovercolor dark:bg-darkbox gap-2 p-2 relative border w-full rounded-main shadow-sm border-darkgrey dark:border-subcolor h-64 animate-pulse">
       {/* Header */}
       <div className="flex items-center bg-hovercolor dark:bg-blackgrey p-2 rounded-main gap-2">
-        <div className="h-9 w-9 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+        <div className="h-9 w-9 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
         <div className="flex flex-col">
-          <div className="h-5 w-32 bg-gray-300 dark:bg-gray-600 rounded-md mb-1"></div>
-          <div className="h-3 w-24 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+          <div className="h-5 w-32 bg-darkgrey dark:bg-darkgrey rounded-main mb-1"></div>
+          <div className="h-3 w-24 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         </div>
       </div>
 
       {/* Content lines */}
       {[1, 2, 3].map((item) => (
         <div key={item} className="flex items-center gap-2">
-          <div className="h-3 w-16 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
-          <div className="h-5 w-40 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+          <div className="h-3 w-16 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+          <div className="h-5 w-40 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         </div>
       ))}
 
       {/* Footer */}
       <div className="absolute bottom-2 left-2">
-        <div className="h-4 w-20 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+        <div className="h-4 w-20 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
       </div>
       
       <div className="absolute right-2 bottom-2">
-        <div className="h-10 w-10 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+        <div className="h-10 w-10 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
       </div>
       
       <div className="absolute bottom-12 left-2 flex items-center gap-2">
-        <div className="h-3 w-6 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
-        <div className="h-5 w-24 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+        <div className="h-3 w-6 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+        <div className="h-5 w-24 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
       </div>
     </div>
   );
@@ -149,41 +168,41 @@ export const EventCardSkeleton = () => {
       <div className="p-4 pb-0">
         <div className="flex h-[95px] gap-3 items-start">
           <div className="flex-shrink-0">
-            <div className="h-12 w-12 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+            <div className="h-12 w-12 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
           </div>
           <div className="flex-grow">
             <div className="flex justify-between items-start mb-2">
               <div className="flex flex-col">
-                <div className="h-6 w-32 bg-gray-300 dark:bg-gray-600 rounded-md mb-2"></div>
-                <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+                <div className="h-6 w-32 bg-darkgrey dark:bg-darkgrey rounded-main mb-2"></div>
+                <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
               </div>
               <div className="flex flex-col items-end gap-2">
-                <div className="h-6 w-16 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                <div className="h-6 w-16 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
               </div>
             </div>
             
-            <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-md mt-2"></div>
-            <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-md mt-2"></div>
+            <div className="h-4 w-full bg-hovercolor dark:bg-blackgrey rounded-main mt-2"></div>
+            <div className="h-4 w-3/4 bg-hovercolor dark:bg-blackgrey rounded-main mt-2"></div>
           </div>
         </div>
       </div>
       
       <div className="flex h-full bg-subcolor/50 mt-3 flex-wrap rounded gap-2 p-3 pb-3 dark:border-gray-800">
         {[1, 2, 3].map((item) => (
-          <div key={item} className="h-8 w-24 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+          <div key={item} className="h-8 w-24 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         ))}
       </div>
       
       <div className="bg-subcolor/50 flex h-full items-center justify-between gap-2 p-3 pt-3">
-        <div className="flex items-center gap-1 rounded-full bg-gray-300 dark:bg-gray-600 p-1 pr-3 w-32">
-          <div className="h-7 w-7 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-          <div className="h-4 w-16 bg-gray-400 dark:bg-gray-500 rounded-md"></div>
+        <div className="flex items-center gap-1 rounded-full bg-darkgrey dark:bg-darkgrey p-1 pr-3 w-32">
+          <div className="h-7 w-7 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
+          <div className="h-4 w-16 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         </div>
-        <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+        <div className="h-4 w-24 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
       </div>
       
       <div className="absolute top-[75px] right-4">
-        <div className="h-5 w-5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+        <div className="h-5 w-5 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
       </div>
     </li>
   );
@@ -198,41 +217,41 @@ export const AbnormalCardSkeleton = () => {
       <div className="p-4 pb-0">
         <div className="flex h-[95px] gap-3 items-start">
           <div className="flex-shrink-0">
-            <div className="h-12 w-12 bg-red-200 dark:bg-red-900 rounded-full"></div>
+            <div className="h-12 w-12 bg-lightred dark:bg-darkred rounded-full"></div>
           </div>
           <div className="flex-grow">
             <div className="flex justify-between items-start mb-2">
               <div className="flex flex-col">
-                <div className="h-6 w-32 bg-gray-300 dark:bg-gray-600 rounded-md mb-2"></div>
-                <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+                <div className="h-6 w-32 bg-darkgrey dark:bg-darkgrey rounded-main mb-2"></div>
+                <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
               </div>
               <div className="flex flex-col items-end gap-2">
                 <div className="h-6 w-16 bg-green-200 dark:bg-green-900 rounded-full"></div>
               </div>
             </div>
             
-            <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-md mt-2"></div>
-            <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-md mt-2"></div>
+            <div className="h-4 w-full bg-hovercolor dark:bg-blackgrey rounded-main mt-2"></div>
+            <div className="h-4 w-3/4 bg-hovercolor dark:bg-blackgrey rounded-main mt-2"></div>
           </div>
         </div>
       </div>
       
       <div className="flex h-full bg-subcolor/50 mt-3 flex-wrap rounded gap-2 p-3 pb-3 dark:border-gray-800">
         {[1, 2, 3].map((item) => (
-          <div key={item} className="h-8 w-24 bg-red-200 dark:bg-red-900 rounded-md"></div>
+          <div key={item} className="h-8 w-24 bg-lightred dark:bg-darkred rounded-main"></div>
         ))}
       </div>
       
       <div className="bg-subcolor/50 flex h-full items-center justify-between gap-2 p-3 pt-3">
-        <div className="flex items-center gap-1 rounded-full bg-red-300 dark:bg-red-800 p-1 pr-3 w-32">
-          <div className="h-7 w-7 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-          <div className="h-4 w-16 bg-gray-400 dark:bg-gray-500 rounded-md"></div>
+        <div className="flex items-center gap-1 rounded-full b-daebg-darkgrey dark:bg-red-800 p-1 pr-3 w-32">
+          <div className="h-7 w-7 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
+          <div className="h-4 w-16 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         </div>
-        <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+        <div className="h-4 w-24 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
       </div>
       
       <div className="absolute top-[75px] right-4">
-        <div className="h-5 w-5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+        <div className="h-5 w-5 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
       </div>
     </li>
   );
@@ -312,7 +331,7 @@ export const HeaderSkeletonTest = () => {
 
 export const EventsStatsChartSkeleton = () => {
     return (
-      <div className="h-52 w-full p-2 bg-boxcolor gap-1 flex flex-col rounded-main shadow animate-pulse">
+      <div className="h-52 w-full p-2 bg-hovercolor gap-1 flex flex-col rounded-main shadow animate-pulse">
         {/* Header Skeleton */}
         <div className="flex items-center justify-between">
           {/* Labels Skeleton */}
@@ -320,7 +339,7 @@ export const EventsStatsChartSkeleton = () => {
             {[1, 2, 3].map((item) => (
               <div
                 key={item}
-                className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"
+                className="h-6 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"
               ></div>
             ))}
           </div>
@@ -330,7 +349,7 @@ export const EventsStatsChartSkeleton = () => {
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
-                className="h-6 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"
+                className="h-6 w-12 bg-hovercolor dark:bg-blackgrey rounded-full"
               ></div>
             ))}
           </div>
@@ -338,7 +357,7 @@ export const EventsStatsChartSkeleton = () => {
   
         {/* Chart Area Skeleton */}
         <div className="w-full relative h-full">
-          <div className="h-full w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+          <div className="h-full w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
         </div>
       </div>
     );
@@ -348,59 +367,59 @@ export const EventsStatsChartSkeleton = () => {
   export const EditPageSkeleton = () => {
     return (
       <div className="w-full p-4 h-full md:h-full overflow-y-auto dark:text-subtextcolor flex gap-3 justify-center rounded-main">
-        <div className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey bg-boxcolor animate-pulse">
+        <div className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center dark:bg-blackgrey bg-hovercolor animate-pulse">
           {/* Header Skeleton */}
           <div className="w-full flex items-center gap-2">
-            <div className="h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-            <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-6 w-6 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+            <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           </div>
   
           {/* Date Field Skeleton */}
           <div className="w-full">
-            <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
   
           {/* Location Field Skeleton */}
           <div className="w-full">
-            <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
   
           {/* Type Selection Skeleton */}
           <div className="w-full">
-            <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
   
           {/* Topic and Attendees Skeleton */}
           <div className="w-full">
-            <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main mb-2"></div>
-            <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main mb-2"></div>
+            <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
   
           {/* Description Field Skeleton */}
           <div className="w-full">
-            <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-20 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-20 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
   
           {/* File Upload Section Skeleton */}
           <div className="w-full p-4 border-2 rounded-main border-darkbox">
-            <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded-md mb-4"></div>
+            <div className="h-6 w-48 bg-hovercolor dark:bg-blackgrey rounded-main mb-4"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[1, 2, 3, 4, 5].map((item) => (
-                <div key={item} className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+                <div key={item} className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
               ))}
             </div>
           </div>
   
           {/* Buttons Skeleton */}
           <div className="w-full flex flex-col gap-2">
-            <div className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-            <div className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-12 w-full bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+            <div className="h-12 w-full bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           </div>
         </div>
       </div>
@@ -412,34 +431,34 @@ export const EventsStatsChartSkeleton = () => {
       <div className="p-4 w-full dark:text-subtextcolor gap-3 flex flex-col justify-center h-[500px] items-center animate-pulse">
         {/* Logo Skeleton */}
         <div className="text-maincolor text-[15px] font-extralight h-full flex flex-col justify-center items-center">
-          <div className="h-12 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-          <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded-full mt-2"></div>
+          <div className="h-12 w-12 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+          <div className="h-4 w-20 bg-hovercolor dark:bg-blackgrey rounded-full mt-2"></div>
         </div>
   
         {/* Login Form Skeleton */}
         <div className="bg-hovercolor dark:bg-blackgrey p-4 flex gap-3 items-center flex-col w-full sm:w-96 justify-center rounded-main">
           {/* Header Skeleton */}
           <div className="flex justify-between items-center w-full">
-            <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-            <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-8 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+            <div className="h-8 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           </div>
   
           {/* Form Fields Skeleton */}
           <div className="w-full max-w-96 flex flex-col gap-2 rounded-main p-4 items-center">
             {/* ID Field Skeleton */}
             <div className="w-full">
-              <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-              <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+              <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             </div>
   
             {/* Password Field Skeleton */}
             <div className="w-full">
-              <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-              <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+              <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             </div>
   
             {/* Submit Button Skeleton */}
-            <div className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-12 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
         </div>
       </div>
@@ -459,15 +478,15 @@ export const DayContentSkeleton = () => {
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-gray-200 dark:bg-gray-700 p-2 rounded-circle">
-                  <div className="w-6 h-6 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                <div className="bg-hovercolor dark:bg-blackgrey p-2 rounded-circle">
+                  <div className="w-6 h-6 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
                 </div>
                 <div>
-                  <div className="h-8 w-32 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-                  <div className="h-4 w-48 bg-gray-200 dark:bg-gray-700 rounded-full mt-2"></div>
+                  <div className="h-8 w-32 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+                  <div className="h-4 w-48 bg-hovercolor dark:bg-blackgrey rounded-full mt-2"></div>
                 </div>
               </div>
-              <div className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+              <div className="h-10 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
             </div>
           </div>
         </div>
@@ -477,12 +496,12 @@ export const DayContentSkeleton = () => {
           {[1, 2, 3, 4].map((item) => (
             <div key={item} className="bg-hovercolor dark:bg-darkbox p-4 rounded-main shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="bg-gray-200 dark:bg-gray-700 p-2 rounded-circle">
-                  <div className="w-6 h-6 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                <div className="bg-hovercolor dark:bg-blackgrey p-2 rounded-circle">
+                  <div className="w-6 h-6 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
                 </div>
                 <div>
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
-                  <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
+                  <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </div>
               </div>
             </div>
@@ -495,12 +514,12 @@ export const DayContentSkeleton = () => {
           <div className="flex-1">
             <div className="dark:bg-subcolor rounded-xl shadow-sm">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-6 h-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-                <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                <div className="w-6 h-6 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+                <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
               </div>
               <div className="grid gap-4 grid-cols-1 xl:grid-cols-2">
                 {[1, 2, 3, 4].map((item) => (
-                  <div key={item} className="h-48 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+                  <div key={item} className="h-48 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
                 ))}
               </div>
             </div>
@@ -510,12 +529,12 @@ export const DayContentSkeleton = () => {
           <div className="md:w-1/2 lg:w-96">
             <div className="dark:bg-blackgrey rounded-xl shadow-sm">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-6 h-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-                <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                <div className="w-6 h-6 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+                <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
               </div>
               <div className="space-y-4 rounded-main p-6 bg-backgroundcolor">
                 {[1, 2, 3].map((item) => (
-                  <div key={item} className="h-24 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+                  <div key={item} className="h-24 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
                 ))}
               </div>
             </div>
@@ -532,12 +551,12 @@ export const NoteDetailsPageSkeleton = () => {
     <div className="px-4 mb-4 animate-pulse">
       <div className="bg-hovercolor dark:bg-darkbox rounded-main overflow-hidden">
         {/* Header Skeleton */}
-        <div className="bg-gray-200 dark:bg-gray-700 p-6">
+        <div className="bg-hovercolor dark:bg-blackgrey p-6">
           <div className="flex items-center gap-4">
-            <div className="h-12 w-12 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+            <div className="h-12 w-12 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
             <div className="flex-1">
-              <div className="h-6 w-48 bg-gray-300 dark:bg-gray-600 rounded-full mb-2"></div>
-              <div className="h-4 w-32 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+              <div className="h-6 w-48 bg-darkgrey dark:bg-darkgrey rounded-full mb-2"></div>
+              <div className="h-4 w-32 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
             </div>
           </div>
         </div>
@@ -545,45 +564,45 @@ export const NoteDetailsPageSkeleton = () => {
         {/* Content Skeleton */}
         <div className="p-6">
           <div className="prose dark:prose-invert max-w-none">
-            <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
-            <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
-            <div className="h-4 w-2/3 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+            <div className="h-4 w-full bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
+            <div className="h-4 w-3/4 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
+            <div className="h-4 w-2/3 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
           </div>
 
           {/* Target Date Skeleton */}
           <div className="mt-6 flex items-center gap-2">
-            <div className="h-5 w-5 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-            <div className="h-4 w-48 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-5 w-5 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+            <div className="h-4 w-48 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           </div>
 
           {/* Images Skeleton */}
           <div className="mt-6">
-            <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-full mb-4"></div>
+            <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-full mb-4"></div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[1, 2, 3].map((item) => (
-                <div key={item} className="relative aspect-square bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+                <div key={item} className="relative aspect-square bg-hovercolor dark:bg-blackgrey rounded-main"></div>
               ))}
             </div>
           </div>
 
           {/* Files Skeleton */}
           <div className="mt-6">
-            <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-full mb-4"></div>
+            <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-full mb-4"></div>
             <div className="grid gap-3">
               {[1, 2].map((item) => (
-                <div key={item} className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+                <div key={item} className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
               ))}
             </div>
           </div>
 
           {/* Users Skeleton */}
           <div className="mt-6">
-            <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-full mb-4"></div>
+            <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-full mb-4"></div>
             <div className="flex flex-wrap gap-2">
               {[1, 2, 3].map((item) => (
-                <div key={item} className="flex items-center gap-3 bg-gray-200 dark:bg-gray-700 p-2 rounded-full">
-                  <div className="h-10 w-10 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                  <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                <div key={item} className="flex items-center gap-3 bg-hovercolor dark:bg-blackgrey p-2 rounded-full">
+                  <div className="h-10 w-10 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
+                  <div className="h-4 w-24 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
                 </div>
               ))}
             </div>
@@ -599,42 +618,42 @@ export const EditUserPageSkeleton = () => {
       <div className="lg:p-4 flex gap-3 justify-center dark:bg-darkbox lg:bg-maincolor dark:text-subtextcolor bg-darkbluec m-2 rounded-main animate-pulse">
         {/* Header Skeleton */}
         <div className="hidden justify-center items-center lg:flex w-full">
-          <div className="h-12 w-48 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-12 w-48 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
   
         {/* Form Skeleton */}
-        <div className="w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-blackgrey bg-boxcolor">
+        <div className="w-full md:min-w-[700px] shadow-sm shadow-darkbluec flex flex-col gap-4 rounded-main p-4 items-center dark:bg-blackgrey bg-hovercolor">
           {/* Images Skeleton */}
           <div className="flex flex-col md:flex-row gap-2 w-full items-center">
-            <div className="h-64 w-64 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
-            <div className="h-64 w-64 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-64 w-64 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+            <div className="h-64 w-64 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
   
           {/* Inputs Skeleton */}
           <div className="grid w-full md:grid-cols-2 gap-4">
             {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div key={item} className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div key={item} className="h-12 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             ))}
           </div>
   
           {/* Permissions Skeleton */}
           <div className="flex flex-col gap-4 p-2 w-full">
-            <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
             <div className="flex justify-center gap-4 flex-wrap">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                <div key={item} className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                <div key={item} className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
               ))}
             </div>
           </div>
   
           {/* Verified Checkbox Skeleton */}
-          <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
   
           {/* File Input Skeleton */}
-          <div className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+          <div className="h-12 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
   
           {/* Submit Button Skeleton */}
-          <div className="h-12 w-full md:w-96 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-12 w-full md:w-96 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
       </div>
     );
@@ -644,28 +663,11 @@ export const EditUserPageSkeleton = () => {
  */
 export const ProjectNavMobileSkeleton = () => {
   return (
-    <div className="flex flex-col gap-2 items-end w-full relative animate-pulse">
+    <div className="flex flex-col gap-2 h-10 items-end w-full relative animate-pulse">
       {/* Menu Icon Skeleton */}
-      <div className="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
 
       {/* Menu Content Skeleton */}
-      <div className="w-full h-screen p-4 pt-20 shadow-lg top-0 right-0 dark:bg-darkbox bg-hovercolor justify-center flex fixed overflow-hidden duration-200 flex-col gap-2 items-center">
-        {/* Close Icon Skeleton */}
-        <div className="h-12 w-12 bg-gray-200 dark:bg-gray-700 rounded-full absolute top-12 right-4"></div>
-
-        {/* Links Skeleton */}
-        <div className="gap-4 rounded-main grid text-subtextcolor w-full overflow-hidden">
-          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-            <div
-              key={item}
-              className="p-2 w-full px-3 flex gap-2 rounded-main hover:bg-darkbluec dark:text-subtextcolor dark:bg-blackgrey items-center duration-200 text-xl text-subcolor bg-boxcolor font-bold hover:text-subtextcolor group"
-            >
-              <div className="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-              <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-            </div>
-          ))}
-        </div>
-      </div>
+   
     </div>
   );
 };
@@ -675,32 +677,32 @@ export const CoverSkeleton = () => {
         {/* Header Section Skeleton */}
         <div className="relative bg-verylightblue dark:bg-darkbox p-2 py-4 rounded-t-main flex items-center gap-2">
           {/* Settings Icon Skeleton */}
-          <div className="top-4 right-4 absolute h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="top-4 right-4 absolute h-6 w-6 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
   
           {/* Avatar Skeleton */}
           <div className="rounded-circle relative flex justify-center items-start overflow-hidden w-32 h-32">
-            <div className="w-full min-h-full bg-gray-200 dark:bg-gray-700"></div>
+            <div className="w-full min-h-full bg-hovercolor dark:bg-blackgrey"></div>
           </div>
   
           {/* User Info Skeleton */}
           <div className="flex-col gap-2 text-darkbluec dark:text-subtextcolor flex">
-            <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
-            <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-6 w-48 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
+            <div className="h-4 w-32 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           </div>
         </div>
   
         {/* Permissions Section Skeleton */}
-        <div className="w-full items-center flex gap-2 dark:bg-blackgrey bg-darkbluec text-boxcolor py-4 p-2">
-          <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="w-full items-center flex gap-2 dark:bg-blackgrey bg-darkbluec text-hovercolor py-4 p-2">
+          <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-            <div key={item} className="h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div key={item} className="h-6 w-6 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           ))}
         </div>
   
         {/* Stats Section Skeleton */}
         <div className="bg-darkbluec mb-4 dark:bg-blackgrey justify-evenly flex gap-4 rounded-b-main p-4 flex-wrap">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-            <div key={item} className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div key={item} className="h-10 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           ))}
         </div>
       </div>
@@ -709,36 +711,38 @@ export const CoverSkeleton = () => {
 
   export const UserCardSkeleton = () => {
     return (
-      <div className="bg-[#ffffff] border border-[#dddddd] rounded-lg shadow-sm overflow-hidden animate-pulse">
-        <div className="flex items-stretch w-full">
-          {/* Status indicator */}
-          <div className="w-2 bg-gray-200 dark:bg-gray-700"></div>
-  
-          {/* Avatar section */}
-          <div className="flex-shrink-0 p-4 flex items-center justify-center">
-            <div className="h-16 w-16 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-          </div>
-  
-          {/* User information */}
-          <div className="flex-1 p-4 flex flex-col justify-center">
-            <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
-            <div className="flex items-center gap-4">
-              <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-              <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+      <div className="block transition-all duration-300">
+        <div className="overflow-hidden rounded-main bg-boxcolor dark:bg-darkbox border border-border dark:border-darkgrey animate-pulse">
+          {/* Gradient Header */}
+          <div className="h-12 bg-gradient-to-r from-bluecolor/30 to-cyancolor/30"></div>
+          
+          {/* Profile Image Section */}
+          <div className="flex justify-center -mt-1">
+            <div className="relative -top-8">
+              {/* Profile Image Placeholder */}
+              <div className="relative w-40 h-40 rounded-full bg-hovercolor dark:bg-blackgrey border-4 border-boxcolor dark:border-darkbox"></div>
             </div>
           </div>
-  
-          {/* Action buttons */}
-          <div className="flex-shrink-0 flex items-center p-4 border-l border-[#dddddd]">
-            <div className="flex flex-col gap-2">
-              <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-              <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          
+          {/* Content Section */}
+          <div className="px-4 pb-6 -mt-4 text-center">
+            {/* Name Placeholder */}
+            <div className="h-6 w-3/4 mx-auto bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            
+            {/* Role Section */}
+            <div className="py-2 px-2 bg-hovercolor dark:bg-blackgrey rounded-main mt-2">
+              {/* Role Badge Placeholder */}
+              <div className="w-1/2 h-5 mx-auto bg-verylightblue dark:bg-darkbluec rounded-full"></div>
+              
+              {/* Project Status Placeholder */}
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <div className="w-2 h-2 rounded-circle bg-hovercolor dark:bg-blackgrey"></div>
+                <div className="w-1/2 h-4 bg-boxcolor dark:bg-darkbox rounded"></div>
+              </div>
             </div>
-          </div>
-  
-          {/* Go to details arrow */}
-          <div className="flex items-center pr-6">
-            <div className="h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            
+            {/* Button Placeholder */}
+            <div className="w-full h-10 mt-5 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
         </div>
       </div>
@@ -749,19 +753,7 @@ export const CoverSkeleton = () => {
 export const ProjectNavSkeleton = () => {
     return (
       <div className="gap-2 items-center flex animate-pulse">
-        {/* Buttons Skeleton */}
-        {[1, 2, 3, 4, 5].map((item) => (
-          <div
-            key={item}
-            className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"
-          ></div>
-        ))}
-  
-        {/* Icons Skeleton */}
-        <div className="flex gap-2">
-          <div className="h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-          <div className="h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-        </div>
+       
       </div>
     );
   };
@@ -769,13 +761,13 @@ export const ProjectNavSkeleton = () => {
     return (
       <div className="flex flex-col md:flex-row gap-2 animate-pulse">
         {/* Search Input Skeleton */}
-        <div className="w-full h-12 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+        <div className="w-full h-12 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
   
         {/* Project Filter Skeleton */}
-        <div className="w-full h-12 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+        <div className="w-full h-12 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
   
         {/* Role Filter Skeleton */}
-        <div className="w-full h-12 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+        <div className="w-full h-12 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
       </div>
     );
   };
@@ -787,8 +779,8 @@ export const InfocontainerSkeleton = () => {
     <div className="flex-col mt-4 flex gap-2 animate-pulse">
       {/* Header Skeleton */}
       <div className="flex justify-between">
-        <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-        <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-6 w-48 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+        <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
       </div>
 
       {/* InfoBoxes Skeleton */}
@@ -796,19 +788,19 @@ export const InfocontainerSkeleton = () => {
         {[1, 2, 3, 4, 5, 6].map((item) => (
           <div
             key={item}
-            className="flex-col flex justify-between bg-gray-200 dark:bg-gray-700 rounded-main w-full font-semibold md:h-24 p-3"
+            className="flex-col flex justify-between bg-hovercolor dark:bg-blackgrey rounded-main w-full font-semibold md:h-24 p-3"
           >
             <div className="flex gap-2 items-center">
-              <div className="h-8 w-8 min-w-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-              <div className="h-4 w-24 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+              <div className="h-8 w-8 min-w-8 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
+              <div className="h-4 w-24 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
             </div>
-            <div className="h-6 w-16 bg-gray-300 dark:bg-gray-600 rounded-full self-end"></div>
+            <div className="h-6 w-16 bg-darkgrey dark:bg-darkgrey rounded-full self-end"></div>
           </div>
         ))}
       </div>
 
       {/* Full Day Link Skeleton */}
-      <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+      <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-full"></div>
     </div>
   );
 };
@@ -820,22 +812,22 @@ export const AbnormalEventsSkeleton = () => {
     <div className="w-full dark:text-subtextcolor animate-pulse">
       {/* Header Skeleton */}
       <div className="flex justify-between items-center mb-4">
-        <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-        <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-8 w-48 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+        <div className="h-8 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
       </div>
 
       {/* Filters Skeleton */}
       <div className="mb-4 space-y-2">
         <div className="flex flex-col gap-4">
           <div className="flex gap-2">
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
           <div className="flex gap-2 items-center">
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
-            <div className="h-4 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
+            <div className="h-4 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
         </div>
       </div>
@@ -844,13 +836,13 @@ export const AbnormalEventsSkeleton = () => {
       <div className="relative">
         <ul className="space-y-4">
           {[1, 2, 3].map((item) => (
-            <div key={item} className="h-52 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div key={item} className="h-52 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           ))}
         </ul>
 
         {/* Show More Button Skeleton */}
         <div className="w-full mt-2 px-4 py-2 flex items-center justify-center">
-          <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-8 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
       </div>
     </div>
@@ -858,43 +850,43 @@ export const AbnormalEventsSkeleton = () => {
 };
 export const StatsSkeleton = () => {
     return (
-      <div className="group gap-2 p-2 dark:bg-blackgrey bg-boxcolor rounded-main duration-300 w-full justify-between flex animate-pulse">
+      <div className="group gap-2 p-2 dark:bg-blackgrey bg-hovercolor rounded-main dur-daebg-darkgrey w-full justify-between flex animate-pulse">
         {/* Icon Section Skeleton */}
         <div className="flex items-center flex-col">
-          <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-8 w-8 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           <div className="flex flex-col gap-2 font-bold text-sm sm:text-base py-2">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div key={item} className="h-6 w-16 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             ))}
           </div>
         </div>
   
         {/* Abnormal Events Section Skeleton */}
         <div className="flex items-center flex-col w-full">
-          <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+          <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
           <div className="flex flex-col text-sm font-bold w-full gap-2 rounded-main py-2">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div key={item} className="h-6 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             ))}
           </div>
         </div>
   
         {/* Open Events Section Skeleton */}
         <div className="flex items-center flex-col w-full">
-          <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+          <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
           <div className="flex flex-col text-sm font-bold w-full gap-2 rounded-main py-2">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div key={item} className="h-6 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             ))}
           </div>
         </div>
   
         {/* Closed Events Section Skeleton */}
         <div className="flex items-center flex-col w-full">
-          <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full mb-2"></div>
+          <div className="h-6 w-24 bg-hovercolor dark:bg-blackgrey rounded-full mb-2"></div>
           <div className="flex flex-col text-sm font-bold w-full gap-2 rounded-main py-2">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="h-6 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+              <div key={item} className="h-6 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
             ))}
           </div>
         </div>
@@ -903,20 +895,20 @@ export const StatsSkeleton = () => {
   };
 export const ChartsSkeleton = () => {
     return (
-      <div className="h-52 w-full p-2 bg-boxcolor dark:bg-blackgrey gap-1 flex flex-col rounded-main animate-pulse">
+      <div className="h-52 w-full p-2 bg-hovercolor dark:bg-blackgrey gap-1 flex flex-col rounded-main animate-pulse">
         {/* Header Skeleton */}
         <div className="flex items-center justify-between">
-          <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           <div className="flex gap-1">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="h-6 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+              <div key={item} className="h-6 w-12 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
             ))}
           </div>
         </div>
   
         {/* Chart Area Skeleton */}
         <div className="w-full relative h-full">
-          <div className="h-full w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+          <div className="h-full w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
         </div>
       </div>
     );
@@ -930,21 +922,21 @@ export const CardSkeleton = () => {
         <div className="flex h-[95px] gap-3 items-start">
           {/* Icon Skeleton */}
           <div className="flex-shrink-0">
-            <div className="h-12 w-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="h-12 w-12 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
           </div>
 
           {/* Content Skeleton */}
           <div className="flex-grow">
             <div className="flex justify-between items-start mb-2">
               <div className="flex flex-col">
-                <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-md mb-2"></div>
-                <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+                <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-main mb-2"></div>
+                <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
               </div>
-              <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+              <div className="h-6 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
             </div>
 
-            <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-md mt-2"></div>
-            <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-md mt-2"></div>
+            <div className="h-4 w-full bg-hovercolor dark:bg-blackgrey rounded-main mt-2"></div>
+            <div className="h-4 w-3/4 bg-hovercolor dark:bg-blackgrey rounded-main mt-2"></div>
           </div>
         </div>
       </div>
@@ -952,22 +944,22 @@ export const CardSkeleton = () => {
       {/* Files Section Skeleton */}
       <div className="flex h-full bg-subcolor/50 mt-3 flex-wrap rounded gap-2 p-3 pb-3 dark:border-gray-800">
         {[1, 2, 3].map((item) => (
-          <div key={item} className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+          <div key={item} className="h-8 w-24 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
         ))}
       </div>
 
       {/* Footer Section Skeleton */}
       <div className="bg-subcolor/50 flex h-full items-center justify-between gap-2 p-3 pt-3">
-        <div className="flex items-center gap-1 rounded-full bg-gray-200 dark:bg-gray-700 p-1 pr-3 w-32">
-          <div className="h-7 w-7 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-          <div className="h-4 w-16 bg-gray-300 dark:bg-gray-600 rounded-md"></div>
+        <div className="flex items-center gap-1 rounded-full bg-hovercolor dark:bg-blackgrey p-1 pr-3 w-32">
+          <div className="h-7 w-7 bg-darkgrey dark:bg-darkgrey rounded-full"></div>
+          <div className="h-4 w-16 bg-darkgrey dark:bg-darkgrey rounded-main"></div>
         </div>
-        <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-md"></div>
+        <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
       </div>
 
       {/* Settings Icon Skeleton */}
       <div className="absolute top-[75px] right-4">
-        <div className="h-5 w-5 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-5 w-5 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
       </div>
     </li>
   );
@@ -977,9 +969,9 @@ export const ProjectCalendarSkeleton = () => {
       <div className="p-4 dark:text-subtextcolor animate-pulse">
         {/* Navigation Skeleton */}
         <div className="flex items-center justify-between mb-6">
-          <div className="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-          <div className="h-10 w-48 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-          <div className="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-10 w-10 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+          <div className="h-10 w-48 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+          <div className="h-10 w-10 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
   
         {/* Calendar Grid Skeleton */}
@@ -987,7 +979,7 @@ export const ProjectCalendarSkeleton = () => {
           {/* Day Headers Skeleton */}
           {[1, 2, 3, 4, 5, 6, 7].map((item) => (
             <div key={item} className="text-center font-bold p-2">
-              <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto"></div>
+              <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full mx-auto"></div>
             </div>
           ))}
   
@@ -995,7 +987,7 @@ export const ProjectCalendarSkeleton = () => {
           {Array.from({ length: 42 }).map((_, index) => (
             <div
               key={index}
-              className="p-4 rounded-main min-h-[100px] bg-gray-200 dark:bg-gray-700"
+              className="p-4 rounded-main min-h-[100px] bg-hovercolor dark:bg-blackgrey"
             ></div>
           ))}
         </div>
@@ -1005,21 +997,21 @@ export const ProjectCalendarSkeleton = () => {
 export const AuditFormSkeleton = () => {
   return (
     <div className="w-full scrollbar-hide text-nowrap h-full md:h-full overflow-y-auto flex gap-3 justify-center rounded-main animate-pulse">
-      <div className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center bg-boxcolor dark:bg-blackgrey">
+      <div className="shadow-sm flex flex-col w-full gap-2 rounded-main p-4 items-center bg-hovercolor dark:bg-blackgrey">
         {/* Header Skeleton */}
         <div className="w-full flex items-center gap-2">
-          <div className="h-6 w-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-          <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-6 w-6 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
+          <div className="h-6 w-32 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
 
         {/* Success/Error Message Skeleton */}
-        <div className="w-full p-4 mb-4 bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+        <div className="w-full p-4 mb-4 bg-hovercolor dark:bg-blackgrey rounded-main"></div>
 
         {/* Type Selection Skeleton */}
         <div className="w-full">
           <div className="flex flex-col gap-1 p-2">
-            <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-md mb-1"></div>
-            <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-main"></div>
+            <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-main mb-1"></div>
+            <div className="h-10 w-full bg-hovercolor dark:bg-blackgrey rounded-main"></div>
           </div>
         </div>
 
@@ -1027,13 +1019,13 @@ export const AuditFormSkeleton = () => {
         <div className="grid grid-cols-2 gap-3 w-full">
           {[1, 2].map((item) => (
             <div key={item} className="relative p-1 rounded-main flex">
-              <div className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+              <div className="h-10 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
             </div>
           ))}
         </div>
 
         {/* Submit Button Skeleton */}
-        <div className="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-12 w-full bg-hovercolor dark:bg-blackgrey rounded-full"></div>
       </div>
     </div>
   );
@@ -1041,31 +1033,31 @@ export const AuditFormSkeleton = () => {
 
 export const AbStatsSkeleton = () => {
     return (
-      <div className="group p-4 dark:bg-blackgrey bg-boxcolor rounded-main duration-300 w-full animate-pulse">
+      <div className="group p-4 dark:bg-blackgrey bg-hovercolor rounded-main dur-daebg-darkgrey w-full animate-pulse">
         {/* Header Skeleton */}
         <div className="flex items-center gap-2 mb-4">
-          <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-8 w-48 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
   
         {/* Table Skeleton */}
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="dark:text-subtextcolor border-b border-red-200">
+              <tr className="dark:text-subtextcolor border-b border-lightred">
                 <th className="text-left p-2">
-                  <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-24 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </th>
                 <th className="p-2 text-center">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </th>
                 <th className="p-2 text-center">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </th>
                 <th className="p-2 text-center">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </th>
                 <th className="p-2 text-center">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </th>
               </tr>
             </thead>
@@ -1073,37 +1065,37 @@ export const AbStatsSkeleton = () => {
               {[1, 2, 3, 4, 5, 6, 7].map((row, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-lightred dark:text-subtextcolor bg-opacity-10' : ''}>
                   <td className="p-2">
-                    <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                    <div className="h-4 w-32 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                   </td>
                   <td className="p-2 text-center">
-                    <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                    <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                   </td>
                   <td className="p-2 text-center">
-                    <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                    <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                   </td>
                   <td className="p-2 text-center">
-                    <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                    <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                   </td>
                   <td className="p-2 text-center">
-                    <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                    <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                   </td>
                 </tr>
               ))}
               <tr className="text-subtextcolor font-bold">
                 <td className="p-2 bg-darkred rounded-l-main">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </td>
                 <td className="p-2 text-center bg-darkred">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </td>
                 <td className="p-2 text-center bg-darkred">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </td>
                 <td className="p-2 text-center bg-darkred">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </td>
                 <td className="p-2 text-center bg-darkred rounded-r-main">
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <div className="h-4 w-16 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
                 </td>
               </tr>
             </tbody>
@@ -1114,9 +1106,9 @@ export const AbStatsSkeleton = () => {
   };
 export const NestedDoughnutChartSkeleton = () => {
     return (
-      <div className="bg-boxcolor dark:bg-blackgrey rounded-main w-full animate-pulse">
+      <div className="bg-hovercolor dark:bg-blackgrey rounded-main w-full animate-pulse">
         <div className="h-[400px] w-full flex items-center justify-center">
-          <div className="h-64 w-64 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+          <div className="h-64 w-64 bg-hovercolor dark:bg-blackgrey rounded-full"></div>
         </div>
       </div>
     );
@@ -1129,23 +1121,23 @@ export const AllSkeletonsTest = () => {
     <div className="container mx-auto p-4 space-y-8">
       <h1 className="text-2xl font-bold mb-6">Skeleton Components Test Page</h1>
       
-      <section className="border dark:border-gray-700 rounded-lg p-4">
+      <section className="border dark:border-blackgrey rounded-lg p-4">
         <HeaderSkeletonTest />
       </section>
       
-      <section className="border dark:border-gray-700 rounded-lg p-4">
+      <section className="border dark:border-blackgrey rounded-lg p-4">
         <NavbarSkeletonTest />
       </section>
       
-      <section className="border dark:border-gray-700 rounded-lg p-4">
+      <section className="border dark:border-blackgrey rounded-lg p-4">
         <ProjectsSkeletonTest />
       </section>
       
-      <section className="border dark:border-gray-700 rounded-lg p-4">
+      <section className="border dark:border-blackgrey rounded-lg p-4">
         <EventSkeletonTest />
       </section>
       
-      <section className="border dark:border-gray-700 rounded-lg p-4">
+      <section className="border dark:border-blackgrey rounded-lg p-4">
         <AbnormalSkeletonTest />
       </section>
     </div>

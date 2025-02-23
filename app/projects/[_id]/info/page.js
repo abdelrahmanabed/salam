@@ -1,5 +1,5 @@
 'use client'
-import { useContext } from 'react';
+import { Suspense, useContext } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import { Icon } from '@iconify/react';
 
@@ -57,6 +57,7 @@ const ProjectInfoPage = () => {
   ];
 
   return (
+    <Suspense fallback={<div/>}>
     <div className="p-4 dark:text-subtextcolor">
       {/* Project Header */}
       <div className="mb-6 p-6 rounded-main dark:bg-darkbox bg-hovercolor">
@@ -97,7 +98,7 @@ const ProjectInfoPage = () => {
           </div>
         ))}
       </div>
-    </div>
+    </div></Suspense>
   );
 };
 

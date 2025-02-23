@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Suspense } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import {
@@ -90,6 +90,7 @@ const AbnormalEventsCharts = () => {
   }, [filter, project]);
 
   return (
+    <Suspense fallback={<div/>}>
     <div className="h-52 w-full p-2 bg-boxcolor  dark:bg-blackgrey gap-1 flex flex-col rounded-main ">
       <div className="flex items-center justify-between text-subtextcolor ">
         <div className="flex items-center">
@@ -136,7 +137,7 @@ const AbnormalEventsCharts = () => {
           }}
         />
       </div>
-    </div>
+    </div></Suspense>
   );
 };
 

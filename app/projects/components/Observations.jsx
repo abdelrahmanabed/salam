@@ -69,6 +69,8 @@ const handleFilterChange = (name, value) => {
 };
 
 return (
+   <Suspense fallback={<div/>}>
+  
   <div className="w-full dark:text-subtextcolor">
     <h2 className="text-xl font-bold flex justify-between items-center mb-4">
       Observations 
@@ -147,6 +149,7 @@ return (
       <span className="text-gray-500">لا توجد ملاحظات تطابق معايير البحث.</span>
     )}
   </div>
+  </Suspense>
 );
 };
 

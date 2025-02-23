@@ -65,6 +65,7 @@ const AbnormalEvents = () => {
   };
 
   return (
+    <Suspense fallback={<div/>}>
     <div className="w-full dark:text-subtextcolor">
       <h2 className="text-xl font-bold flex justify-between items-center mb-4">
         Abnormal Events 
@@ -151,7 +152,7 @@ const AbnormalEvents = () => {
       ) : (
         <span className="text-gray-500">لا توجد أحداث تطابق معايير البحث.</span>
       )}
-    </div>
+    </div></Suspense>
   );
 };
 

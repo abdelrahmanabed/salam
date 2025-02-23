@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, Suspense } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import { useRouter } from 'next/navigation';
 import { 
@@ -16,14 +16,17 @@ import {
   parseISO
 } from 'date-fns';
 import { Icon } from '@iconify/react';
+import { ProjectCalendarSkeleton } from '@/app/components/Loading';
 
 const ProjectCalendar = () => {
   const router = useRouter();
-  const { project } = useContext(ProjectsContext);
+  const { project,projectLoading } = useContext(ProjectsContext);
   const [currentDate, setCurrentDate] = useState(null);
+if(projectLoading){
+  return <ProjectCalendarSkeleton />;
 
-  // Set initial month on component mount
-  useEffect(() => {
+}
+    useEffect(() => {
     const today = new Date();
     const projectStart = parseISO(project.startDate);
     const projectEnd = parseISO(project.endDate);
@@ -44,7 +47,7 @@ const ProjectCalendar = () => {
   }, [project]);
 
   if (!currentDate) {
-    return <div>Loading...</div>;
+    return <ProjectCalendarSkeleton />;
   }
 
   const projectStart = parseISO(project.startDate);
@@ -122,6 +125,7 @@ daysInMonth.forEach(day => {
     const isToday = isSameMonth(day, new Date()) && day.getDate() === new Date().getDate();
   
     calendarDays.push(
+
       <div
         key={day.toString()}
         onClick={() => dayData && router.push(`/projects/${project._id}/calender/${dayData._id}`)}
@@ -167,7 +171,8 @@ daysInMonth.forEach(day => {
   
   
   return (
-    <div className="p-4 dark:text-subtextcolor">
+    <Suspense fallback={<div/>}>
+ <div className="p-4 dark:text-subtextcolor">
       {/* Navigation */}
       <div className="flex items-center justify-between mb-6">
         <button 
@@ -214,7 +219,7 @@ daysInMonth.forEach(day => {
         {/* Calendar Days */}
         {calendarDays}
       </div>
-    </div>
+    </div></Suspense>
   );
 };
 

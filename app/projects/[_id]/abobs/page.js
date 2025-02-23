@@ -4,6 +4,7 @@
 import { Suspense, lazy, useState } from 'react';
 
 import { Icon } from '@iconify/react';
+import { AbnormalEventsSkeleton } from '@/app/components/Loading';
 
 
 const Observations = lazy(() => import('../../components/Observations'));
@@ -37,10 +38,12 @@ const Page = () => {
    
 <div className=' flex  gap-4 w-full overflow-hidden md:flex-row flex-col'>
 
-<Suspense fallback={<LoadingSkeleton />}>
-            <AbnormalEvents />
-            <Observations />
-          </Suspense>
+<Suspense fallback={<AbnormalEventsSkeleton />}>
+            <AbnormalEvents /> </Suspense>
+            <Suspense fallback={<AbnormalEventsSkeleton />}>
+
+            <Observations />            </Suspense>
+
 </div>
 </div>
 

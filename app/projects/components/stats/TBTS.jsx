@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { Suspense, useContext } from 'react';
 import { ProjectsContext } from '../../context/ProjectsContext';
 import { Icon } from '@iconify/react';
 
@@ -52,6 +52,7 @@ const TBTS = (props) => {
   const ptdCount = countTBTs(project.calendar, projectStartDate, today);
 
   return (
+    <Suspense fallback={<div/>}>
     <Link href={'/'} className={`${ props.className} group gap-2 p-2   dark:bg-blackgrey  bg-boxcolor  rounded-main duration-300  w-full  justify-between flex`}>
       <div className='flex items-center flex-col'>
         <Icon icon='mdi:talk' className='text-xl sm:text-2xl text-greencolor' />
@@ -72,7 +73,7 @@ const TBTS = (props) => {
           <span className=' w-full bg-lightgreen dark:bg-greencolor rounded-main text-center p-1'>{ptdCount}</span>
         </div>
       </div>
-    </Link>
+    </Link></Suspense>
   );
 };
 
