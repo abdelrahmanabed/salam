@@ -129,17 +129,19 @@ const UsersPage = () => {
                 roles={roles}
             />
 </Suspense>
+<Suspense fallback={            <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <UserCardSkeleton />
+        <UserCardSkeleton /><UserCardSkeleton /><UserCardSkeleton /></div>}>
+
             <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <Suspense fallback={<UserCardSkeleton />}>
 
                 {users.map(user => (
                     <Suspense key={user._id} fallback={<UserCardSkeleton />}>
                         <UserCard user={user} />
                     </Suspense>
                 ))}
-                </Suspense>
 
-            </div>
+            </div></Suspense>
             <div className="mt-6 flex justify-center gap-2">
                 {Array.from({ length: totalPages }, (_, i) => (
                     <button

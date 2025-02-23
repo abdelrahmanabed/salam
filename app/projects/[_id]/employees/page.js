@@ -74,7 +74,10 @@ const ProjectUsersPage = () => {
         </Suspense>
       </div>
 
-      <Suspense fallback={<UserCardSkeleton />}>
+      <Suspense fallback={            <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <UserCardSkeleton />
+        <UserCardSkeleton /><UserCardSkeleton /><UserCardSkeleton />
+        </div>}>
         <UserGrid users={users} />
       </Suspense>
 

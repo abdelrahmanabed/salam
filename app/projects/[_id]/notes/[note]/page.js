@@ -1,12 +1,12 @@
 import { NoteDetailsPageSkeleton } from '@/app/components/Loading';
 import React, { Suspense } from 'react'
-const NoteContent = React.lazy(() => import('./NoteContent'));
+const NoteDetailsPage = React.lazy(() => import('./NoteContent'));
 
 const page = () => {
 
   return (
 <Suspense fallback={<NoteDetailsPageSkeleton/>}>
-<NoteContent/>
+<NoteDetailsPage/>
 </Suspense>
   )
 }
