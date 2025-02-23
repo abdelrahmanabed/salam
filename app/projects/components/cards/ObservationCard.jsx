@@ -6,7 +6,7 @@ const ObservationCard = ({ event, index }) => {
 
       return (
   <div
-  className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-blackgrey bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
+  className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-darkbox bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
   ><div className=' p-4  pb-0'>
 
              <div className='flex h-[95px] gap-3 items-start'>
@@ -45,7 +45,7 @@ const ObservationCard = ({ event, index }) => {
              </div></div>
            
              {event.image && event.image.length > 0 && (
-      <div className='flex  bg-subcolor/50   mt-3 flex-wrap rounded h-full  gap-2 p-3 mb-0  dark:border-gray-800'>
+      <div className='flex  bg-orangecolor/50   mt-3 flex-wrap rounded h-full  gap-2 p-3 mb-0  dark:border-gray-800'>
                  {event.image.map((imgPath, imgIndex) => {
                    const imageUrl = `${process.env.NEXT_PUBLIC_API}${imgPath}`;
                    return (
@@ -75,7 +75,7 @@ const ObservationCard = ({ event, index }) => {
                  })}
                </div>
              )}
-           { event.observedBy._id &&    <div className=' bg-subcolor/50 flex justify-between h-full items-center gap-2 p-3 pt-3'>
+           { event.observedBy._id &&    <div className=' bg-orangecolor/50 flex justify-between h-full items-center gap-2 p-3 pt-3'>
         <Link href={`/users/${event.observedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkorange p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img  src={`${process.env.NEXT_PUBLIC_API}${event.observedBy.image}`} className=''/>
