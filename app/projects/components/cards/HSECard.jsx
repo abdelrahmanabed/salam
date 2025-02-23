@@ -7,7 +7,7 @@ import DownloadButton from '../DownloadButton';
 const HSECard = ({ event, index }) => {
 
   return (
-  <li
+  <div
   className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-blackgrey bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
   ><div className=' p-4  pb-0'>
 
@@ -76,7 +76,7 @@ const HSECard = ({ event, index }) => {
         >
           <Icon icon="uiw:setting" width="20" height="20" />
         </Link> 
-           </li>
+           </div>
   );
 };
 

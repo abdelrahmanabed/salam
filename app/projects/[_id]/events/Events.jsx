@@ -202,8 +202,11 @@ const Page = () => {
       {sortedActivities.length > 0 ? (
         <>
           <ul className="transition-all grid gap-4 md:grid-cols-2 xl:grid-cols-3 overflow-hidden duration-1000">
-            {displayActivities.map((activity, index) => renderActivityCard(activity, index))}
-          </ul>
+          {displayActivities.map((activity, index) => (
+                <li key={activity._id||`${activity.activityType}-${activity.date}-${index}`}>
+                  {renderActivityCard(activity, index)}
+                </li>
+              ))}          </ul>
           
           {visibleActivities < sortedActivities.length && (
             <button

@@ -6,7 +6,7 @@ import DownloadButton from '../DownloadAbnormal';
 const AbnormalCard = ({ event, index,edit }) => {
 
   return (
-<li
+<div
     className="group dark:text-subtextcolor  bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-blackgrey bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
     ><div className=' p-4  pb-0'>
       <div className='flex h-[95px] gap-3 items-start'>
@@ -86,7 +86,7 @@ const AbnormalCard = ({ event, index,edit }) => {
         >
           <Icon icon="uiw:setting" width="20" height="20" />
         </Link> 
-    </li>
+    </div>
      )
 }
 

@@ -106,19 +106,19 @@ const Activities = () => {
   const renderActivityCard = (activity, index) => {
     switch (activity.activityType) {
       case 'Safety Observation':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <Suspense fallback={<EventCardSkeleton/>}> <ObservationCard key={activity._id || index} event={activity} index={index} /></Suspense> </Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <ObservationCard  event={activity} index={index} /></Suspense>;
       case 'TBT':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <TBTCard key={activity._id || index} event={activity} index={index} /></Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <TBTCard  event={activity} index={index} /></Suspense>;
       case 'Audit Report':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <AuditCard key={activity._id || index} event={activity} index={index} /></Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <AuditCard  event={activity} index={index} /></Suspense>;
       case 'Drill Report':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <DrillCard key={activity._id || index} event={activity} index={index} /></Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <DrillCard  event={activity} index={index} /></Suspense>;
       case 'HSE Report':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <HSECard key={activity._id || index} event={activity} index={index} /></Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <HSECard  event={activity} index={index} /></Suspense>;
       case 'Abnormal Event':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <AbnormalCard key={activity._id || index} event={activity} index={index} /></Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <AbnormalCard  event={activity} index={index} /></Suspense>;
       case 'Training Record':
-        return <Suspense fallback={<EventCardSkeleton/>}>  <TrainingCard key={activity._id || index} event={activity} index={index} /></Suspense>;
+        return <Suspense fallback={<EventCardSkeleton/>}>  <TrainingCard  event={activity} index={index} /></Suspense>;
       default:
         return null;
     }
@@ -211,8 +211,11 @@ const Activities = () => {
             <div className="bg-white  rounded-xl shadow-sm ">
               {sortedActivities.length > 0 ? (
                 <div className="grid gap-4 grid-cols-1 xl:grid-cols-2">
-                  {displayActivities.map((activity, index) => renderActivityCard(activity, index))}
-                </div>
+   {displayActivities.map((activity, index) => (
+            <li key={activity._id||`${activity.activityType}-${activity.date}-${index}`}>
+              {renderActivityCard(activity, index)}
+            </li>
+          ))}                </div>
               ) : (
                 <div className="text-center py-8 text-gray-500">
                   <Icon icon="material-symbols:event-busy" className="w-12 h-12 mx-auto mb-2" />

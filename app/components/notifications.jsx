@@ -38,7 +38,7 @@ const Notifications = () => {
                     {displayedNotifications.length > 0 ? (
                         displayedNotifications.map(notification => (
                             <NotificationItem
-                                key={notification._id}
+                                key={notification?._id}
                                 notification={notification}
                                 onMarkAsRead={() => handleMarkAsRead(notification._id)}
                             />

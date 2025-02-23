@@ -101,7 +101,7 @@ const Event = () => {
 
   const renderActivityCard = (activity, index) => {
     return (
-      <Suspense key={activity._id || index} fallback={<EventCardSkeleton />}>
+      <Suspense fallback={<EventCardSkeleton />}>
         {(() => {
           switch(activity.activityType) {
             case 'TBT':
@@ -125,9 +125,11 @@ const Event = () => {
     <div className="w-full  p-4">
       
 
-      <ul className="space-y-4">
-        {getActivities().map((activity, index) => renderActivityCard(activity, index))}
-      </ul>
+      {getActivities().map((activity, index) => (
+          <li key={activity._id||`${activity.activityType}-${activity.date}-${index}`}>
+            {renderActivityCard(activity, index)}
+          </li>
+        ))}
     </div>
   );
 };

@@ -174,15 +174,16 @@ const DayContent = () => {
                 <h2 className="text-lg font-semibold">Events</h2>
               </div>
               {allEvents.length > 0 ? (
-                <div className="grid gap-4 grid-cols-1 xl:grid-cols-2">
-                  {allEvents.map((event, index) => renderEventCard(event, index))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <Icon icon="material-symbols:event-busy" className="w-12 h-12 mx-auto mb-2" />
-                  <p>No events found for today</p>
-                </div>
-              )}
+          <ul>
+          {allEvents.map((event, index) => (
+            <li key={event._id || index}>
+              {renderEventCard(event, index)}
+            </li>
+          ))}
+        </ul>
+        ) : (
+          <span className="text-gray-500">No events found for today.</span>
+        )}
             </div>
           </div>
 
