@@ -56,7 +56,7 @@ const NanoNote = ({ note,projectId }) => {
 
   return (
     <Link href={`/projects/${projectId}/notes/${_id}`} className="block text-xs my-2  overflow-hidden w-full">
-      <div className={`bg-${typeConfig.bgColor}    bg-opacity-50    dark:bg-darkbox dark:hover:bg-darkbluec  w-full overflow-hidden rounded-full p-2 shadow-sm hover:bg-maincolor/10  transition-colors duration-200`}>
+      <div className={`bg-${typeConfig.bgColor}    bg-opacity-50    dark:hover:bg-darkbluec  w-full overflow-hidden rounded-full p-2 shadow-sm hover:bg-maincolor/10  transition-colors duration-200`}>
         <div className="flex items-center gap-4">
           {/* Icon and Type */}
           <div className={`shrink-0 p-1 rounded-circle bg-${typeConfig.bgColor}`}>

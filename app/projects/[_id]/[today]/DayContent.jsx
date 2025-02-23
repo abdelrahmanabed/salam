@@ -82,7 +82,7 @@ const DayContent = () => {
     <div className="p-4 pt-0 dark:text-subtextcolor   min-h-screen">
       <div className="max-w-full mx-auto">
         {/* Header Section */}
-        <div className="bg-hovercolor dark:bg-blackgrey   rounded-main shadow-sm p-6 mb-4">
+        <div className="bg-hovercolor dark:bg-darkbox   rounded-main shadow-sm p-6 mb-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -96,10 +96,10 @@ const DayContent = () => {
               </div>
               <button 
                 onClick={scrollToNotes}
-                className="md:hidden px-4 py-2 bg-bluecolor text-white rounded-full text-sm flex items-center gap-2 hover:bg-bluecolor/90 transition-colors"
+                className="md:hidden px-4 py-2  border-2 text-white rounded-full text-sm flex items-center gap-2  transition-colors"
               >
                 <Icon icon="material-symbols:sticky-note-2" />
-                Notes
+                See Notes
               </button>
             </div>
 

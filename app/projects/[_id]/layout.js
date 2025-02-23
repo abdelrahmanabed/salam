@@ -18,7 +18,7 @@ export default function PrLayout({ children }) {
  if(!project) return;
   return (
     <>
-      <div className="flex justify-between p-4 bg-backgroundcolor dark:bg-blackgrey mx-4 mb-4 rounded-main">
+      <div className="flex justify-between p-4 bg-backgroundcolor dark:bg-darkbox mx-4 mb-4 rounded-main">
         <Suspense fallback={<div  />}>
           <AddNewReport onClick={() => setOpen(true)} />
         </Suspense>

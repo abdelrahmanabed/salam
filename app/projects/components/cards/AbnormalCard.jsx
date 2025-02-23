@@ -7,12 +7,12 @@ const AbnormalCard = ({ event, index,edit }) => {
 
   return (
 <div
-    className="group dark:text-subtextcolor  bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-darkbox bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
+    className="group dark:text-subtextcolor  bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-redcolor/30 hover:shadow-lg transition-all duration-300  border-transparent "
     ><div className=' p-4  pb-0'>
       <div className='flex h-[95px] gap-3 items-start'>
         <div className="flex-shrink-0">
           <Icon 
-            className="text-4xl bg-redcolor/10 p-2 rounded-circle text-redcolor scale-110 transition-transform duration-300" 
+            className="text-4xl bg-redcolor/30 dark:bg-redcolor/20 p-2 rounded-circle text-redcolor scale-110 transition-transform duration-300" 
             icon="jam:triangle-danger-f" 
           />
         </div>
@@ -47,7 +47,7 @@ const AbnormalCard = ({ event, index,edit }) => {
       
       </div>
     
-      <div className='flex h-full bg-redcolor/50   mt-3 flex-wrap rounded   gap-2 p-3 pb-3  dark:border-gray-800'>
+      <div className='flex h-full bg-redcolor/70   mt-3 flex-wrap rounded   gap-2 p-3 pb-3  dark:border-gray-800'>
         {['initialReport', 'investigationReport', 'actionPlan', 'lessonLearned', 'closeoutReport']
           .filter(key => event[key])
           .map((fileKey) => (
@@ -62,7 +62,7 @@ const AbnormalCard = ({ event, index,edit }) => {
         }
       </div>
     
-      {event.uploadedBy?._id&& <div className=' bg-redcolor/50 flex h-full items-center justify-between gap-2 p-3 pt-3'>
+      {event.uploadedBy?._id&& <div className=' bg-redcolor/70 flex h-full items-center justify-between gap-2 p-3 pt-3'>
         <Link href={`/users/${event.uploadedBy?._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkred p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img src={`${process.env.NEXT_PUBLIC_API}${event.uploadedBy.image}`} className=''/>
@@ -70,7 +70,7 @@ const AbnormalCard = ({ event, index,edit }) => {
            <span className=' text-subtextcolor text-xs font-bold '>{event.uploadedBy?.name}</span>
 
         </Link>
-        <span className=' text-xs text-subtextcolor/90'>
+        <span className=' text-xs dark:text-subtextcolor/90'>
               {new Date(event.date).toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',

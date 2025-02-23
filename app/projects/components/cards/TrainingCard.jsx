@@ -8,13 +8,13 @@ const TrainingCard = ({ event, index }) => {
  
   return (
   <div
-  className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-darkbox bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
+  className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative bg-rosecolor/30 hover:shadow-lg transition-all duration-300  border-transparent "
   ><div className=' p-4  pb-0'>
 
              <div className='flex gap-3 h-[95px] items-start'>
                <div className="flex-shrink-0">
                  <Icon 
-                   className="text-4xl bg-rosecolor/10 p-2 rounded-circle text-rosecolor scale-110 transition-transform duration-300" 
+                   className="text-4xl bg-rosecolor/30 p-2 rounded-circle text-rosecolor scale-110 transition-transform duration-300" 
                    icon="fluent:learning-app-20-filled" 
                  />
                </div>
@@ -63,7 +63,7 @@ const TrainingCard = ({ event, index }) => {
            <span className=' text-subtextcolor text-xs font-bold '>{event.uploadedBy.name}</span>
 
         </Link>
-        <span className='  text-xs text-subtextcolor/90'>
+        <span className='  text-xs dark:text-subtextcolor/90'>
               {new Date(event.date).toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',

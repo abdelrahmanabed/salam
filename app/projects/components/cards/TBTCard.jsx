@@ -6,13 +6,13 @@ const TBTCard = ({ event, index }) => {
  
   return (
   <div
-  className="group dark:text-subtextcolor   bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative dark:bg-darkbox bg-backgroundcolor hover:shadow-lg transition-all duration-300  border-transparent "
+  className="group dark:text-subtextcolor   bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-greencolor/30 hover:shadow-lg transition-all duration-300  border-transparent "
   ><div className=' p-4  pb-0'>
 
              <div className='flex h-[95px] gap-3 items-start'>
                <div className="flex-shrink-0">
                  <Icon 
-                   className="text-4xl bg-greencolor/10 p-2 rounded-circle text-greencolor scale-110 transition-transform duration-300" 
+                   className="text-4xl bg-greencolor/30 dark:bg-greencolor/20 p-2 rounded-circle text-greencolor scale-110 transition-transform duration-300" 
                    icon="mdi:talk" 
                  />
                </div>
@@ -79,7 +79,7 @@ const TBTCard = ({ event, index }) => {
            <span className=' text-subtextcolor text-xs font-bold '>{event.conductedBy.name}</span>
 
         </Link>
-        <span className=' text-xs text-subtextcolor/90'>
+        <span className=' text-xs dark:text-subtextcolor/90'>
               {new Date(event.dateTime).toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',
