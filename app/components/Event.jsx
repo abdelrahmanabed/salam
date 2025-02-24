@@ -124,12 +124,12 @@ const Event = () => {
   return (
     <div className="w-full  p-4">
       
-
+<ul className=' gap-4 flex flex-col'>
       {getActivities().map((activity, index) => (
           <li key={activity._id||`${activity.activityType}-${activity.date}-${index}`}>
             {renderActivityCard(activity, index)}
           </li>
-        ))}
+        ))}</ul>
     </div>
   );
 };

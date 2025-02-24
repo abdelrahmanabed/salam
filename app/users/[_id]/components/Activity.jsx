@@ -212,9 +212,9 @@ const Activities = () => {
               {sortedActivities.length > 0 ? (
                 <div className="grid gap-4 grid-cols-1 xl:grid-cols-2">
    {displayActivities.map((activity, index) => (
-            <li key={activity._id||`${activity.activityType}-${activity.date}-${index}`}>
+            <div key={activity._id||`${activity.activityType}-${activity.date}-${index}`}>
               {renderActivityCard(activity, index)}
-            </li>
+            </div>
           ))}                </div>
               ) : (
                 <div className="text-center py-8 text-gray-500">

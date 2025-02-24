@@ -6,21 +6,21 @@ const ObservationCard = ({ event, index }) => {
 
       return (
   <div
-  className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative bg-orangecolor/30 hover:shadow-lg transition-all duration-300  border-transparent "
+  className="group border-l-4 dark:text-subtextcolor border-orangecolor bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-hovercolor dark:bg-darkbox hover:shadow-lg transition-all duration-300  border-transparent "
   ><div className=' p-4  pb-0'>
 
              <div className='flex h-[95px] gap-3 items-start'>
                <div className="flex-shrink-0">
                  <Icon 
-                   className="text-4xl bg-orangecolor/30 dark:bg-orangecolor/20   p-2 rounded-circle text-orangecolor scale-110 transition-transform duration-300" 
-                   icon="weui:eyes-on-filled" 
+            className="text-4xl  bg-orangecolor/20  p-2 rounded-circle text-orangecolor scale-110 transition-transform duration-300" 
+            icon="weui:eyes-on-filled" 
                  />
                </div>
                <div className='flex-grow'>
                  <div className="flex justify-between items-start mb-2">
                    <div>
-                     <h3 className="font-semibold text-lg mb-1">{event.type}</h3>
-                     <div className='text-sm flex items-center gap-1 text-gray-500 dark:text-gray-400'>
+                   <h3 className="font-semibold text-xl text-orangecolor ">{event.type}</h3>
+                   <div className='text-sm flex items-center gap-1 text-gray-500 dark:text-gray-400'>
                        {event.location}
                        <Icon icon="mdi:location" className="text-orangecolor" width="16" height="16" />
 
@@ -44,8 +44,9 @@ const ObservationCard = ({ event, index }) => {
                </div>
              </div></div>
            
+          <div className='min-h-12'>
              {event.image && event.image.length > 0 && (
-      <div className='flex  bg-orangecolor/70   mt-3 flex-wrap rounded h-full  gap-2 p-3 mb-0  dark:border-gray-800'>
+      <div className='flex      flex-wrap rounded h-full  gap-2  ml-3 mb-0  dark:border-gray-800'>
                  {event.image.map((imgPath, imgIndex) => {
                    const imageUrl = `${process.env.NEXT_PUBLIC_API}${imgPath}`;
                    return (
@@ -74,9 +75,9 @@ const ObservationCard = ({ event, index }) => {
                    );
                  })}
                </div>
-             )}
-           { event.observedBy._id &&    <div className=' bg-orangecolor/70 flex justify-between h-full items-center gap-2 p-3 pt-3'>
-        <Link href={`/users/${event.observedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkorange p-1 pr-3 '>   
+             )}</div>
+           { event.observedBy._id &&    <div className='  flex justify-between h-full items-center gap-2 p-3 pt-3'>
+        <Link href={`/users/${event.observedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-orangecolor p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img  src={`${process.env.NEXT_PUBLIC_API}${event.observedBy.image}`} className=''/>
            </div>

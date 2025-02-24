@@ -7,19 +7,19 @@ const AbnormalCard = ({ event, index,edit }) => {
 
   return (
 <div
-    className="group dark:text-subtextcolor  bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-redcolor/30 hover:shadow-lg transition-all duration-300  border-transparent "
+    className="group border-l-4 dark:text-subtextcolor border-redcolor bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-hovercolor dark:bg-darkbox hover:shadow-lg transition-all duration-300  border-transparent "
     ><div className=' p-4  pb-0'>
       <div className='flex h-[95px] gap-3 items-start'>
         <div className="flex-shrink-0">
           <Icon 
-            className="text-4xl bg-redcolor/30 dark:bg-redcolor/20 p-2 rounded-circle text-redcolor scale-110 transition-transform duration-300" 
+            className="text-4xl  bg-redcolor/20  p-2 rounded-circle text-redcolor scale-110 transition-transform duration-300" 
             icon="jam:triangle-danger-f" 
           />
         </div>
         <div className='flex-grow'>
           <div className="flex justify-between items-start mb-2">
             <div className=' flex flex-col'>
-              <h3 className="font-semibold text-lg ">{event.eventType}</h3>
+              <h3 className="font-semibold text-xl text-redcolor ">{event.eventType}</h3>
               <div className='text-sm flex items-center gap-1 text-gray-500 dark:text-gray-400'>
                 {event.location}
                 <Icon icon="mdi:location" className="text-redcolor" width="16" height="16" />
@@ -47,14 +47,14 @@ const AbnormalCard = ({ event, index,edit }) => {
       
       </div>
     
-      <div className='flex h-full bg-redcolor/70   mt-3 flex-wrap rounded   gap-2 p-3 pb-3  dark:border-gray-800'>
+      <div className='flex ml-3 min-h-12 h-full pb-2     flex-wrap rounded   gap-2   dark:border-gray-800'>
         {['initialReport', 'investigationReport', 'actionPlan', 'lessonLearned', 'closeoutReport']
           .filter(key => event[key])
           .map((fileKey) => (
             <DownloadButton 
               key={fileKey}
               filePath={event[fileKey]}
-              color="dark:bg-subcolor/50 dark:text-hovercolor bg-boxcolor/50  dark:hover:bg-subcolor hover:bg-boxcolor duration-200 font-bold text-darkred "
+              color="dark:bg-subcolor/50 text-xs dark:text-hovercolor bg-boxcolor  dark:hover:bg-subcolor hover:bg-boxcolor duration-200 font-bold text-darkred "
               reportType={fileKey}
               className="transition-all duration-300"
             />
@@ -62,8 +62,8 @@ const AbnormalCard = ({ event, index,edit }) => {
         }
       </div>
     
-      {event.uploadedBy?._id&& <div className=' bg-redcolor/70 flex h-full items-center justify-between gap-2 p-3 pt-3'>
-        <Link href={`/users/${event.uploadedBy?._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkred p-1 pr-3 '>   
+      {event.uploadedBy?._id&& <div className='  flex h-full items-center justify-between gap-2 p-3 pt-3'>
+        <Link href={`/users/${event.uploadedBy?._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-redcolor p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img src={`${process.env.NEXT_PUBLIC_API}${event.uploadedBy.image}`} className=''/>
            </div>

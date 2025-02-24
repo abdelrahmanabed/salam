@@ -8,7 +8,7 @@ const TrainingCard = ({ event, index }) => {
  
   return (
   <div
-  className="group dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative bg-rosecolor/30 hover:shadow-lg transition-all duration-300  border-transparent "
+  className="group border-l-rosecolor border-l-4 dark:text-subtextcolor  bg max-h-80 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative bg-rosecolor/15 hover:shadow-lg transition-all duration-300  border-transparent "
   ><div className=' p-4  pb-0'>
 
              <div className='flex gap-3 h-[95px] items-start'>
@@ -36,7 +36,7 @@ const TrainingCard = ({ event, index }) => {
                  </p>
                </div>
              </div></div>
-             <div className='flex  bg-rosecolor/50   mt-3 flex-wrap rounded h-full  gap-2 p-3 mb-0  dark:border-gray-800'>
+             <div className='flex  min-h-9  flex-wrap rounded h-full  gap-2 ml-3 mb-3  dark:border-gray-800'>
              {['report', 'file', 'closeoutFile'].map((fileKey) => {
                 if (!event[fileKey]) return null;
           
@@ -55,7 +55,7 @@ const TrainingCard = ({ event, index }) => {
       </div>
     
        
-      { event.uploadedBy?._id&&<div className=' bg-rosecolor/50 flex  justify-between h-full items-center gap-2 p-3 pt-0'>
+      { event.uploadedBy?._id&&<div className='  flex  justify-between h-full items-center gap-2 p-3 pt-0'>
         <Link href={`/users/${event.uploadedBy._id}`} className=' overflow-hidden   flex items-center gap-1 rounded-full bg-darkrose p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img  src={`${process.env.NEXT_PUBLIC_API}${event.uploadedBy.image}`} className=''/>
