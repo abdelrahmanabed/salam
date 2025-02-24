@@ -174,7 +174,7 @@ const DayContent = () => {
                 <h2 className="text-lg font-semibold">Events</h2>
               </div>
               {allEvents.length > 0 ? (
-          <ul>
+          <ul className=' grid grid-cols-1 gap-4  xl:grid-cols-2 '>
           {allEvents.map((event, index) => (
             <li key={event._id || index}>
               {renderEventCard(event, index)}

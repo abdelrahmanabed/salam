@@ -62,7 +62,7 @@ const AbnormalCard = ({ event, index,edit }) => {
         }
       </div>
     
-      {event.uploadedBy?._id&& <div className='  flex h-full items-center justify-between gap-2 p-3 pt-3'>
+      {event.uploadedBy?._id&& <div className='  flex h-full items-center justify-between gap-2 p-3 pt-0'>
         <Link href={`/users/${event.uploadedBy?._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-redcolor p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img src={`${process.env.NEXT_PUBLIC_API}${event.uploadedBy.image}`} className=''/>

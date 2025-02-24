@@ -76,7 +76,7 @@ const ObservationCard = ({ event, index }) => {
                  })}
                </div>
              )}</div>
-           { event.observedBy._id &&    <div className='  flex justify-between h-full items-center gap-2 p-3 pt-3'>
+           { event.observedBy._id &&    <div className='  flex justify-between h-full items-center gap-2 p-3 pt-0'>
         <Link href={`/users/${event.observedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-orangecolor p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img  src={`${process.env.NEXT_PUBLIC_API}${event.observedBy.image}`} className=''/>
