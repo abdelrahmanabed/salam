@@ -19,7 +19,7 @@ const TBTCard = ({ event, index }) => {
                <div className='flex-grow'>
                  <div className="flex justify-between items-start mb-2">
                    <div>
-                     <h3 className="font-semibold text-lg ">TBT</h3>
+                     <h3 className="font-semibold md:text-xl sm:text-lg ">TBT</h3>
                    <div className='flex'> <div className='text-sm flex items-center gap-1 text-gray-500 dark:text-gray-400'>
                        {event.location}
                        <Icon icon="mdi:location" className="text-greencolor" width="16" height="16" />

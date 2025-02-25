@@ -21,7 +21,7 @@ const TrainingCard = ({ event, index }) => {
                <div className='flex-grow'>
                  <div className="flex justify-between items-start mb-2">
                    <div>
-                     <h3 className="font-semibold text-lg mb-1">Training</h3>
+                     <h3 className="font-semibold md:text-xl sm:text-lg mb-1">Training</h3>
                      <div className='text-sm flex items-center gap-1 text-gray-500 dark:text-gray-400'>
                        {event.numberOfAttendees}
                        <Icon icon="fa6-solid:people-line" className="text-rosecolor" width="16" height="16" />

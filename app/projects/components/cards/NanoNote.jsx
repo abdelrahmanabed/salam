@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import { NotesContext } from '@/app/contexts/NoteContext';
 
 const getNoteTypeConfig = (type) => {
     
@@ -38,7 +39,9 @@ const getNoteTypeConfig = (type) => {
 };
 
 const NanoNote = ({ note,projectId }) => {
-
+  const { togglePinNote } = useContext(NotesContext);
+  const [isPinning, setIsPinning] = useState(false);
+  const [localPinned, setLocalPinned] = useState(note.pinned);
   const {
     type,
     content,
@@ -48,13 +51,50 @@ const NanoNote = ({ note,projectId }) => {
     usersId,
     _id
   } = note;
-
+  const handlePinToggle = async (e) => {
+    e.preventDefault(); // Prevent navigation to the note detail
+    e.stopPropagation();
+    
+    if (isPinning) return;
+    
+    try {
+      setIsPinning(true);
+      // Optimistic update for better UX
+      setLocalPinned(!localPinned);
+      await togglePinNote(_id);
+    } catch (error) {
+      // Revert on error
+      setLocalPinned(note.pinned);
+      console.error("Failed to toggle pin status:", error);
+    } finally {
+      setIsPinning(false);
+    }
+  };
   const typeConfig = getNoteTypeConfig(type);
   const isDaily = targetDate ? true : false;
   const isPublic = !targetDate && !usersId?.length;
   const totalAttachments = (images?.length || 0) + (files?.length || 0);
 
   return (
+        <div className="block overflow-hidden  w-full relative">
+        {/* Pin Button - Absolute positioned at top right */}
+        <button
+          onClick={handlePinToggle}
+          className={`absolute top-1 right-1 z-10  rounded-full transition-all duration-200 ${
+            isPinning ? 'opacity-70' : 'opacity-100'
+          } ${
+            localPinned 
+              ? ' dark:text-backgroundcolor  hover:bg-darkbluec dark:hover:bg-darkbluec' 
+              : 'bg-transparent hover:bg-hovercolor dark:hover:bg-blackgrey text-darkbox dark:text-hovercolor'
+          }`}
+          disabled={isPinning}
+          aria-label={localPinned ? "Unpin note" : "Pin note"}
+        >
+          <Icon 
+            icon={localPinned ? "material-symbols:push-pin" : "material-symbols:push-pin-outline"} 
+            className={`w-3 h-3 transform rotate-45 ${isPinning ? 'animate-pulse' : ''}`}
+          />
+        </button>
     <Link href={`/projects/${projectId}/notes/${_id}`} className="block text-xs my-2  overflow-hidden w-full">
       <div className={`bg-${typeConfig.bgColor}    bg-opacity-50    dark:hover:bg-darkbluec  w-full overflow-hidden rounded-full p-2 shadow-sm hover:bg-maincolor/10  transition-colors duration-200`}>
         <div className="flex items-center gap-4">
@@ -89,7 +129,7 @@ const NanoNote = ({ note,projectId }) => {
           </div>
         </div>
       </div>
-    </Link>
+    </Link></div>
   );
 };
 

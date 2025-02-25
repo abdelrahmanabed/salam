@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${sen.className}  dark:bg-subcolor antialiased `}
+        className={`${sen.className} bg-boxcolor  dark:bg-subcolor antialiased `}
       
       > 
       <ProtectedRoute>

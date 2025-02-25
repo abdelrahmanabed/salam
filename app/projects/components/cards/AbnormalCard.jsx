@@ -19,7 +19,7 @@ const AbnormalCard = ({ event, index,edit }) => {
         <div className='flex-grow'>
           <div className="flex justify-between items-start mb-2">
             <div className=' flex flex-col'>
-              <h3 className="font-semibold text-xl text-redcolor ">{event.eventType}</h3>
+              <h3 className="font-semibold md:text-xl sm:text-lg text-redcolor ">{event.eventType}</h3>
               <div className='text-sm flex items-center gap-1 text-gray-500 dark:text-gray-400'>
                 {event.location}
                 <Icon icon="mdi:location" className="text-redcolor" width="16" height="16" />
