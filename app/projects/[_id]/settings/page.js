@@ -11,7 +11,7 @@ import MapLocation from './MapLocation';
 
 
 const EditProject = () => {
-  const { project, loading } = useContext(ProjectsContext);
+  const { project, loading, refreshProject } = useContext(ProjectsContext);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
   
@@ -137,6 +137,7 @@ const EditProject = () => {
         });
         
         console.log('Project updated:', response.data);
+        refreshProject();
         
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred while updating the project";

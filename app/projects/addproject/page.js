@@ -2,15 +2,16 @@
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Addinput from './components/Addinput';
 import MapLocation from './components/MapLocation';
 import { useRouter } from 'next/navigation';
+import { ProjectsContext } from '../context/ProjectsContext';
 
 const Page = () => {
  const [loading, setLoading] = useState(false);
-  // إضافة حالات جديدة لتتبع التقدم
-  const [uploadProgress, setUploadProgress] = useState(0);
+const{ refreshProjects} = useContext(ProjectsContext)
+ const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ 
     success: false, 
@@ -132,6 +133,7 @@ const router = useRouter()
         setIsUploading(false);
         console.log('Project created:', response.data);
         resetForm();
+        refreshProjects();
         router.back()
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred while creating the project";

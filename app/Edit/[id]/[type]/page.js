@@ -1,10 +1,11 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { Icon } from '@iconify/react';
 import { useParams, useRouter } from 'next/navigation';
 import Addinput from './Addinput';
+import { ProjectsContext } from '../../../projects/context/ProjectsContext';
 
 
 const EditPage = () => {
@@ -22,6 +23,9 @@ const EditPage = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);  const router = useRouter(); // Initialize router
   const [loading, setLoading] = useState(false);
+  const [fileUploaders, setFileUploaders] = useState({}); // Track who uploaded each file
+  const { refreshSProject } = useContext(ProjectsContext);
+
   const EnhancedProgressBar = ({ progress, isUploading }) => {
     if (!isUploading) return null;
     
@@ -120,16 +124,21 @@ const EditPage = () => {
         });
         setInitialData(response.data);
        
-        
         if (type === 'abnormal') {
           const fileFields = ['initialReport', 'investigationReport', 'actionPlan', 'lessonLearned', 'closeoutReport'];
           const existingFilesObj = {};
+          const fileUploadersObj = {};
+
           fileFields.forEach(field => {
             if (response.data[field]) {
               existingFilesObj[field] = response.data[field];
             }
+            if (response.data[`${field}By`]) {
+              fileUploadersObj[field] = response.data[`${field}By`];  
+            }
           });
           setExistingFiles(existingFilesObj);
+          setFileUploaders(fileUploadersObj);
         } else if (['observation', 'tbt'].includes(type)) {
           setExistingImages(response.data.image || []);
         } else if (['audit', 'drill', 'hse', 'training'].includes(type)) {
@@ -287,9 +296,12 @@ const EditPage = () => {
         fileFields.forEach(field => {
           if (files[field]) {
             formData.append(field, files[field]);
+            formData.append(`${field}By`, currentUserId);
+
           }
           if (existingFiles[field]) {
             formData.append(`existing_${field}`, 'true');
+            
           } else {
             formData.append(`existing_${field}`, 'false');
           }
@@ -330,11 +342,13 @@ const EditPage = () => {
           }
         );
      
-  
-        router.back();
+        refreshSProject(response.data.project);
+        
         setApiError("");
         setLoading(false);
         setIsUploading(false);
+        router.back();
+
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred";
         setApiError(errorMessage);
@@ -530,8 +544,11 @@ const EditPage = () => {
                 .map((field) => (
                   <div key={field} className="relative">
                     <label className="block mb-2 text-sm font-medium">
-                      {field.replace(/([A-Z])/g, ' $1').trim()}
-                    </label>
+                        {field.replace(/([A-Z])/g, ' $1').trim()}
+                        {fileUploaders[field] &&
+                          <span className="text-xs ml-2 text-gray-500">Uploaded by {fileUploaders[field].name} </span>
+                        }
+                      </label>
                     <div className="flex items-center gap-2">
                       {existingFiles[field] ? (
                         <div className="flex items-center gap-2 bg-gray-100 p-2 rounded">

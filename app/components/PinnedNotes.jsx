@@ -21,7 +21,7 @@ const PinnedNotes = () => {
 
   return (
     <div className="w-full my-4 ">
-      <div className="">
+      <div className=" flex flex-col gap-1">
         {getPinnedNotes().map((note, index) => (
           <NanoNote key={note._id || index} note={note} projectId={note.projectId._id} />
         ))}

@@ -5,12 +5,14 @@ import Select from './components/SelectRole'
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const router = useRouter();
   const EnhancedProgressBar = ({ progress, isUploading }) => {
     if (!isUploading) return null;
     
@@ -95,7 +97,8 @@ const page = () => {
         });
         setLoading(false);
         setIsUploading(false);
-                console.log('User created:', response.data);
+                console.log('Admin created:', response.data);
+                router.back();
       } catch (error) {
         const errorMessage = error.response?.data?.message || "An error occurred";
         

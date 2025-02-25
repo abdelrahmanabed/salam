@@ -3,6 +3,7 @@
 import { useContext, useState, Suspense, lazy } from "react";
 import { ProjectsContext } from "../context/ProjectsContext";
 import { ProjectNavMobileSkeleton, ProjectNavSkeleton } from "@/app/components/Loading";
+import Link from "next/link";
 
 // Lazy load components
 const ProjectNav = lazy(() => import("../components/ProjectNav"));
@@ -45,14 +46,14 @@ export default function PrLayout({ children }) {
           </ReportsMenu>
         </Suspense>
 <Suspense fallback={<div/>}>
-        <div className="flex flex-col">
+        <Link href={`/projects/${project._id}`} className="flex flex-col">
           <span className="font-black dark:text-subtextcolor text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl">
             {project.name}
           </span>
           <span className="text-xs sm:text-xs md:text-base lg:text-lg xl:text-xl dark:text-darkgrey text-blackgrey">
             {project.client}
           </span>
-        </div></Suspense>
+        </Link></Suspense>
 
         <Suspense fallback={<ProjectNavSkeleton/>}>
           <ProjectNav className="lg:flex hidden" href={project._id} />

@@ -95,8 +95,8 @@ const NanoNote = ({ note,projectId }) => {
             className={`w-3 h-3 transform rotate-45 ${isPinning ? 'animate-pulse' : ''}`}
           />
         </button>
-    <Link href={`/projects/${projectId}/notes/${_id}`} className="block text-xs my-2  overflow-hidden w-full">
-      <div className={`bg-${typeConfig.bgColor}    bg-opacity-50    dark:hover:bg-darkbluec  w-full overflow-hidden rounded-full p-2 shadow-sm hover:bg-maincolor/10  transition-colors duration-200`}>
+    <Link href={`/projects/${projectId}/notes/${_id}`} className="block text-xs   overflow-hidden w-full">
+      <div className={`bg-${typeConfig.bgColor}    bg-opacity-50    dark:hover:bg-darkbluec  w-full overflow-hidden rounded-full p-1 shadow-sm hover:bg-maincolor/10  transition-colors duration-200`}>
         <div className="flex items-center gap-4">
           {/* Icon and Type */}
           <div className={`shrink-0 p-1 rounded-circle bg-${typeConfig.bgColor}`}>
