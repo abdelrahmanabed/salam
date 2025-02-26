@@ -35,34 +35,34 @@ export const ProjectsProvider = ({ children }) => {
     });
 
     // تعريف استعلامات لجميع أنواع التقارير
-    const reportTypes = [
-        { key: 'tbts', endpoint: 'tbts' },
-        { key: 'manhours', endpoint: 'manhours' },
-        { key: 'abnormalEvents', endpoint: 'abnormal-events' },
-        { key: 'drillReports', endpoint: 'drill-reports' },
-        { key: 'auditReports', endpoint: 'audit-reports' },
-        { key: 'trainingRecords', endpoint: 'training-reports' },
-        { key: 'hseReports', endpoint: 'hse-reports' },
-        { key: 'observations', endpoint: 'observations' }
-    ];
+    // const reportTypes = [
+    //     { key: 'tbts', endpoint: 'tbts' },
+    //     { key: 'manhours', endpoint: 'manhours' },
+    //     { key: 'abnormalEvents', endpoint: 'abnormal-events' },
+    //     { key: 'drillReports', endpoint: 'drill-reports' },
+    //     { key: 'auditReports', endpoint: 'audit-reports' },
+    //     { key: 'trainingRecords', endpoint: 'training-reports' },
+    //     { key: 'hseReports', endpoint: 'hse-reports' },
+    //     { key: 'observations', endpoint: 'observations' }
+    // ];
 
-    // إنشاء استعلامات لكل نوع من التقارير
-    const reportQueries = {};
+    // // إنشاء استعلامات لكل نوع من التقارير
+    // const reportQueries = {};
     
-    reportTypes.forEach(({ key, endpoint }) => {
-        const { data = [], isLoading } = useQuery({
-            queryKey: [key, id],
-            queryFn: async () => {
-                if (!id) return [];
-                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/${endpoint}/project/${id}`);
-                return data || [];
-            },
-            enabled: !!id,
-            staleTime: 300000,
-        });
+    // reportTypes.forEach(({ key, endpoint }) => {
+    //     const { data = [], isLoading } = useQuery({
+    //         queryKey: [key, id],
+    //         queryFn: async () => {
+    //             if (!id) return [];
+    //             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/${endpoint}/project/${id}`);
+    //             return data || [];
+    //         },
+    //         enabled: !!id,
+    //         staleTime: 300000,
+    //     });
         
-        reportQueries[key] = { data, isLoading };
-    });
+    //     reportQueries[key] = { data, isLoading };
+    // });
 
     // دالة لتحديث المشاريع
     const refreshProjects = () => queryClient.invalidateQueries(['projects']);
@@ -70,17 +70,17 @@ export const ProjectsProvider = ({ children }) => {
     const refreshSProject = (projectId) => queryClient.invalidateQueries(['project', projectId]);
 
     // دالة لتحديث نوع معين من التقارير للمشروع الحالي
-    const refreshReportType = (reportType) => queryClient.invalidateQueries([reportType, id]);
+    // const refreshReportType = (reportType) => queryClient.invalidateQueries([reportType, id]);
     
     // دالة لتحديث نوع معين من التقارير لمشروع محدد
-    const refreshProjectReportType = (projectId, reportType) => queryClient.invalidateQueries([reportType, projectId]);
+    // const refreshProjectReportType = (projectId, reportType) => queryClient.invalidateQueries([reportType, projectId]);
     
     // دالة لتحديث جميع أنواع التقارير للمشروع الحالي
-    const refreshAllReports = () => {
-        reportTypes.forEach(({ key }) => {
-            queryClient.invalidateQueries([key, id]);
-        });
-    };
+    // const refreshAllReports = () => {
+    //     reportTypes.forEach(({ key }) => {
+    //         queryClient.invalidateQueries([key, id]);
+    //     });
+    // };
 
     useEffect(() => {
         if (!id) return;
@@ -89,39 +89,37 @@ export const ProjectsProvider = ({ children }) => {
 
         // الاستماع لتحديثات المشاريع
         socket.on('projectUpdated', (updatedProject) => {
-            if (updatedProject._id === id) {
-                refreshProject();
-            }
-            refreshProjects();
+                refreshSProject(updatedProject._id);
+        
         });
 
         // تسجيل مستمعي الأحداث لكل نوع من التقارير
-        const eventHandlers = {
-            'tbt': 'tbts',
-            'manhour': 'manhours',
-            'abnormalEvent': 'abnormalEvents',
-            'drillReport': 'drillReports',
-            'auditReport': 'auditReports',
-            'trainingRecord': 'trainingRecords',
-            'hseReport': 'hseReports',
-            'observation': 'observations'
-        };
+        // const eventHandlers = {
+        //     'tbt': 'tbts',
+        //     'manhour': 'manhours',
+        //     'abnormalEvent': 'abnormalEvents',
+        //     'drillReport': 'drillReports',
+        //     'auditReport': 'auditReports',
+        //     'trainingRecord': 'trainingRecords',
+        //     'hseReport': 'hseReports',
+        //     'observation': 'observations'
+        // };
 
         // إضافة مستمعين للأحداث (إنشاء، تحديث، حذف) لكل نوع تقرير
-        Object.entries(eventHandlers).forEach(([eventPrefix, reportType]) => {
-            ['Created', 'Updated', 'Deleted'].forEach(action => {
-                const eventName = `${eventPrefix}${action}`;
+        // Object.entries(eventHandlers).forEach(([eventPrefix, reportType]) => {
+        //     ['Created', 'Updated', 'Deleted'].forEach(action => {
+        //         const eventName = `${eventPrefix}${action}`;
                 
-                socket.on(eventName, (data) => {
-                    const projectId = data.project || (data.projectId);
+        //         socket.on(eventName, (data) => {
+        //             const projectId = data.project || (data.projectId);
                     
-                    if (projectId === id) {
-                        refreshReportType(reportType);
-                        refreshProject(); // تحديث المشروع أيضًا لأن التقارير مرتبطة بالمشروع
-                    }
-                });
-            });
-        });
+        //             if (projectId === id) {
+        //                 refreshReportType(reportType);
+        //                 refreshProject(); // تحديث المشروع أيضًا لأن التقارير مرتبطة بالمشروع
+        //             }
+        //         });
+        //     });
+        // });
 
         return () => {
             socket.disconnect();
@@ -138,16 +136,16 @@ export const ProjectsProvider = ({ children }) => {
         refreshProjects,
         refreshProject,
         refreshSProject,
-        refreshReportType,
-        refreshProjectReportType,
-        refreshAllReports,
+        // refreshReportType,
+        // refreshProjectReportType,
+        // refreshAllReports,
     };
 
     // إضافة بيانات التقارير وحالات التحميل للسياق
-    reportTypes.forEach(({ key }) => {
-        contextValue[key] = reportQueries[key].data;
-        contextValue[`${key}Loading`] = reportQueries[key].isLoading;
-    });
+    // reportTypes.forEach(({ key }) => {
+    //     contextValue[key] = reportQueries[key].data;
+    //     contextValue[`${key}Loading`] = reportQueries[key].isLoading;
+    // });
 
     return (
         <ProjectsContext.Provider value={contextValue}>

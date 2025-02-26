@@ -7,7 +7,7 @@ const AbnormalCard = ({ event, index,edit }) => {
 
   return (
 <div
-    className="group border-l-4 dark:text-subtextcolor border-redcolor bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-hovercolor dark:bg-darkbox hover:shadow-lg transition-all duration-300  border-transparent "
+    className="group border-l-4  dark:text-subtextcolor border-redcolor bg max-h-96 rounded-main overflow-hidden gap-0 flex flex-col rounded-xl relative  bg-hovercolor dark:bg-darkbox hover:shadow-lg transition-all duration-300  border-transparent "
     ><div className=' p-4  pb-0'>
       <div className='flex h-[95px] gap-3 items-start'>
         <div className="flex-shrink-0">

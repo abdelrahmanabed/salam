@@ -37,6 +37,7 @@ export const UsersProvider = ({ children }) => {
     // تحديث بيانات المستخدمين
     const refreshUsers = () => queryClient.invalidateQueries(['users']);
     const refreshUser = () => queryClient.invalidateQueries(['user', id]);
+    const refreshSUser = (userId) => queryClient.invalidateQueries(['user', userId]);
 
     // تحديث بيانات المستخدم محليًا
     const setUser = (newUserData) => queryClient.setQueryData(['user', id], newUserData);
@@ -44,7 +45,8 @@ export const UsersProvider = ({ children }) => {
     useEffect(() => {
         const socket = io(`${process.env.NEXT_PUBLIC_API}`);
 
-        socket.on('userUpdated', refreshUser);
+        socket.on('userUpdated', (updatedUser) => {
+            refreshSUser(updatedUser._id); });
         socket.on('usersUpdated', refreshUsers);
 
         return () => {
@@ -61,6 +63,7 @@ export const UsersProvider = ({ children }) => {
             usersError,
             userError,
             refreshUsers,
+            refreshSUser,
             refreshUser,
             setUser,
         }}>

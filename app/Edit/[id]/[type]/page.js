@@ -296,7 +296,7 @@ const EditPage = () => {
         fileFields.forEach(field => {
           if (files[field]) {
             formData.append(field, files[field]);
-            formData.append(`${field}By`, currentUserId);
+            formData.append(`${field}By`, '67b0121b61d73eb526515a6d');
 
           }
           if (existingFiles[field]) {
@@ -342,7 +342,6 @@ const EditPage = () => {
           }
         );
      
-        refreshSProject(response.data.project);
         
         setApiError("");
         setLoading(false);

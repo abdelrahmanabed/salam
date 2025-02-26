@@ -168,18 +168,21 @@ export const NotesProvider = ({ children }) => {
         const socket = io(`${process.env.NEXT_PUBLIC_API}`);
 
         socket.on('noteCreated', () => {
-            refreshAllNotes();
+           
             if (project?._id) refreshProjectNotes();
+            refreshAllNotes();
         });
 
         socket.on('noteUpdated', () => {
-            refreshAllNotes();
             if (project?._id) refreshProjectNotes();
+            refreshAllNotes();
+
         });
 
         socket.on('noteDeleted', () => {
-            refreshAllNotes();
             if (project?._id) refreshProjectNotes();
+            refreshAllNotes();
+
         });
 
         return () => {

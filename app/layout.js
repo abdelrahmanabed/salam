@@ -9,6 +9,7 @@ import { NotificationsProvider } from "./contexts/NotificationContext";
 import Notifications from "./components/notifications";
 import Qprovider from "./contexts/Qprovider";
 import { NotesProvider } from "./contexts/NoteContext";
+import { AdminProvider } from "./contexts/AdminContext";
 
 const sen = Sen({
   subsets: ["latin"],
@@ -27,12 +28,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${sen.className} bg-boxcolor  dark:bg-subcolor antialiased `}
       
-      > 
+      >
+
       <ProtectedRoute>
         <Qprovider>
+        <AdminProvider>
+
       <NotificationsProvider>
       <Notifications/>
-    
+
         <UsersProvider>
         <ProjectsProvider>
 
@@ -48,7 +52,10 @@ export default function RootLayout({ children }) {
         </ProjectsProvider>
 
         </UsersProvider> 
+
         </NotificationsProvider>
+        </AdminProvider>
+
         </Qprovider>
        </ProtectedRoute> 
        
