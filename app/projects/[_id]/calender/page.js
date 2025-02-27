@@ -127,45 +127,45 @@ daysInMonth.forEach(day => {
     calendarDays.push(
 
       <div
-        key={day.toString()}
-        onClick={() => dayData && router.push(`/projects/${project._id}/calender/${dayData._id}`)}
-        className={`
-          p-4 rounded-main min-h-[100px] relative flex flex-col gap-1
-          ${isToday ? 'bg-lightblue dark:bg-darkblueb' : dayData ? 'cursor-pointer hover:bg-lightblue dark:hover:bg-lightblue duration-200 bg-backgroundcolor dark:bg-blackgrey' : ' dark:text-blackgrey text-darkgrey bg-blackgrey dark:bg-darkbox'}
-        `}
-      >
-        <span className="font-bold">{format(day, 'd')}</span>
-        {dayData && (
-          <div className="text-xs flex gap-1 flex-wrap">
-            {dayData.tbts.length > 0 && (
-              <div className="text-blue-600 hidden md:flex justify-between">
-                <Icon  className="text-base bg-greencolor p-1 rounded-circle text-subtextcolor" 
-                  icon="mdi:talk" 
-                />      
-                          <span>{dayData.tbts.length}</span>
-              </div>
-            )}
-            {dayData.abnormalEvents.length > 0 && (
-              <div className="text-blue-600 hidden md:flex justify-between">
-                <Icon  className="text-base bg-redcolor p-1 rounded-circle text-subtextcolor" 
-                   icon="icon-park-solid:abnormal" 
-                />
-                <span>{dayData.abnormalEvents.length}</span>
-              </div>
-            )}
-            {dayData.observations.length > 0 && (
-              <div className="text-blue-600 hidden md:flex justify-between">
-                <Icon  className="text-base bg-orangecolor p-1 rounded-circle text-subtextcolor" 
-                  icon="weui:eyes-on-filled" 
-                />
-                <span>{dayData.observations.length}</span>
-              </div>
-            )}
-          
-          
-          </div>
-        )}
-      </div>
+      key={day.toString()}
+      onClick={() => dayData && router.push(`/projects/${project._id}/calender/${dayData._id}`)}
+      className={`
+       p-2  md:p-4 rounded-main min-h-[80px] relative flex flex-col gap-0 md:gap-1
+        ${isToday ? 'bg-lightblue dark:bg-darkblueb' : dayData ? 'cursor-pointer hover:bg-lightblue dark:hover:bg-lightblue duration-200 bg-backgroundcolor dark:bg-blackgrey' : ' dark:text-blackgrey text-darkgrey bg-blackgrey dark:bg-darkbox'}
+      `}
+    >
+      <span className="font-bold">{format(day, 'd')}</span>
+      {dayData && (
+        <div className="text-xs flex gap-0 md:gap-1 flex-col md:flex-row flex-wrap">
+          {dayData.tbts.length > 0 && (
+            <div className="text-blue-600 flex justify-between items-center">
+              <Icon  className="text-xs md:text-base bg-greencolor p-1 rounded-circle text-subtextcolor" 
+                icon="mdi:talk" 
+              />      
+                        <span>{dayData.tbts.length}</span>
+            </div>
+          )}
+          {dayData.abnormalEvents.length > 0 && (
+            <div className="text-blue-600  flex items-center justify-between">
+              <Icon  className="text-xs md:text-base bg-redcolor p-1 rounded-circle text-subtextcolor" 
+                 icon="icon-park-solid:abnormal" 
+              />
+              <span>{dayData.abnormalEvents.length}</span>
+            </div>
+          )}
+          {dayData.observations.length > 0 && (
+            <div className="text-blue-600  flex justify-between items-center">
+              <Icon  className="text-xs md:text-base bg-orangecolor p-1 rounded-circle text-subtextcolor" 
+                icon="weui:eyes-on-filled" 
+              />
+              <span>{dayData.observations.length}</span>
+            </div>
+          )}
+        
+        
+        </div>
+      )}
+    </div>
     );
   });
   
@@ -175,7 +175,7 @@ daysInMonth.forEach(day => {
  <div className="p-4 dark:text-subtextcolor">
       {/* Navigation */}
       <div className="flex items-center justify-between mb-6">
-        <button 
+      <button 
           onClick={goToPreviousMonth}
           className={`p-2 bg-darkbluea rounded-circle text-subtextcolor hover:bg-maincolor disabled:bg-blackgrey `}
           disabled={isBefore(startOfMonth(subMonths(currentDate, 1)), startOfMonth(projectStart))}
@@ -184,7 +184,7 @@ daysInMonth.forEach(day => {
           </button>
         
         <div className="flex gap-4 items-center">
-          <input
+        <input
             type="month"
             value={format(currentDate, dateFormat)}
             onChange={handleMonthYearChange}

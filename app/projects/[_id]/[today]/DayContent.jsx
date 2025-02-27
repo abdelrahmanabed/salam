@@ -14,14 +14,7 @@ import NoteCard from '../../components/cards/NoteCard';
 import NanoNote from '../../components/cards/NanoNote';
 import { useNotes } from '../../../contexts/NoteContext';
 
-const LoadingState = () => (
-  <div className="flex items-center justify-center w-full h-64">
-    <div className="flex flex-col items-center gap-4">
-      <Icon icon="eos-icons:loading" className="w-12 h-12 animate-spin text-bluecolor" />
-      <span className="text-lg text-gray-600">جاري تحميل البيانات...</span>
-    </div>
-  </div>
-);
+
 
 const DayContent = () => {
   const { projectNotes, getPinnedNotes, toggleNotePin } = useNotes();
