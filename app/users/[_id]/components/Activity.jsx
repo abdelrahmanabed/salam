@@ -27,8 +27,11 @@ const Activities = () => {
   const allNotes = user?.notes|| [];
 
   // Get pinned and regular notes directly from user
-  const pinnedNotes = allNotes.filter(note => note.pinned === true);
+  const pinnedNotes = allNotes.filter(note => note.pinned === true)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+
   const regularNotes = allNotes 
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
   const scrollToNotes = () => {
     notesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };

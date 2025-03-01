@@ -60,7 +60,8 @@ const NoteCard = ({ note,projectId }) => {
     images,
     files,
     usersId,
-    _id
+    _id,
+    createdAt
   } = note;
 
 
@@ -89,6 +90,36 @@ const NoteCard = ({ note,projectId }) => {
     } finally {
       setIsPinning(false);
     }
+  };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    // If the date is today, show time in AM/PM format
+    if (diffDays === 0) {
+      return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    }
+    
+    // If more than a year has passed, show full date with year
+    if (diffDays > 365) {
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+    }
+    
+    // Otherwise show date in DD/MM format
+    return date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit'
+    });
   };
 
   return (
@@ -176,6 +207,9 @@ const NoteCard = ({ note,projectId }) => {
                 </div>
               )}
             </div>
+            <div className="text-xs absolute  bottom-5 right-4 text-darkgrey dark:text-gray-400">
+                {formatDate(createdAt)}
+              </div>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ const ProjectInfoPage = () => {
             totals.hseReports += day.hseReports?.length || 0;
             totals.observations += day.observations?.length || 0;
             totals.auditReports += day.auditReports?.length || 0;
-            totals.manhours += day.manhours?.length || 0;
+            totals.manhours += day.manhours?.dayWorkingHours || 0;
             totals.trainingRecords += day.trainingRecords?.length || 0;
             totals.drillReports += day.drillReports?.length || 0;
           });

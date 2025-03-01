@@ -191,7 +191,7 @@ const NoteDetailsPage = () => {
     </h3>
     <div className="flex flex-wrap gap-2">
       {noteDetails.usersId.map((user, index) => (
-        <Link href={`/users/${user._id}`} key={index} className="flex items-center gap-3 bg-boxcolor dark:bg-blackgrey p-2 rounded-full shadow">
+        <Link href={`/team/${user._id}`} key={index} className="flex items-center gap-3 bg-boxcolor dark:bg-blackgrey p-2 rounded-full shadow">
           <Image
             src={`${process.env.NEXT_PUBLIC_API}${user.image}`}
             alt={user.name}
