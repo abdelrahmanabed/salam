@@ -51,15 +51,17 @@ const AuditCard = ({ event, index }) => {
         
       </div>
     
-          {event.uploadedBy?._id&&    <div className='h-full  flex  justify-between items-center gap-2 p-3 pt-0'>
-        <Link href={`/users/${event.uploadedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkpink p-1 pr-3 '>   
+            <div className='h-full  flex  justify-between items-center gap-2 p-3 pt-0'>
+            {event.uploadedBy?._id&& !event.uploadedByAdmin&&  <Link href={`/users/${event.uploadedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkpink p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img  src={`${process.env.NEXT_PUBLIC_API}${event.uploadedBy.image}`} className=''/>
            </div>
            <span className=' text-subtextcolor text-xs font-bold '>{event.uploadedBy.name}</span>
 
-        </Link>
-
+        </Link>}
+        {event.uploadedByAdmin&&<Link href={`/admins/${event.uploadedByAdmin.id}`} className=' overflow-hidden font-bold text-xs  flex items-center gap-1 rounded-full border-4 border-pinkcolor/20 p-2 py-1 '>
+            {event.uploadedByAdmin.name}
+        </Link>}
         <span className=' text-xs dark:text-subtextcolor/90'>
               {new Date(event.date).toLocaleString('en-US', {
     year: 'numeric',
@@ -69,7 +71,7 @@ const AuditCard = ({ event, index }) => {
     minute: 'numeric',
     hour12: true
   })}              </span>
-        </div>  }
+        </div>  
 
         <Link
           href={`/Edit/${event._id}/audit`}

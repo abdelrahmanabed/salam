@@ -108,12 +108,17 @@ const NoteDetailsPage = () => {
 
   return (
     <div className="  px-4 mb-4 ">
-      <div className="bg-hovercolor dark:bg-darkbox rounded-main overflow-hidden">
+      <div className="bg-hovercolor relative dark:bg-darkbox rounded-main overflow-hidden">
         {/* Header */}
+        <div className=' absolute   top-4 right-4 gap-2 '>
+              {noteDetails.uploadedBy&&<Link href={`/admins/${noteDetails.uploadedBy.id}`} className={` overflow-hidden font-bold text-[10px]  flex items-center gap-1 rounded-full border-4 border-subcolor/20 p-2 py-1 `}>
+            {noteDetails.uploadedBy.name}
+        </Link>}
+              </div>
         <div className={`bg-${typeConfig.bgColor} bg-opacity-50 p-6`}>
           <div className="flex items-center gap-4">
             <div className={`p-3 rounded-full bg-${typeConfig.bgColor}`}>
-              <Icon icon={typeConfig.icon} className="w-6 h-6 text-white" />
+              <Icon icon={typeConfig.icon} className="w-10 h-10 text-white" />
             </div>
             <div>
               <h1 className="text-2xl font-semibold text-textcolor dark:text-white">
@@ -128,7 +133,9 @@ const NoteDetailsPage = () => {
                   minute: '2-digit'
                 })}
               </p>
+           
             </div>
+
           </div>
         </div>
 
@@ -142,7 +149,7 @@ const NoteDetailsPage = () => {
 
           {/* Target Date */}
           {noteDetails.targetDate && (
-            <div className="mt-6 flex items-center gap-2 text-gray-600 dark:text-gray-300">
+            <div className="mt-6 flex items-center gap-2  dark:text-subtextcolor">
               <Icon icon="material-symbols:calendar-today-outline" className="w-5 h-5" />
               <span>Target Date: {new Date(noteDetails.targetDate).toLocaleDateString()}</span>
             </div>
@@ -191,7 +198,7 @@ const NoteDetailsPage = () => {
     </h3>
     <div className="flex flex-wrap gap-2">
       {noteDetails.usersId.map((user, index) => (
-        <Link href={`/team/${user._id}`} key={index} className="flex items-center gap-3 bg-boxcolor dark:bg-blackgrey p-2 rounded-full shadow">
+        <Link href={`/team/${user._id}`} key={index} className="flex items-center gap-1 font-bold bg-boxcolor dark:bg-blackgrey p-2 pr-3 rounded-full shadow">
           <Image
             src={`${process.env.NEXT_PUBLIC_API}${user.image}`}
             alt={user.name}

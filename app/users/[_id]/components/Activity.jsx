@@ -31,7 +31,7 @@ const Activities = () => {
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const regularNotes = allNotes 
-  .sort((a, b) => new Date(b.date) - new Date(a.date));
+  .sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date)); 
   const scrollToNotes = () => {
     notesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };

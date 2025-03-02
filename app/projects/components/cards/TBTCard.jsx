@@ -71,14 +71,17 @@ const TBTCard = ({ event, index }) => {
                  })}
                </div>
              )}</div>
-             { event.conductedBy._id &&  <div className='flex h-full justify-between items-center gap-2 p-3 pt-0'>
-        <Link href={`/users/${event.conductedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkgreen p-1 pr-3 '>   
+              <div className='flex h-full justify-between items-center gap-2 p-3 pt-0'>
+        { event.conductedBy._id &&!event.conductedByAdmin&& <Link href={`/users/${event.conductedBy._id}`} className=' overflow-hidden  flex items-center gap-1 rounded-full bg-darkgreen p-1 pr-3 '>   
            <div className=' overflow-hidden h-7 w-7 rounded-circle'>
            <img  src={`${process.env.NEXT_PUBLIC_API}${event.conductedBy.image}`} className=''/>
            </div>
            <span className=' text-subtextcolor text-xs font-bold '>{event.conductedBy.name}</span>
 
-        </Link>
+        </Link>}
+        {event.conductedByAdmin&&<Link href={`/admins/${event.conductedByAdmin.id}`} className=' overflow-hidden font-bold text-xs  flex items-center gap-1 rounded-full border-4 border-greencolor/20 p-2 py-1 '>
+            {event.conductedByAdmin.name}
+        </Link>}
         <span className=' text-xs dark:text-subtextcolor/90'>
               {new Date(event.dateTime).toLocaleString('en-US', {
     year: 'numeric',
@@ -88,7 +91,7 @@ const TBTCard = ({ event, index }) => {
     minute: 'numeric',
     hour12: true
   })}              </span>
-        </div>  }
+        </div>  
 
         <Link
           href={`/Edit/${event._id}/tbt`}
