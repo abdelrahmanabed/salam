@@ -1,15 +1,31 @@
 import { Icon } from "@iconify/react";
+import { useAdmin } from "../contexts/AdminContext";
+import { useEffect, useState } from "react";
 
 const NotificationItem = ({ notification, onMarkAsRead }) => {
     const {
         message,
         projectId,
         userId,
-        isRead,
+        adminId,
+        readByAdmin = [], // Provide default empty array
         createdAt,
         type
     } = notification;
 
+    const { admin } = useAdmin(); // Get current admin
+    const isRead = admin ? readByAdmin.includes(admin._id) : false;
+    const [isReadDelayed, setIsReadDelayed] = useState(!isRead);
+    
+    useEffect(() => {
+        if (isRead) {
+            const timer = setTimeout(() => {
+                setIsReadDelayed(false);
+            }, 3000); // تأخير 3 ثواني
+
+            return () => clearTimeout(timer);
+        }
+    }, [isRead]);
     // Reuse the same notification config from ToastNotification
     const notificationConfig = {
         AbnormalEvent: {
@@ -75,7 +91,7 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
                     </div>
 
                     {/* User & Project Info */}
-                    <div className="mt-2 flex items-center gap-2">
+                    {userId ? <div className="mt-2 flex items-center gap-2">
                         <img
                             src={userId?.image ? `${process.env.NEXT_PUBLIC_API}${userId.image}` : '/placeholder-avatar.png'}
                             alt={userId?.name || 'User'}
@@ -86,13 +102,21 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
                             <span className="mx-2">•</span>
                             <span>{projectId?.name || 'Unknown Project'}</span>
                         </div>
-                    </div>
+                    </div> :
+                     adminId ? 
+                     <div className="mt-2 flex items-center gap-2">
+                        <div className="text-xs text-gray-600">
+                            <span className="font-medium">{adminId?.name || 'Unknown Admin'}</span>
+                            <span className="mx-2">•</span>
+                            <span>{projectId?.name || 'Unknown Project'}</span>
+                        </div>
+                    </div> :""}
                 </div>
 
                 {/* Unread Indicator */}
-                {!isRead && (
+                {!isRead && isReadDelayed && (
                     <div className="absolute top-2 right-2">
-                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                        <div className="w-2 h-2 bg-redcolor rounded-full animate-pulse" />
                     </div>
                 )}
             </div>

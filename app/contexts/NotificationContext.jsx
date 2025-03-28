@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import ToastNotification from '../components/toast';
+import { jwtDecode } from 'jwt-decode';
 
 export const NotificationsContext = createContext();
 
@@ -10,27 +11,74 @@ export const NotificationsProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [toasts, setToasts] = useState([]);
-
+    const [adminId, setAdminId] = useState(null);
     useEffect(() => {
-        const fetchNotifications = async () => {
-            try {
-                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/notifications`);
-                setNotifications(data);
-                setUnreadCount(data.filter(n => !n.isRead).length);
-            } catch (error) {
-                console.error('Error fetching notifications:', error);
+        const getAdminFromToken = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const decoded = jwtDecode(token);
+                    setAdminId(decoded.id || decoded._id);
+                } catch (error) {
+                    console.error('Error decoding token:', error);
+                }
             }
         };
 
-        fetchNotifications();
-    }, [ toasts]);
+        getAdminFromToken();
+    }, []);
+
+  
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            const token = localStorage.getItem('token');
+    if (!token) {
+        setNotifications([]);
+        setUnreadCount(0);
+        return;
+    }
+            try {
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/notifications`);
+                const decoded = jwtDecode(token);
+                const adminId = decoded.id || decoded._id;
+                
+            // فلترة الإشعارات حسب المشروع
+                setNotifications(data);
+                const unreadNotifications = data.filter(notification => {
+                    return !notification.readByAdmin || !notification.readByAdmin.includes(adminId);
+                });
+                setUnreadCount(unreadNotifications.length);
+                console.log('object unread',unreadCount);
+            } catch (error) {
+                console.error('Error fetching notifications:', error);
+                setNotifications([]);
+                setUnreadCount(0); 
+            }
+        };
+        if (adminId) {
+            fetchNotifications();
+        }
+    }, [toasts, adminId]);
+
     useEffect(() => {
       
 
         const socket = io(`${process.env.NEXT_PUBLIC_API}`);
-        socket.on('newNotification', (notification) => {
-            setUnreadCount(prev => prev + 1);
+        const token = localStorage.getItem('token');
 
+        if (!token) return;
+        
+        const decoded = jwtDecode(token);
+        const adminId = decoded.id || decoded._id;
+        
+       
+        socket.on('newNotification', (notification) => {
+            setNotifications(prev => [notification, ...prev]);
+
+            if (!notification.readByAdmin || !notification.readByAdmin.includes(adminId)) {
+                setUnreadCount(prev => prev + 1);
+            }
+            
             const toastId = Date.now();
             setToasts(prev => [...prev, {
                 id: toastId,
@@ -40,18 +88,33 @@ export const NotificationsProvider = ({ children }) => {
         });
 
         return () => socket.disconnect();
-    }, []);
+    }, [adminId]);
     const removeToast = (toastId) => {
         setToasts(prev => prev.filter(toast => toast.id !== toastId));
     };
 
     const markAsRead = async (notificationIds) => {
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API}/api/notifications/mark-read`, {
-                notificationIds
-            });
-            setUnreadCount(prev => prev - notificationIds.length);
-        } catch (error) {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            const { data } = await axios.post(
+                `${process.env.NEXT_PUBLIC_API}/api/notifications/mark-read-admin`, 
+                { notificationIds },
+                { headers: { Authorization: `Bearer ${token}` } }
+              );
+              setNotifications(prev => 
+                prev.map(notification => 
+                  notificationIds.includes(notification._id) 
+                    ? { ...notification, readByAdmin: [...(notification.readByAdmin || []), jwtDecode(token).id] }
+                    : notification
+                )
+              );
+              
+              // Update unread count
+              setUnreadCount(prev => Math.max(0, prev - notificationIds.length));
+              
+              return data;
+            } catch (error) {
             console.error('Error marking notifications as read:', error);
         }
     };

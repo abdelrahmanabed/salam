@@ -2,11 +2,15 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { io } from 'socket.io-client';
+import { usePathname } from 'next/navigation';
+import axios from 'axios';
 
 const AdminContext = createContext();
 
 export function AdminProvider({ children }) {
   const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const id = pathname.split('/')[2]; // استخراج ID المستخدم من الـ URL
 
   const { data: admin, isLoading, error } = useQuery({
     queryKey: ['admin'],
@@ -37,6 +41,18 @@ export function AdminProvider({ children }) {
     retry: 1,
     staleTime: 300000, // 5 minutes
   });
+
+  const { data: theAdmin, isLoading: adminLoading, error: adminError } = useQuery({
+    queryKey: ['theAdmin', id],
+    queryFn: async () => {
+        if (!id) return null;
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/admins/${id}`);
+        return data;
+    },
+    enabled: !!id, // لا يتم تشغيل الاستعلام إذا لم يكن هناك ID
+    staleTime: 300000,
+});
+
 
   const refreshAdmin = () => {
     queryClient.invalidateQueries(['admin']);
@@ -70,7 +86,9 @@ export function AdminProvider({ children }) {
       error,
       refreshAdmin,
       logout,
-      setAdmin
+      setAdmin,
+      theAdmin,
+      adminLoading
     }}>
       {children}
     </AdminContext.Provider>

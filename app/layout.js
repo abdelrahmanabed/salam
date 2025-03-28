@@ -32,13 +32,14 @@ export default function RootLayout({ children }) {
 
       <ProtectedRoute>
         <Qprovider>
+        <NotificationsProvider>
+
         <AdminProvider>
 
-      <NotificationsProvider>
-      <Notifications/>
 
         <UsersProvider>
         <ProjectsProvider>
+      <Notifications/>
 
         <Header/>        
 
@@ -53,8 +54,8 @@ export default function RootLayout({ children }) {
 
         </UsersProvider> 
 
-        </NotificationsProvider>
         </AdminProvider>
+        </NotificationsProvider>
 
         </Qprovider>
        </ProtectedRoute> 

@@ -3,30 +3,45 @@ import { Icon } from '@iconify/react';
 import React, { useContext, useState, useEffect } from 'react';
 import { NotificationsContext } from '../contexts/NotificationContext';
 import NotificationItem from './Notification';
+import { useAdmin } from '../contexts/AdminContext';
 
 const Notifications = () => {
     const { notifications, unreadCount, markAsRead } = useContext(NotificationsContext);
     const [isOpen, setIsOpen] = useState(false);
     const [displayedNotifications, setDisplayedNotifications] = useState([]);
+    const { admin } = useAdmin(); // Get current user
 
     // Update displayed notifications whenever the notifications list changes
     useEffect(() => {
         setDisplayedNotifications(notifications);
     }, [notifications]);
 
-    const handleMarkAsRead = (notificationId) => {
-        markAsRead([notificationId]);
+    const handleToggle = () => {
+        const newState = !isOpen;
+        setIsOpen(newState);
+        
+        if (newState && admin && unreadCount > 0) {
+            const unreadIds = notifications
+                .filter(notification => 
+                    !notification.readByAdmin || 
+                    !notification.readByAdmin.includes(admin?._id)
+                )
+                .map(notification => notification._id);
+                
+            if (unreadIds.length > 0) {
+                markAsRead(unreadIds);
+            }
+        }
     };
-
     return (
         <>
             <button 
                 className="fixed right-[24px] bottom-[90px] bg-bluecolor text-darkbluec shadow-md p-2 rounded-circle z-40"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleToggle}
             >
                 <Icon icon="basil:notification-solid" width="30" height="30" />
                 {unreadCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                    <span className="absolute text-subtextcolor bg-redcolor   -top-2 -right-2  text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
                         {unreadCount}
                     </span>
                 )}

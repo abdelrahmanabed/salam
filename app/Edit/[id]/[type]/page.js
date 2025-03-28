@@ -388,7 +388,7 @@ const EditPage = () => {
 
 
   return (
-    <div className="w-full p-4 h-full md:h-full overflow-y-auto dark:text-subtextcolor flex gap-3 justify-center rounded-main">
+    <div className="w-full relative p-4 h-full md:h-full overflow-y-auto dark:text-subtextcolor flex gap-3 justify-center rounded-main">
  {loading && !isUploading ? (
         <div className='w-full h-full flex justify-center items-center'>
           <div className="loader"></div>
@@ -514,6 +514,7 @@ const EditPage = () => {
 
         {/* Description field for specific types */}
         {['abnormal', 'observation'].includes(type) && (
+          <>
           <div className="w-full">
             <Addinput 
               label="Description" 
@@ -528,6 +529,40 @@ const EditPage = () => {
               </span>
             )}
           </div>
+          {/* Status display */}
+<div className=" absolute right-8 top-8  flex items-center justify-center mb-2">
+  <span className={`px-4 py-1 rounded-full text-white ${
+    initialData.status === 'Open' ? 'bg-greencolor' : 'bg-redcolor'
+  }`}>
+    {initialData.status}
+  </span>
+</div>
+          <div className="mt-4 w-full flex justify-center">
+          {initialData.status === 'Open' && (
+            <button
+              type="button"
+              onClick={async () => {
+                if (window.confirm('Are you sure you want to close this report?')) {
+                  const token = localStorage.getItem('token');
+                  try {
+                    await axios.patch(
+                      `${process.env.NEXT_PUBLIC_API}/api/${type === 'abnormal' ? 'abnormal-events' : 'observations'}/close/${id}`,
+                      {},
+                      { headers: { 'Authorization': `Bearer ${token}` } }
+                    );
+                    router.back();
+                  } catch (error) {
+                    setApiError("Failed to close report: " + (error.response?.data?.message || "Unknown error"));
+                  }
+                }
+              }}
+              className="flex items-center gap-2 rounded-full w-full md:w-96 hover:opacity-80 duration-200 bg-red-500 text-white text-lg font-bold py-3 px-8"
+            >
+              <Icon icon="mdi:lock-check" width="24" height="24" />
+              Close This Report
+            </button>
+          )}
+        </div></>
         )}
 
         {/* File upload sections */}

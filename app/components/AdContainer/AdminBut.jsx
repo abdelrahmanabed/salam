@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import axios from 'axios'
 import Link from 'next/link'
 import React from 'react'
-const AdminBut = ({ adminrole ,_id,id, name, onDelete }) => {
+const AdminBut = ({ adminrole ,_id,id, name, onDelete, href }) => {
   const handleDelete = async () => {
     const confirmDelete = window.confirm(`هل أنت متأكد من حذف ${name}؟`)
     if (!confirmDelete) return
@@ -17,7 +17,7 @@ const AdminBut = ({ adminrole ,_id,id, name, onDelete }) => {
   }
 
   return (<div  className='  dark:text-subtextcolor relative'>
-<Link href='' className='dark:hover:border-subtextcolor group flex  items-center hover:border-subcolor duration-200 gap-2 p-2 relative  border w-full rounded-main border-darkgrey h-fit'>
+<Link href={href} className='dark:hover:border-subtextcolor group flex  items-center hover:border-subcolor duration-200 gap-2 p-2 relative  border w-full rounded-main border-darkgrey h-fit'>
 {adminrole==='Admin'? 
                   <Icon icon='eos-icons:admin'  width="30" height="30" /> :
                 <Icon icon="dashicons:superhero"  width="30" height="30" />}

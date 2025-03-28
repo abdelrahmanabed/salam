@@ -42,8 +42,9 @@ const AdminCon = () => {
 
     <div className={`${showed? "":"h-0 px-2 py-0"} duration-200 ease-in-out  gap-2 grid md:grid-cols-2 overflow-hidden  lg:grid-cols-3`}>
     { admins.length > 0 && admins.map((a) => (
-    <AdminBut adminrole={a.role} _id={a._id} key={a.id} name={a.name} id={a.id}                         onDelete={handleDeleteAdmin} // تمرير الدالة
-/>
+    <AdminBut adminrole={a.role} _id={a._id} key={a.id} name={a.name} id={a.id} onDelete={handleDeleteAdmin} // تمرير الدالة
+        href={`/admins/${a.id}`}
+    />
 ))}
     </div>
     
